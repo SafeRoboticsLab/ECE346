@@ -10,10 +10,10 @@ sudo apt-get install -y libjpeg-turbo8 libturbojpeg libusb-1.0-0 \
 pip3 install --upgrade cython 
 pip3 install --upgrade numpy opencv-python pyopengl
 
-wget https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/3.6/ZED_SDK_Tegra_JP46_v3.6.3.run
-chmod +x ZED_SDK_Tegra_JP46_v3.6.3.run
+wget https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/3.6/ZED_SDK_Tegra_JP46_v3.6.4.run
+chmod +x ZED_SDK_Tegra_JP46_v3.6.4.run
 
 # during installation, choose no for automatic dependency install, then choose python3.8 for API
-./ZED_SDK_Tegra_JP46_v3.6.3.run
+./ZED_SDK_Tegra_JP46_v3.6.4.run
 
-rm ZED_SDK_Tegra_JP46_v3.6.3.run
+rm ZED_SDK_Tegra_JP46_v3.6.4.run
