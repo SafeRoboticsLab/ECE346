@@ -1,0 +1,13 @@
+<launch>
+    <arg name="output"            default="screen"    doc="display output to screen or log file"/>
+    <arg name="SteeringChannel"   default="0"    doc="Controller Channel of steering servo"/>
+    <arg name="ThrottleChannel"   default="1"    doc="Controller Channel of ESC"/>
+    <arg name="ControllerTopic"   default="control/servo_control"    doc="ROS topic to subscribe"/>
+    <arg name="frequency"         default="50"              doc="Frequency to update the controller" />
+    <node pkg="rc_control" type="rc_control_node" name="rc_control_node" output="$(arg output)" args="" required="true">
+        <param name="SteeringChannel"           value="$(arg SteeringChannel)" />
+        <param name="ThrottleChannel"           value="$(arg ThrottleChannel)" />
+        <param name="ControllerTopic"           value="$(arg ControllerTopic)" />
+        <param name="frequency"                 value="$(arg frequency)" />
+    </node>
+</launch>
