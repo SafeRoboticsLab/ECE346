@@ -43,13 +43,15 @@ source ACADOS_env/bin/activate
 
 # set up env in virtualenv
 pip install -e acados/interfaces/acados_template
-pip install pyyaml rospkg empy sympy spatialmath-python pyclothoids
+pip install pyyaml rospkg empy sympy 
 
-# install gfortran
-sudo apt-get install gfortran
-# install pyspline
-git clone https://github.com/mdolab/pyspline.git
-cd pyspline
-cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk
-make
-pip install .
+# # install dependence for MPCC
+# pip install spatialmath-python pyclothoids
+# # install gfortran
+# sudo apt-get install gfortran
+# # install pyspline
+# git clone https://github.com/mdolab/pyspline.git
+# cd pyspline
+# cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk
+# make
+# pip install .
