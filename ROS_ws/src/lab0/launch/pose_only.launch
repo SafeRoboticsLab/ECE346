@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find zed_wrapper)/launch/zed2.launch"/>
+  <node name="pose_listener" pkg="ece346_lab0" type="pose_node.py" />
+</launch>
