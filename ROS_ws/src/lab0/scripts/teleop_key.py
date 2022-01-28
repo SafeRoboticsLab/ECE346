@@ -170,7 +170,7 @@ if __name__=="__main__":
     turn = rospy.get_param("~turn", 1)
     # repeat = rospy.get_param("~repeat_rate", 0.0)
     repeat = rospy.get_param("~repeat_rate", 50.0)
-    key_timeout = rospy.get_param("~key_timeout", 0.2)
+    key_timeout = rospy.get_param("~key_timeout", 0.5)
     if key_timeout == 0.0:
         key_timeout = None
 
