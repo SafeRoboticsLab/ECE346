@@ -39,15 +39,12 @@
 # Update your fork from public repo
 ## First, commit all of your changes you have made to your private epo.
 
-1. When you want to pull changes from upstream you can first fetch the upstream remote.
+1. (Optional) When you want to pull changes from upstream you can first fetch the upstream remote and inspect the difference between the public repo (upstream/Spring2022) and your own repo by
     ```
     git fetch upstream
-    ```
-2. (Optional) You can inspect the difference between the public repo (upstream/Spring2022) and your own repo by 
-    ```
     git diff upstream/Spring2022 Spring2022
     ```
-3. You can now merge the upstream 
+2. You can now merge the upstream 
     ```
     git pull upstream Spring2022 
     ```
