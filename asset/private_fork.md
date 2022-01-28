@@ -51,10 +51,7 @@
     ```
     git merge upstream/Spring2022 
     ```
-    If you perfer use [rebase](https://www.perforce.com/blog/vcs/git-rebase-vs-git-merge-which-better) rather than merge, simply do
-    ```
-    git rebase upstream/Spring2022 
-    ```
+    If you encounter any conflicts, please checkout this [tutorial](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts).
 
 
 
