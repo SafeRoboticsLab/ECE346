@@ -35,4 +35,12 @@
     ```
 
 # Update your fork from public repo
-When you want to pull changes from upstream you can just fetch the remote and rebase on top of your work.
+## First, commit all of your changes you have made to your private epo.
+
+1. When you want to pull changes from upstream you can first fetch the upstream remote.
+    ```
+    git fetch upstream
+    ```
+2. (Optional)
+
+
