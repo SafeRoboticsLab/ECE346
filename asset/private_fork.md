@@ -33,7 +33,9 @@
     git remote add upstream https://github.com/SafeRoboticsLab/ECE346.git
     git remote set-url --push upstream DISABLE
     ```
-
+# Push to your private repo
+    git push origin
+    
 # Update your fork from public repo
 ## First, commit all of your changes you have made to your private epo.
 
@@ -41,6 +43,18 @@
     ```
     git fetch upstream
     ```
-2. (Optional)
+2. (Optional) You can inspect the difference between the public repo (upstream/Spring2022) and your own repo by 
+    ```
+    git diff upstream/Spring2022 Spring2022
+    ```
+3. You can now merge the upstream 
+    ```
+    git merge upstream/Spring2022 
+    ```
+    If you perfer use [rebase](https://www.perforce.com/blog/vcs/git-rebase-vs-git-merge-which-better) rather than merge, simply do
+    ```
+    git rebase upstream/Spring2022 
+    ```
+
 
 
