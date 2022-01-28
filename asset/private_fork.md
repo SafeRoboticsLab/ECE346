@@ -49,9 +49,9 @@
     ```
 3. You can now merge the upstream 
     ```
-    git merge upstream/Spring2022 
+    git pull upstream Spring2022 
     ```
-    If you encounter any conflicts, please checkout this [tutorial](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts).
+    This will create a merge commit for you. If you encounter any conflicts, please checkout this [tutorial](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts).
 
 
 
