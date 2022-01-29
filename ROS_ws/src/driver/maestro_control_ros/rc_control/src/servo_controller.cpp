@@ -116,11 +116,11 @@ void ServoController::_dynParamCallback(rc_control::calibrationConfig &config, u
     DynParam dynamic_params;
     dynamic_params.steering_C = config.steering_C;
     dynamic_params.steering_L = config.steering_L;
-    dynamic_params.steering_R = config.steering_R;
+    dynamic_params.steering_H = config.steering_H;
 
     dynamic_params.throttle_N = config.throttle_N;
-    dynamic_params.throttle_R = config.throttle_R;
-    dynamic_params.throttle_D = config.throttle_D;
+    dynamic_params.throttle_L = config.throttle_L;
+    dynamic_params.throttle_H = config.throttle_H;
 
     dynamic_params.inverse_steer = config.inverse_steer;
     dynamic_params.inverse_throttle = config.inverse_throttle;
@@ -133,11 +133,18 @@ void ServoController::_dynParamUpdate()
     const DynParam dynamic_params = *(_dynParam.readFromRT());
     _steering_C = dynamic_params.steering_C;
     _steering_L = dynamic_params.steering_L;
-    _steering_R = dynamic_params.steering_R;
+    _steering_H = dynamic_params.steering_H;
+    
+
+    _steering_L = std::min(_steering_C, _steering_L);
+    _steering_H = std::max(_steering_C, _steering_H);
 
     _throttle_N = dynamic_params.throttle_N;
-    _throttle_R = dynamic_params.throttle_R;
-    _throttle_D = dynamic_params.throttle_D;
+    _throttle_L = dynamic_params.throttle_L;
+    _throttle_H = dynamic_params.throttle_H;
+
+    _throttle_L = std::min(_throttle_N, _throttle_L);
+    _throttle_H = std::max(_throttle_N, _throttle_H);
 
     _inverse_steer = dynamic_params.inverse_steer;
     _inverse_throttle = dynamic_params.inverse_throttle;
@@ -171,17 +178,14 @@ int ServoController::_convertTargetThrottle(double percentage)
    
     if(_inverse_throttle)
         percentage = -percentage;
-    double scaled_percentage;
-
-    // go forward (%>0) map from 0-1 to center to high
-    // go backward/brake (%<=0) map from -1-0 to low to center
-    if (percentage>0)         
-        scaled_percentage = percentage*(_throttle_D-_throttle_N)+_throttle_N;
-    else
-        scaled_percentage = percentage*(_throttle_N-_throttle_R)+_throttle_N;
     
+    double input_pwm = (percentage*400.0+_throttle_N); 
+
+    // saturated to the limit
+    input_pwm = std::max(_throttle_L, std::min(input_pwm, _throttle_H));
+
     // scaled to the unit of 0.25us
-    int input = int((scaled_percentage*500.0+1500.0)*4.0); 
+    int input = int(input_pwm*4.0);
 
     return std::max(_throttle_min, std::min(input, _throttle_max));
 }
@@ -195,17 +199,13 @@ int ServoController::_convertTargetSteering(double percentage)
     if (_inverse_steer)
         percentage = -percentage;
 
-    double scaled_percentage;
+    double input_pwm = (percentage*400.0+_steering_C); 
 
-    // right turn (%>0) map from 0-1 to center to high
-    // left turn (%<=0) map from -1-0 to low to center
-    if (percentage>0)
-        scaled_percentage = percentage*(_steering_R-_steering_C)+_steering_C;
-    else
-        scaled_percentage = percentage*(_steering_C-_steering_L)+_steering_C;
+    // saturated to the limit
+    input_pwm = std::max(_steering_L, std::min(input_pwm, _steering_H));
 
     // scaled to the unit of 0.25us
-    int input = int((scaled_percentage*500.0+1500.0)*4.0); 
+    int input = int(input_pwm*4.0);
 
     return std::max(_steering_min, std::min(input, _steering_max));
 }

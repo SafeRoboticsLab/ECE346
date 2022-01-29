@@ -65,16 +65,16 @@ class ServoController{
         bool _reverse;
 
         // calibration parameters
-        double _steering_C, _steering_L, _steering_R; // center, max left and max right steering input
-        double _throttle_N, _throttle_D, _throttle_R; // netural, max forward and max reverse throttle input 
+        double _steering_C, _steering_L, _steering_H; // center, max left and max right steering input
+        double _throttle_N, _throttle_H, _throttle_L; // netural, max forward and max reverse throttle input 
         bool _inverse_steer, _inverse_throttle;
         struct DynParam
         {
-            double steering_C, steering_L, steering_R; // center, max left and max right steering input
-            double throttle_N, throttle_D, throttle_R;
+            double steering_C, steering_L, steering_H; // center, max left and max right steering input
+            double throttle_N, throttle_H, throttle_L;
             bool inverse_steer, inverse_throttle;
-            DynParam() : steering_C(0.0), steering_L(-1.0), steering_R(1.0),
-                        throttle_N(0.0), throttle_D(1.0), throttle_R(-1.0),
+            DynParam() : steering_C(0.0), steering_L(-1.0), steering_H(1.0),
+                        throttle_N(0.0), throttle_H(1.0), throttle_L(-1.0),
                         inverse_steer(false), inverse_throttle(false) {}
         };
         realtime_tools::RealtimeBuffer<DynParam> _dynParam;
