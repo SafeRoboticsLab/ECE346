@@ -12,7 +12,8 @@ curl https://sh.rustup.rs -sSf -o install_rust.sh
 sh install_rust.sh -y
 rm install_rust.sh
 
-source ~/.bashrc
+source $HOME/.cargo/env
+
 # get tera_renderer
 git clone https://github.com/acados/tera_renderer.git
 cd tera_renderer
@@ -43,13 +44,14 @@ source ACADOS_env/bin/activate
 
 # set up env in virtualenv
 pip install -e acados/interfaces/acados_template
-pip install pyyaml rospkg empy sympy 
+pip install pyyaml rospkg empy sympy catkin_pkg
 
-# # install dependence for MPCC
+#
 # pip install spatialmath-python pyclothoids
-# # install gfortran
+
+# install gfortran
 # sudo apt-get install gfortran
-# # install pyspline
+# install pyspline
 # git clone https://github.com/mdolab/pyspline.git
 # cd pyspline
 # cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk

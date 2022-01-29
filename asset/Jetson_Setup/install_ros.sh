@@ -9,7 +9,6 @@ apt search ros-melodic
 echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 sudo apt install python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential -y
-pip3 install rospkg catkin_pkg
 
 sudo rosdep init
 rosdep update
