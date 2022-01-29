@@ -1,6 +1,6 @@
 # Create a private fork
 
-** If you have never used git before, please check out this [tutorial](https://www.atlassian.com/git/tutorials).**
+**If you have never used git before, please check out this [tutorial](https://www.atlassian.com/git/tutorials).**
 
 1. Create a new **private** GitHub repo named ```ECE346_GroupXX``` following this [documentation](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository).
 
