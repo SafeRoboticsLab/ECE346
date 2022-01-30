@@ -20,7 +20,7 @@ ServoController::ServoController(ros::NodeHandle node, ros::NodeHandle private_n
     } 
     _running = true; 
 
-    get a copy of the controller setting
+    // get a copy of the controller setting
     Maestro::Device::ChannelSettings steering_ch_setting = _device_list[_device_idx ].getChannelSettings(_steering_ch);
     _steering_min = steering_ch_setting.minimum;
     _steering_max = steering_ch_setting.maximum;
