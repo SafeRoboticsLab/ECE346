@@ -20,7 +20,7 @@ ServoController::ServoController(ros::NodeHandle node, ros::NodeHandle private_n
     } 
     _running = true; 
 
-    // get a copy of the controller setting
+    get a copy of the controller setting
     Maestro::Device::ChannelSettings steering_ch_setting = _device_list[_device_idx ].getChannelSettings(_steering_ch);
     _steering_min = steering_ch_setting.minimum;
     _steering_max = steering_ch_setting.maximum;
@@ -212,21 +212,25 @@ int ServoController::_convertTargetSteering(double percentage)
 
 void ServoController::brake()
 {
-    if(_reverse)
-    {
-        _device_list[_device_idx].setTarget(_steering_ch, _convertTargetSteering(0));
-        _device_list[_device_idx].setTarget(_throttle_ch, _convertTargetThrottle(1));   
-    }else
-    {   
-        _device_list[_device_idx].setTarget(_steering_ch, _convertTargetSteering(0));
-        _device_list[_device_idx].setTarget(_throttle_ch, _convertTargetThrottle(-1));   
+    if(_running){
+        if(_reverse)
+        {
+            _device_list[_device_idx].setTarget(_steering_ch, _convertTargetSteering(0));
+            _device_list[_device_idx].setTarget(_throttle_ch, _convertTargetThrottle(1));   
+        }else
+        {   
+            _device_list[_device_idx].setTarget(_steering_ch, _convertTargetSteering(0));
+            _device_list[_device_idx].setTarget(_throttle_ch, _convertTargetThrottle(-1));   
+        }
     }
 }
 
 void ServoController::natural()
 {
-    _device_list[_device_idx].setTarget(_steering_ch, _convertTargetSteering(0));
-    _device_list[_device_idx].setTarget(_throttle_ch, _convertTargetThrottle(0));
+    if(_running){
+        _device_list[_device_idx].setTarget(_steering_ch, _convertTargetSteering(0));
+        _device_list[_device_idx].setTarget(_throttle_ch, _convertTargetThrottle(0));
+    }
 }
 
 
