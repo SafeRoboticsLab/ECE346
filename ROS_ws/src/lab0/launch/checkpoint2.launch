@@ -1,7 +1,8 @@
 <launch>
   <include file="$(find zed_wrapper)/launch/zed2.launch"/>
   <include file="$(find rc_control)/launch/rc_control_node.launch"/>
-  <node name="keyboard_listener" pkg="ece346_lab0" type="control_node.py" />
+  <node name="keyboard_listener" pkg="ece346_lab0" type="keyboard_listener.py"/>
   <node name="pose_listener" pkg="ece346_lab0" type="pose_node.py" />
-  <node name="teleop_node" pkg="ece346_lab0" type="teleop_key.py" output="screen"/>
+  <arg name="node_start_delay" default="5.0" />  
+  <node name="teleop_node" pkg="ece346_lab0" type="teleop_key.py" output="screen"  launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' " />
 </launch>
