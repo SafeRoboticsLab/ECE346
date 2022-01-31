@@ -38,14 +38,14 @@ CTRL-C to quit
 """
 
 moveBindings = {
-        'i':(0.2,0,0,0),
-        'o':(0.2,0,0,1),
+        'i':(0.1,0,0,0),
+        'o':(0.1,0,0,1),
         'j':(0,0,0,-1),
         'l':(0,0,0,1),
-        'u':(0.2,0,0,-1),
-        ',':(-0.2,0,0,0),
-        '.':(-0.2,0,0,-1),
-        'm':(-0.2,0,0,1),
+        'u':(0.1,0,0,-1),
+        ',':(-0.15,0,0,0),
+        '.':(-0.15,0,0,-1),
+        'm':(-0.15,0,0,1),
         # 'O':(1,-1,0,0),
         # 'I':(1,0,0,0),
         # 'J':(0,1,0,0),
@@ -187,7 +187,7 @@ if __name__=="__main__":
         pub_thread.update(x, y, z, th, speed, turn)
 
         print(msg)
-        print(vels(speed,turn))
+        #print(vels(speed,turn))
         while(1):
             key = getKey(key_timeout)
             if key in moveBindings.keys():
