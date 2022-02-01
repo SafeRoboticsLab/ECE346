@@ -24,9 +24,13 @@
     ```
 
 6. Clone your own private repo and initialize the submodule
+
     ```
     git clone YOUR_NEW_REPO_URL
     cd YOUR_NEW_REPO_NAME
+    ```
+    **Remember that you will also need to initialize and update your submodule by**
+    ```bash
     git submodule update --init --recursive
     ```
 
