@@ -29,12 +29,11 @@
     git push -u origin Spring2022
     ```
     
-
-5. 
-
 # Push to your private repo
-    git push origin
-    
+When woking on the lab and making changes to your code, you can push the code to your private repo by
+```bash
+git push origin
+```    
 # Update your fork from public repo
 ## First, commit all of your changes you have made to your private epo. Not sure about merge? It is never a bad idea to keep a copy locally before merge.
 
