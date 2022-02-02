@@ -6,40 +6,31 @@
 
 2. Open Terminal.
 
-3. Create a bare clone of the repository.
+3. Create a clone of the repository.
     ```
-    git clone --bare https://github.com/SafeRoboticsLab/ECE346.git
-    ```
-
-4. Mirror-push to the new repository.
-    ```
-    cd ECE346.git
-    git push --mirror YOUR_NEW_REPO_URL
-    ```
-
-5. Remove the temporary local repository you created earlier.
-    ```
-    cd ..
-    rm -rf ECE346.git
-    ```
-
-6. Clone your own private repo and initialize the submodule
-
-    ```
-    git clone YOUR_NEW_REPO_URL
-    cd YOUR_NEW_REPO_NAME
+    git clone https://github.com/SafeRoboticsLab/ECE346.git
     ```
     **Remember that you will also need to initialize and update your submodule by**
     ```bash
+    cd ECE346
     git submodule update --init --recursive
     ```
-
-5. Add the original ECE346 repo as remote to fetch future lab assignments and updates
-
+4. Rename the original ECE346 repo as upstream to fetch future lab assignments and updates
     ```
-    git remote add upstream https://github.com/SafeRoboticsLab/ECE346.git
+    git remote rename origin upstream
     git remote set-url --push upstream DISABLE
     ```
+5. Set your private repo as the new origin
+    ```
+    git remote add origin PRIVATE_REPO_URL
+    ```
+4. Push from your local repo to your new remote one.
+    ```
+    git push -u origin Spring2022
+    ```
+    
+
+5. 
 
 # Push to your private repo
     git push origin
