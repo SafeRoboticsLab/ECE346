@@ -124,12 +124,22 @@ For **Linux** computer, simply run the same command with the addition of flag ``
 ssh -X nxXX@192.168.0.1XX
 ```
 
+![image info](asset/Figures/../../Figures/ssh/ssh-ubuntu.png)
+
 For **Mac** computer, first you have to install [XQuartz](https://www.xquartz.org/).
 
 Then add flag ```-X``` to your SSH command:
 ```
 ssh -X nxXX@192.168.0.1XX
 ```
+
+If successfully connect, you should expect to see something like this on your terminal:
+
+![image info](asset/Figures/../../Figures/ssh/ssh-ubuntu-2.png)
+
+You can check if X11 forwarding is working correctly by typing in the terminal ```xclock```. If there is a clock open up on another window, X11 forwarding is correctly configured and running.
+
+![image info](asset/Figures/../../Figures/ssh/ssh-ubuntu-3.png)
 
 ## Connect from computer workstation in lab
 If you are using computer workstation in the lab, you can connect to the robot using SSH through either **PowerShell** or default **Windows terminal**.
