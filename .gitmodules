@@ -1,3 +1,3 @@
 [submodule "ROS_ws/src/driver/zed-ros-wrapper"]
 	path = ROS_ws/src/driver/zed-ros-wrapper
-	url = git@github.com:SafeRoboticsLab/zed-ros-wrapper.git
+	url = https://github.com/SafeRoboticsLab/zed-ros-wrapper.git
