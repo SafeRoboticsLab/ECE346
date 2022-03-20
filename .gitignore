@@ -3,7 +3,9 @@ ROS_ws/devel
 ROS_ws/src/CMakeLists.txt
 ROS_ws/.catkin_workspace
 .vscode
+**/.DS_Store
 */.vscode
+*.code-workspace
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
