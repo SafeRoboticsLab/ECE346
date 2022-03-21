@@ -20,3 +20,6 @@ We encourage each group to create a _private_ fork to host your code, and make a
 
 # [Lab 0 - Introduction](ROS_ws/src/lab0)
 Lab 0 gives an introduction to ROS and the mobile robot platform used in this class.
+
+# [Lab 2 - Forward Reachable Set](ROS_ws/src/lab2)
+Lab 2 allows students to plan trajectory that follows given path and avoids obstacles.
