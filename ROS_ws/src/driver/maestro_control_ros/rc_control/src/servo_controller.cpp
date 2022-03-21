@@ -48,6 +48,7 @@ ServoController::ServoController(ros::NodeHandle node, ros::NodeHandle private_n
 
 ServoController::~ServoController()
 {
+    natural();
     ROS_DEBUG("Exit");
 }
 
