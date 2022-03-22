@@ -3,7 +3,7 @@ from typing import Tuple, Optional
 import numpy as np
 import matplotlib
 
-from ellipsoid import Ellipsoid
+from .ellipsoid import Ellipsoid
 
 
 class EllipsoidObj(Ellipsoid):

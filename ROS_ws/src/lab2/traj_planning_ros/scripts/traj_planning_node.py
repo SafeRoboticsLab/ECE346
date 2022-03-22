@@ -12,15 +12,12 @@ def main():
     TrajTopic = rospy.get_param("~TrajTopic")
     PoseTopic = rospy.get_param("~PoseTopic")
     ParamsFile = rospy.get_param("~PlanParamsFile")
-    ViconPose = rospy.get_param("~ViconPose")
-    Solver = rospy.get_param("~solver")
-    
+    TrackFile = rospy.get_param("~TrackFile")    
 
-    planner = Planning_MPC(solver_type=Solver,
-                        vicon_pose=ViconPose,
-                        pose_topic=PoseTopic,
-                        ref_traj_topic=TrajTopic,
-                        params_file=ParamsFile)
+    planner = Planning_MPC(track_file=TrackFile,
+                 pose_topic=PoseTopic,
+                 ref_traj_topic=TrajTopic,
+                 params_file=ParamsFile)
     planner.run()
 
 

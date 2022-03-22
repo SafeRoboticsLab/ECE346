@@ -4,15 +4,14 @@ import threading
 import rospy
 from copy import deepcopy
 import numpy as np
-from Track import Track
-from iLQR import iLQR
-from traj_msgs.msg import Trajectory
+from iLQR import iLQR, Track
+from traj_msgs.msg import TrajMsg
 from nav_msgs.msg import Odometry
 from scipy.spatial.transform import Rotation
-import yaml
-
+from std_msgs.msg import Bool
+import yaml, csv
+import time
 class Planning_MPC():
-
     def __init__(self,
                  track_file=None,
                  pose_topic='/zed2/zed_node/odom',
@@ -32,12 +31,8 @@ class Planning_MPC():
         # parameters for the ocp solver
         self.T = self.params['T']
         self.N = self.params['N']
-        self.replan_dt = self.params['repaln_dt']
+        self.replan_dt = self.params['replan_dt']
         
-        self.L = self.params['L'] # wheel base (m)
-        # distance from pose center to the rear axis (m)
-        self.d_r = self.params['d_r']
-
         # previous trajectory for replan
         self.prev_plan = None
         self.prev_control = None
@@ -52,39 +47,69 @@ class Planning_MPC():
             y = r * np.sin(theta)
             self.track = Track(np.array([x, y]), 0.5, 0.5, True)
         else:
-            self.track = Track()
-            self.track.load_from_file(track_file)
+            x = []
+            y = []
+            with open(track_file, newline='') as f:
+                spamreader = csv.reader(f, delimiter=',')
+                for i, row in enumerate(spamreader):
+                    if i > 0:
+                        x.append(float(row[0]))
+                        y.append(float(row[1]))
+
+            center_line = np.array([x, y])
+            self.track = Track(
+                center_line=center_line, 
+                width_left=self.params['track_width_L'],
+                width_right=self.params['track_width_R'],
+                loop=True
+            )    
+           
 
         # set up the optimal control solver
 
-        self.ocp_solver = iLQR(self.track, params_file=params_file)
+        self.ocp_solver = iLQR(self.track, params=self.params)
 
         rospy.loginfo("Successfully initialized the solver with horizon " +
                       str(self.T) + "s, and " + str(self.N) + " steps.")
 
         # objects to schedule trajectory publishing
+        self.prev_x = None
+        self.prev_y = None
+        self.prev_t = None
+        
         self.cur_t = None
         self.cur_pose = None
         self.cur_state = None
 
         self.last_pub_t = None
+        self.controller_ready = False
         self.thread_lock = threading.Lock()
 
         # set up publiser to the reference trajectory and subscriber to the pose
         self.traj_pub = rospy.Publisher(ref_traj_topic,
-                                        Trajectory,
+                                        TrajMsg,
                                         queue_size=1)
         
         self.pose_sub = rospy.Subscriber(pose_topic, Odometry,
-                                             self.odom_sub_callback)
-
+                                             self.odom_sub_callback, queue_size = 10)
+        
+        self.controller_status_sub = rospy.Subscriber("/controller_status", Bool,
+                                             self.controller_status_callback, queue_size = 10)
+        
         # start planning thread
         threading.Thread(target=self.ilqr_pub_thread).start()
-    
+        
+    def controller_status_callback(self, statusMsg):
+        if not self.controller_ready:
+            self.controller_ready = statusMsg.data
+            rospy.loginfo("iLQR Starts")
+            rospy.loginfo(self.controller_ready)
+        
     def odom_sub_callback(self, odomMsg):
         """
         Subscriber callback function of the robot pose
-        """        
+        """
+        cur_t = odomMsg.header.stamp
         # postion
         x = odomMsg.pose.pose.position.x
         y = odomMsg.pose.pose.position.y
@@ -101,14 +126,22 @@ class Planning_MPC():
         psi = rot_vec[2]
         
         # linear velocity
-        vx = odomMsg.twist.twist.linear.x
-        vy = odomMsg.twist.twist.linear.y
-        v = (vx**2+vy**2)**0.5
-        self.thread_lock.acquire()
-        self.cur_t = odomMsg.header.stamp
-        self.cur_state = np.array([x, y, v, psi])
-        self.thread_lock.release()
-                        
+        if self.prev_t is not None:
+            dx = x - self.prev_x
+            dy = y - self.prev_y
+            dt = cur_t.to_sec() - self.prev_t
+            v = np.sqrt(dx*dx+dy*dy)/dt
+            self.thread_lock.acquire()
+            self.cur_t = odomMsg.header.stamp
+            self.cur_state = np.array([x, y, v, psi])
+            self.thread_lock.release()
+        else: 
+            v = None
+        
+        self.prev_x = x 
+        self.prev_y = y
+        self.prev_t = cur_t.to_sec()
+                                
     def ilqr_pub_thread(self):
         rospy.loginfo("iLQR Planning publishing thread started")
         while not rospy.is_shutdown():
@@ -126,17 +159,17 @@ class Planning_MPC():
                     cur_state = None
             self.thread_lock.release()
 
-            if since_last_pub >= self.replan_dt and cur_state is not None:
+            if since_last_pub >= self.replan_dt and cur_state is not None and self.controller_ready:
                 if self.prev_plan is None:
                     u_init = None
                 else:
                     u_init = np.zeros((2, self.N))
                     u_init[:, :-1] = self.prev_control[:, 1:]
 
-                sol_x, sol_u, t_solve, _, theta = self.ocp_solver.solve(cur_state, u_init)
+                sol_x, sol_u, t_solve, _, theta, _,_,_ = self.ocp_solver.solve(cur_state, u_init, record = False)
 
                 # contruct the new planning
-                plan = Trajectory()
+                plan = TrajMsg()
                 plan.header.stamp = cur_t
                 plan.dt = self.T / self.N
                 plan.step = self.N
@@ -153,9 +186,12 @@ class Planning_MPC():
                 self.prev_plan = sol_x
                 self.prev_control = sol_u
 
-                rospy.loginfo("Use " + str(t_solve) +
-                              " to plan with progress = " +
-                              str(theta[-1]-theta[0]))
+                # rospy.loginfo("Use " + str(t_solve) +
+                #               " to plan with progress = " +
+                #               str(theta[-1]-theta[0]))
+            else:
+                time.sleep(0.01)
+                
 
     def run(self, debug=False):
         rospy.spin()

@@ -1,0 +1,17 @@
+L: 0.257 #[m]
+d_f: 0.257 #[m]
+
+# PID parameters
+
+# lateral control
+p_lat: 2.0
+
+# longitudinal control
+p_lon: 0.8
+p_lon_complement: 0.08
+i_lon: 0.005
+i_sat: 100
+d_lon: 0.001
+
+# a_max: 5
+# delta_max: 0.25

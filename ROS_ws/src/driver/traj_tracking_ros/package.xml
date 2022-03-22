@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>traj_tracking_ros</name>
+  <version>0.1.0</version>
+  <description>The traj_tracking_ros package</description>
+
+  <maintainer email="zixuz@princeton.edu">Zixu Zhang</maintainer>
+  <license>BSD</license>
+
+  <author >Zixu Zhang</author>
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>rc_control_msgs</depend>
+  <depend>traj_msgs</depend>
+</package>

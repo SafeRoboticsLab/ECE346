@@ -115,8 +115,19 @@ class Track:
 
     plt.plot(self.track_center[0, :], self.track_center[1, :], 'r--')
 
-  def load_from_file(self):
-    pass
+  def load_from_file(self, filename):
+    track_file = 'outerloop_center_smooth.csv'
+    x = []
+    y = []
+    with open(filename, newline='') as f:
+      spamreader = csv.reader(f, delimiter=',')
+      for i, row in enumerate(spamreader):
+        if i > 0:
+          x.append(float(row[0]))
+          y.append(float(row[1]))
+
+    center_line = np.array([x, y])
+    
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 import numpy as np
-from constraints import Constraints
+from .constraints import Constraints
 
 
 class Cost:

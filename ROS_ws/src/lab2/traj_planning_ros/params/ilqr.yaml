@@ -1,52 +1,49 @@
-m: 2.99 #[kg]
-L: 0.257 #[m]
-l_f: 0.15 #[m]
-l_r: 0.107 #[m]
-Iz:  0.1 #[kg*m^3]
-
+wheelbase: 0.257 #[m]
+width: 0.2
+length: 0.5
 
 # box constraints
 # velocity
-v_max: 4 # max long vel [m/s]
+v_max: 2 # max long vel [m/s]
 v_min: 0 #0.05 # min long vel [m/s]
 
 # steering
 delta_min: -0.35  # minimum steering angle [rad]
 delta_max: 0.35  # maximum steering angle [rad]
 
-deltadot_min: -5.5  # minimum steering angle cahgne[rad/s]
-deltadot_max: 5.5 # maximum steering angle cahgne[rad/s]
-
-d_min: -3.5
-d_max: 3.5
-
+# linear acceleration
 a_min: -3.5
 a_max: 3.5
 
-alat_max: 4.0
-alat_min: -4.0
+# lateral acceleration
+alat_max: 5.0
 
-track_width: 0.4
+# track parameters
+track_file: 'outerloop_center_smooth.csv'
+track_width_R: 0.3
+track_width_L: 0.3
+track_offset: 0
 
-# weights for the cost
-w_vel: 2
-w_contour:  30
-w_theta: 1
-w_accel: 0.5
-w_delta: 0.5
+# cost
+w_vel: 4
+w_contour: 30
+w_theta: 0
+w_accel: 0.1
+w_delta: 0.1
 
-# parameter for soft constraints
-q1_v: 0.4
-q2_v: 2
-
-q1_road: 0.5
-q2_road: 2
-
-q1_lat: 0.2
+# parameters for barrier functions
+q1_v: 0
+q2_v: 0
+q1_road: 2
+q2_road: 5
+q1_lat: 1
 q2_lat: 5
+q1_obs: 2
+q2_obs: 5
 
-# optimizer parameters
-T: 2
-N: 11
-replan_dt: 0.2
+# ilqr parameters
+T: 1
+N: 11  # the number of planning steps
+max_itr: 50
+replan_dt: 0.1
 

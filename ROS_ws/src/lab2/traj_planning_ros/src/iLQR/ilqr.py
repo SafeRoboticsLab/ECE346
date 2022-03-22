@@ -1,7 +1,7 @@
 from weakref import ref
 import numpy as np
-from cost import Cost
-from dynamics import Dynamics
+from .cost import Cost
+from .dynamics import Dynamics
 import time
 
 
@@ -88,7 +88,7 @@ class iLQR():
 
     return K_closed_loop, k_open_loop
 
-  def solve(self, cur_state, controls=None, obs_list=[]):
+  def solve(self, cur_state, controls=None, obs_list=[], record = True):
     status = 0
     self.lambad = 10
 
@@ -147,10 +147,15 @@ class iLQR():
         break
     t_process = time.time() - time0
 
-    # get parameters for FRS
-    K_closed_loop, _= self.backward_pass(
-        states, controls, closest_pt, slope
-    )
-    fx, fu = self.dynamics.get_AB_matrix(states, controls)
+    if record:
+      # get parameters for FRS
+      K_closed_loop, _= self.backward_pass(
+          states, controls, closest_pt, slope
+      )
+      fx, fu = self.dynamics.get_AB_matrix(states, controls)
+    else:
+      K_closed_loop = None
+      fx = None
+      fu = None
     return states, controls, t_process, status, theta, K_closed_loop, fx, fu
 

@@ -1,5 +1,5 @@
 import numpy as np
-from ellipsoid import Ellipsoid
+from .ellipsoid import Ellipsoid
 
 
 class Reach():

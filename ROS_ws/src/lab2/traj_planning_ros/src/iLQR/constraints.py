@@ -1,6 +1,6 @@
 from typing import List
 import numpy as np
-from ellipsoid_obj import EllipsoidObj
+from .ellipsoid_obj import EllipsoidObj
 
 
 class Constraints:

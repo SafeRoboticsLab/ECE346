@@ -2,8 +2,8 @@ from typing import Optional, List
 import numpy as np
 import matplotlib
 
-from ellipsoid import Ellipsoid, DynSys, Reach, plot_ellipsoids
-from ellipsoid_obj import EllipsoidObj
+from .ellipsoid import Ellipsoid, DynSys, Reach, plot_ellipsoids
+from .ellipsoid_obj import EllipsoidObj
 
 
 def plot_footprint(

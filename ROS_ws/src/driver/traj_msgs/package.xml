@@ -1,0 +1,16 @@
+<package format="2">
+  <name>traj_msgs</name>
+  <version>0.0.1</version>
+  <description>
+  Messages for discrete trajectory to be tracked by a trajectory tracking controller
+  </description>
+  <maintainer email="zixuz@princeton.edu">Zixu Zhang</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>message_generation</depend>
+  <depend>std_msgs</depend>
+  <exec_depend>message_runtime</exec_depend>
+
+</package>
