@@ -10,5 +10,5 @@
         <param name="ControllerTopic"           value="$(arg ControllerTopic)" />
         <param name="TrackParamsFile"     value="$(find traj_tracking_ros)/params/stanley.yaml" />
     </node>
-    <!-- <node name="tracking_visualize_node" pkg="traj_tracking_ros" type="tracking_visualizer.py" /> -->
+    <node name="tracking_visualize_node" pkg="traj_tracking_ros" type="tracking_visualizer.py" />
 </launch>

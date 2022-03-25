@@ -3,14 +3,21 @@ d_f: 0.257 #[m]
 
 # PID parameters
 
+# # lateral control
+# p_lat: 2.5
+# p_psi: 2.25
+# d_psi: 0.008
+
 # lateral control
-p_lat: 2.0
+p_lat: 2.5
+p_psi: 4
+d_psi: 0.01
 
 # longitudinal control
 p_lon: 0.8
 p_lon_complement: 0.08
 i_lon: 0.005
-i_sat: 100
+i_sat: 0.0
 d_lon: 0.001
 
 # a_max: 5

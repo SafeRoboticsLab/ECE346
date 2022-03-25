@@ -1,6 +1,6 @@
 import numpy as np
 from .constraints import Constraints
-
+import time 
 
 class Cost:
 
@@ -52,7 +52,7 @@ class Cost:
     Returns:
         np.ndarray: costs.
     """
-
+    
     transform = np.array([[
         np.sin(slope), -np.cos(slope), self.zeros, self.zeros
     ], [self.zeros, self.zeros, self.ones, self.zeros]])
@@ -81,11 +81,11 @@ class Cost:
     )
 
     c_control[-1] = 0
-
+    
     # constraints
     c_constraint = self.soft_constraints.get_cost(
         states, controls, closest_pt, slope
-    )
+    )    
 
     J = np.sum(c_state + c_constraint + c_control) + c_progress
 

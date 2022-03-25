@@ -6,7 +6,7 @@
     <arg name="TrackFile"   default="$(find traj_planning_ros)/params/outerloop_center_smooth.csv"    doc="Trajectory Center"/>
 
     
-    <!-- <include file="$(find rc_control)/launch/rc_control_node.launch"/> -->
+    <include file="$(find rc_control)/launch/rc_control_node.launch"/>
 
     <include file="$(find zed_wrapper)/launch/zed2.launch"/>
 
