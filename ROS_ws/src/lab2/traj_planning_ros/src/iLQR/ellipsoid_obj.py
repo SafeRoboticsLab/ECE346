@@ -72,12 +72,33 @@ class EllipsoidObj():
         self.width_L = None
         self.width_R = None
 
+    def dim(self):
+        """
+        Returns the dimension of the ellipsoid.
+        """
+        return self.q.size
+
+    def rank(self):
+        """
+        Returns the rank of the shape matrix.
+        """
+        if self.dim() == 0:
+            return 0
+        else:
+            return np.linalg.matrix_rank(self.Q)
+
+    def parameters(self):
+        """
+        Returns parameters of the ellipsoid.
+        """
+        return self.q, self.Q
+
     def __matmul__(self, A: np.ndarray) -> EllipsoidObj:
         """
-    Multiplication of the ellipsoid by a matrix or a scalar.
-    If E(q,Q) is an ellipsoid, and A - matrix of suitable dimensions, then
-        E(q, Q) @ A = E(Aq, AQA').
-    """
+        Multiplication of the ellipsoid by a matrix or a scalar.
+        If E(q,Q) is an ellipsoid, and A - matrix of suitable dimensions, then
+            E(q, Q) @ A = E(Aq, AQA').
+        """
 
         # t0 = time.time()
         q = A @ self.q
@@ -93,12 +114,12 @@ class EllipsoidObj():
 
     def __add__(self, b: np.ndarray) -> EllipsoidObj:
         """
-    Computes vector addition with an ellipsoid:
+        Computes vector addition with an ellipsoid:
         E + b = E(q + b, Q).
 
-    Args:
-        b (np.ndarray): a vector.
-    """
+        Args:
+            b (np.ndarray): a vector.
+        """
         if b.shape != self.q.shape:
             raise ValueError(
                 "[ellReach] dimensions of b and q of the ellipsoid do not match."
@@ -112,23 +133,23 @@ class EllipsoidObj():
 
     def add(self, b: np.ndarray) -> None:
         """
-    Computes vector addition with an ellipsoid:
-        E + b = E(q + b, Q).
+        Computes vector addition with an ellipsoid:
+            E + b = E(q + b, Q).
 
-    Args:
-        b (np.ndarray): a vector.
-    """
+        Args:
+            b (np.ndarray): a vector.
+        """
         self.q = self.q + b
         self.center = self.center + b
 
     def __sub__(self, b: np.ndarray) -> EllipsoidObj:
         """
-    Computes vector subtraction from an ellipsoid:
-        E - b = E(q - b, Q).
+        Computes vector subtraction from an ellipsoid:
+            E - b = E(q - b, Q).
 
-    Args:
-        b (np.ndarray): a vector.
-    """
+        Args:
+            b (np.ndarray): a vector.
+        """
         if b.shape != self.q.shape:
             raise ValueError(
                 "[ellReach] dimensions of b and q of the ellipsoid do not match."
@@ -202,14 +223,14 @@ class EllipsoidObj():
     def obstacle_cost(self, obs: EllipsoidObj, q1: float, q2: float) -> float:
         """Computes the barrier cost given an obstacle and hyperparameters.
 
-    Args:
-        obs (EllipsoidObj): obstacle.
-        q1 (float): shape parameter.
-        q2 (float): scale parameter.
+        Args:
+            obs (EllipsoidObj): obstacle.
+            q1 (float): shape parameter.
+            q2 (float): scale parameter.
 
-    Returns:
-        float: barrier cost.
-    """
+        Returns:
+            float: barrier cost.
+        """
         # Broadcasts to (2, self.n_circ, obs.n_circ).
         d = (self.center.T[:, np.newaxis, :] - obs.center.T).T
         # Reshapes to (2, self.n_circ*obs.n_circ).
@@ -223,20 +244,21 @@ class EllipsoidObj():
                             obs: EllipsoidObj, q1: float,
                             q2: float) -> Tuple(np.ndarray, np.ndarray):
         """
-    TODO
+        TODO
 
-    Args:
-        state (np.ndarray): nominal state trajectory, of the shape (x_dim, N).
-        center_L (float): displacement of vehicle origin along the major axis
-          of ellipsoid
-        obs (EllipsoidObj): obstacle (or its FRS) represented by ellipsoid
-        q1 (float): barrier function parameters
-        q2 (float): barrier function parameters
+        Args:
+            state (np.ndarray): nominal state trajectory, of the shape
+                (x_dim, N).
+            center_L (float): displacement of vehicle origin along the major
+                axis of ellipsoid
+            obs (EllipsoidObj): obstacle (or its FRS) represented by ellipsoid
+            q1 (float): barrier function parameters
+            q2 (float): barrier function parameters
 
-    Returns:
-        np.ndarray: Jacobian of softconstraint of shape (x_dim, N)
-        np.ndarray: Hessian of softconstraint of shape (x_dim, x_dim, N)
-    """
+        Returns:
+            np.ndarray: Jacobian of softconstraint of shape (x_dim, N)
+            np.ndarray: Hessian of softconstraint of shape (x_dim, x_dim, N)
+        """
         x = state[0]
         y = state[1]
         theta = state[3]
