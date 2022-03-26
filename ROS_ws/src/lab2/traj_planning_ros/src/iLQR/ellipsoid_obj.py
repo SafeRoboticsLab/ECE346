@@ -93,6 +93,30 @@ class EllipsoidObj():
         """
         return self.q, self.Q
 
+    def rho(self, L, eps=1e-10):
+        """
+        Computes the support function of the ellipsoid E in directions specified by
+        the columns of matrix L, and boundary points X of this ellipsoid that
+        correspond to directions in L.
+        Args:
+            E (ellipsoid): an ellipsoid object.
+            L (np.ndarray): a direction matrix.
+        Returns:
+            res (np.ndarray): the values of the support function for the specified
+                ellipsoid E and directions L.
+            x (np.ndarray): boundary points of the ellipsoid E that correspond to
+                directions in L.
+        """
+        d = L.shape[1]
+        res = np.array([]).reshape((1, 0))
+        x = np.array([]).reshape((self.dim(), 0))
+        for i in range(d):
+          l = L[:, i].reshape(self.dim(), 1)
+          sr = np.maximum(np.sqrt(l.T @ self.Q @ l)[0, 0], eps)
+          res = np.hstack((res, self.q.T @ l + sr))
+          x = np.hstack((x, self.Q @ l / sr + self.q))
+        return res, x
+
     def __matmul__(self, A: np.ndarray) -> EllipsoidObj:
         """
         Multiplication of the ellipsoid by a matrix or a scalar.
