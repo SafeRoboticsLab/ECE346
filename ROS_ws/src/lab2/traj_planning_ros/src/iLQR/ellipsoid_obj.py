@@ -158,12 +158,12 @@ class EllipsoidObj():
             ellipsoid: projected ellipsoid (of lower dimension).
         """
         if not isinstance(dims, list):
-          raise ValueError("[ellReach-projection] dims must be a list.")
+            raise ValueError("[ellReach-projection] dims must be a list.")
         n = self.dim()
         m = len(dims)
         B = np.zeros((n, m))
         for i in range(m):
-          B[dims[i], i] = 1
+            B[dims[i], i] = 1
         return self @ B.T
 
     def plot(self, ax, color='r', dims=None, N=200, plot_center=True):
@@ -177,7 +177,7 @@ class EllipsoidObj():
         if dims:
             E = self.projection(dims)
         else:
-            E = self.copy()
+            E = self
         if E.dim() > 3:
             raise ValueError(
                 "[ellReach-plot] ellipsoid dimension can be 1, 2 or 3.")
