@@ -72,6 +72,26 @@ class EllipsoidObj():
         self.width_L = None
         self.width_R = None
 
+    def copy(self):
+        """
+        Creats an identical ellipsoid object.
+        """
+        return EllipsoidObj(q=self.q, Q=self.Q)
+
+    def is_degenerate(self):
+        """
+        Checks if the ellipsoid is degenerate.
+        Returns True if ellipsoid E is degenerate, False - otherwise.
+        """
+        return self.rank() < self.dim()
+
+    def is_empty(self):
+        """
+        Checks if the ellipsoid object is empty.
+        Returns True if ellipsoid E is empty, False - otherwise.
+        """
+        return self.dim() == 0
+
     def dim(self):
         """
         Returns the dimension of the ellipsoid.
@@ -111,10 +131,10 @@ class EllipsoidObj():
         res = np.array([]).reshape((1, 0))
         x = np.array([]).reshape((self.dim(), 0))
         for i in range(d):
-          l = L[:, i].reshape(self.dim(), 1)
-          sr = np.maximum(np.sqrt(l.T @ self.Q @ l)[0, 0], eps)
-          res = np.hstack((res, self.q.T @ l + sr))
-          x = np.hstack((x, self.Q @ l / sr + self.q))
+            l = L[:, i].reshape(self.dim(), 1)
+            sr = np.maximum(np.sqrt(l.T @ self.Q @ l)[0, 0], eps)
+            res = np.hstack((res, self.q.T @ l + sr))
+            x = np.hstack((x, self.Q @ l / sr + self.q))
         return res, x
 
     def __matmul__(self, A: np.ndarray) -> EllipsoidObj:
@@ -222,7 +242,7 @@ class EllipsoidObj():
         if dims:
             E = self.projection(dims)
         else:
-            E = self
+            E = self.copy()
         if E.dim() > 3:
             raise ValueError(
                 "[ellReach-plot] ellipsoid dimension can be 1, 2 or 3.")
