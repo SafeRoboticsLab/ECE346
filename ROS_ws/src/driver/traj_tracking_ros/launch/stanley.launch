@@ -2,7 +2,7 @@
     <arg name="output"            default="screen"    doc="display output to screen or log file"/>
     <arg name="TrajTopic"   default="/planning/trajectory"    doc="ROS topic for the reference trajectory"/>
     <arg name="PoseTopic"   default="/zed2/zed_node/odom"    doc="ROS topic for the pose"/>
-    <arg name="ControllerTopic"   default="/control/rc_control"    doc="ROS topic to publish"/>
+    <arg name="ControllerTopic"   default="/rc_control"    doc="ROS topic to publish"/>
     
     <node pkg="traj_tracking_ros" type="traj_tracking_node.py" name="traj_tracking_node" output="$(arg output)" args="" required="true">
         <param name="TrajTopic"           value="$(arg TrajTopic)" />

@@ -123,7 +123,7 @@ class Tracking_Stanley(object):
                  vicon_pose=False,
                  pose_topic='/zed2/zed_node/odom',
                  ref_traj_topic='/simple_trajectory_topic',
-                 controller_topic='/control/rc_control',
+                 controller_topic='/rc_control',
                  params_file='stanley.yaml'):
 
         self.vicon_pose = vicon_pose

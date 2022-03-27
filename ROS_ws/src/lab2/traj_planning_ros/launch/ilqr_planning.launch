@@ -2,7 +2,7 @@
     <arg name="output"            default="screen"    doc="display output to screen or log file"/>
     <arg name="TrajTopic"   default="/planning/trajectory"    doc="ROS topic for the reference trajectory"/>
     <arg name="PoseTopic"   default="/zed2/zed_node/odom"    doc="ROS topic for the pose"/>
-    <arg name="ControllerTopic"   default="/control/rc_control"    doc="ROS topic to publish"/>
+    <arg name="ControllerTopic"   default="/rc_control"    doc="ROS topic to publish"/>
     <arg name="TrackFile"   default="$(find traj_planning_ros)/params/outerloop_center_smooth.csv"    doc="Trajectory Center"/>
 
     
