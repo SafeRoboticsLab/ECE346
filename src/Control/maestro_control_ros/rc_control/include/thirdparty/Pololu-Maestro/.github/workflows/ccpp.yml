@@ -1,0 +1,43 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macOS-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Installing libusb (linux)
+      if: matrix.os == 'ubuntu-latest'
+      shell: bash
+      run: sudo apt-get install libusb-1.0-0-dev
+    - run: mkdir build
+    - name: Configure
+      working-directory: build
+      shell: bash
+      run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=install ..
+    - name: Build
+      working-directory: build
+      shell: bash
+      run: cmake --build . --config Release
+    - name: Pack
+      working-directory: build
+      shell: bash
+      run: cpack -G ZIP
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v2
+      with:
+        name: Maestro
+        path: build/Maestro-*.zip
+
+
+
+
+
+
+

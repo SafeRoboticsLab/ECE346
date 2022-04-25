@@ -1,0 +1,21 @@
+<launch>
+    <arg name="output"            default="screen"    doc="display output to screen or log file"/>
+    <arg name="PoseTopic"   default="/zed2/zed_node/odom"    doc="ROS topic for the pose"/>
+    <arg name="ControllerTopic"   default="/control/rc_control"    doc="ROS topic to publish"/>
+    <arg name="TrackFile"   default="$(find traj_planning_ros)/params/outerloop_center_smooth.csv"    doc="Trajectory Center"/>
+    <arg name="NameSpace"  default="nx14" doc="name space of the ros nodes"/>
+    <group ns="$(arg NameSpace)">
+        <include file="$(find rc_control)/launch/rc_control_node.launch"/>
+
+        <include file="$(find zed_wrapper)/launch/zed2.launch"/>
+
+        <node pkg="traj_planning_ros" type="traj_planning_node.py" name="traj_planning" output="$(arg output)">
+            <param name="ControllerTopic"           value="/$(arg NameSpace)$(arg ControllerTopic)" />
+            <param name="PoseTopic"           value="/$(arg NameSpace)$(arg PoseTopic)" />
+            <param name="PlanParamsFile"     value="$(find traj_planning_ros)/params/ilqr.yaml" />
+            <param name="TrackFile"     value="$(find traj_planning_ros)/params/outerloop_center_smooth.csv" />
+            <param name="ViconPose"           value="true" />
+            <param name="Solver"           value="ilqr" />
+        </node>
+    </group>
+</launch>

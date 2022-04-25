@@ -1,0 +1,5 @@
+#! /bin/sh
+HOST_IP=192.168.0.114
+export ROS_IP=$HOST_IP
+export ROS_MASTER_URI=http://$HOST_IP:11311
+export ROS_HOSTNAME=$HOST_IP
