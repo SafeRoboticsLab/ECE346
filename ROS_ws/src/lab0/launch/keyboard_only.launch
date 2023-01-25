@@ -1,0 +1,3 @@
+<launch>
+  <node name="rc_teleop_node" pkg="ece346_lab0" type="teleop_key.py" output="screen"/>
+</launch>

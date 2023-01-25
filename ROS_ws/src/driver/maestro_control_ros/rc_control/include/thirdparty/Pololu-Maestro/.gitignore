@@ -1,0 +1,17 @@
+*.vcproj*
+*.ncb*
+*.sln*
+*.suo*
+*.idb
+*.pdb
+
+GNUmakefile
+Makefile
+*.pro.user
+*~
+Thumbs.db
+.DS_Store
+.*.swp
+
+*intermediate
+*bin
