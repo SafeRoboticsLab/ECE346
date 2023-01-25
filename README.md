@@ -9,6 +9,11 @@
 
 > **ECE 346 students:** please fork this repository and work within your own forked repo (see instructions below). 
 
+## First Things First!
+Create a clone of this repo locally. **Important**: `--recurse-submodules` option is very important!
+```
+git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git 
+```
 ## Setup your machine
 One crucial component of ECE346 is ROS. Even though most of computation will be handled on our robots, it is still beneficial to set up ROS on your computer for development, testing, and visualization. Previously, ROS was only available to the Ubuntu system. However, recent developments on [RobotStack](https://robostack.github.io/) make it possible for Windows and Mac computers. Here, we provide detail [instructions](Host_Setup/RoboStack/robotstack.md) and a script to help you set it up. 
 

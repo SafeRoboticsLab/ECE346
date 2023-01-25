@@ -6,15 +6,11 @@
 
 2. Open Terminal.
 
-3. Create a clone of the repository.
+3. Go the `ECE346` folder that you have already cloned. If you have not done that, create a clone of the repository.
     ```
-    git clone https://github.com/SafeRoboticsLab/ECE346.git
+    git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git 
     ```
-    **Remember that you will also need to initialize and update your submodule by**
-    ```bash
-    cd ECE346
-    git submodule update --init --recursive
-    ```
+
 4. Rename the original ECE346 repo as upstream to fetch future lab assignments and updates
     ```
     git remote rename origin upstream
