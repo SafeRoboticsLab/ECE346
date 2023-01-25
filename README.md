@@ -31,6 +31,3 @@ Alternatively, you can remotely access the robot’s terminal through SSH, provi
 
 We highly recommand you to use [Remote Development Functionality](https://code.visualstudio.com/docs/remote/ssh) from VS Code. 
 
-
-# [Lab 2 - Forward Reachable Set](ROS_ws/src/lab2)
-Lab 2 allows students to plan trajectory that follows given path and avoids obstacles.
