@@ -1,0 +1,9 @@
+<launch>
+    <arg name="output"            default="screen"    doc="display output to screen or log file"/>
+    <arg name="message"   default="hello_world"    doc="Message to printout"/>
+    
+    <node pkg="first_pkg" type="first_node.py" name="first_node" output="$(arg output)">
+        <param name="message"           value="$(arg message)" />
+    </node>
+
+</launch>

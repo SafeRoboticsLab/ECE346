@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>first_pkg</name>
+  <version>0.1.0</version>
+  <description>Your first ros pkg</description>
+
+  <maintainer email="XXX@princeton.edu">XXX</maintainer>
+  <license>BSD</license>
+
+  <author >XXXX</author>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+</package>
