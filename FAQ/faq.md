@@ -1,5 +1,5 @@
 # Frequently Asked Questions
-## 1. *"Unable to contact my own server at [http://xxxx]"*
+## *"Unable to contact my own server at [http://xxxx]"*
 You will typically see this error on Mac OS. This is because the default ROS master is not set to localhost. To fix this, you need to run following lines to in your terminal. 
 
 ```
@@ -18,7 +18,12 @@ echo "export ROS_MASTER_URI=http://localhost:11311" >> $profile
 echo "export ROS_IP=localhost" >> $profile
 ```
 
-## 2. *OMG! My ROS is totally broken*
+
+## *Package not found*
+Very likely, you forgot to run ```source devel/setup.bash``` in your workspace.
+
+
+## *OMG! My ROS is totally broken*
 Do not panic, let us just try to delete the ROS environment and reinstall it. 
 
 First, go back to the base environment

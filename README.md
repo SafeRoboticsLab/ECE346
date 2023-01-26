@@ -10,7 +10,7 @@
 > **ECE 346 students:** please fork this repository and work within your own forked repo (see instructions below). 
 
 ## First Things First!
-Create a clone of this repo locally. **Important**: `--recurse-submodules` option is very important!
+Create a clone of this repo locally. **Important**: `--recurse-submodules` option is neccessary to get all submodules!
 ```
 git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git 
 ```
