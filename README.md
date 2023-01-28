@@ -24,14 +24,3 @@ You can simply clik **fork** button on the top of the page. However, we encourag
 We have a ROS cheat sheet for you! Check it out [here](ROScheatsheet.pdf).
 ## Frequently Asked Questions
 Please check out our [FAQ](FAQ/readme.md) page for common questions.
-
-# [Lab 0 - Introduction](ROS_ws/src/lab0)
-Lab 0 gives an introduction to ROS and the mobile robot platform used in this class.
-
-## Connect to the robot
-The robot can be used as a standalone Ubuntu computer by plugging in a keyboard, a mouse, and a monitor through an HDMI or DP cable. 
-
-Alternatively, you can remotely access the robot’s terminal through SSH, provided that both the robot and the computer are under the same network. If you are connected to the lab’s **ECE346** wifi, we provide detailed [instructions](asset/ssh.md) on how to SSH into the robot using one of the lab workstations or your own laptop.
-
-We highly recommand you to use [Remote Development Functionality](https://code.visualstudio.com/docs/remote/ssh) from VS Code. 
-
