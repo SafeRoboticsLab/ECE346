@@ -23,7 +23,7 @@ You can simply clik **fork** button on the top of the page. However, we encourag
 ## Still not comfortable with ROS?
 We have a ROS cheat sheet for you! Check it out [here](ROScheatsheet.pdf).
 ## Frequently Asked Questions
-Please check out our [FAQ](FAQ/faq.md) page for common questions.
+Please check out our [FAQ](FAQ/readme.md) page for common questions.
 
 # [Lab 0 - Introduction](ROS_ws/src/lab0)
 Lab 0 gives an introduction to ROS and the mobile robot platform used in this class.

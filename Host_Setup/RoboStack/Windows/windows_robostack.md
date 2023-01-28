@@ -61,7 +61,10 @@ Check if your X11 forwarding is working well with WSL by running an application 
 rviz
 ```
 
-## 4. Tips and tricks with WSL
+## 4. Common issues
+Check it out [here](/FAQ/readme.md)!
+
+## 5. Tips and tricks with WSL
 You can think of Ubuntu WSL2 is a native Linux distribution running on top of your Windows OS. Meaning that, you can run basically everything that will run on a Linux device, including vscode directly inside WSL. Your vscode windows will show something like this at the bottom left corner indicating that the vscode server is hosted within WSL.
 
 ![](asset/wsl-vscode.png)

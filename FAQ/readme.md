@@ -18,6 +18,12 @@ echo "export ROS_MASTER_URI=http://localhost:11311" >> $profile
 echo "export ROS_IP=localhost" >> $profile
 ```
 
+## *"Missing xcrun at /Library/Developer/CommandLineTools/usr/bin/xcrun"*
+This is a common error on Mac OS. To fix this, you need to install the Xcode Command Line Tools. You can do this by running the following command in your terminal.
+
+```
+xcode-select --install
+```
 
 ## *Package not found*
 Very likely, you forgot to run ```source devel/setup.bash``` in your workspace.
