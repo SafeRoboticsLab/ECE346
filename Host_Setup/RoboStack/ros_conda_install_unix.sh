@@ -99,7 +99,7 @@ echo -e "${BLUE}Finish Settting up RoboStack Env${NC}"
 
 conda activate ros_base
 
-mamba install compilers cmake pkg-config make ninja --yes
+mamba install compilers cmake pkg-config make ninja -c conda-forge --override-channels --yes
 
 mamba install catkin_tools --yes
 
