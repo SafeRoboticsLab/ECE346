@@ -22,7 +22,7 @@
     ```
 4. Push from your local repo to your new remote one.
     ```
-    git push -u origin Spring2022
+    git push -u origin SP2023
     ```
     
 # Push to your private repo
@@ -31,18 +31,24 @@ When woking on the lab and making changes to your code, you can push the code to
 git push origin
 ```    
 # Update your fork from public repo
-## First, commit all of your changes you have made to your private epo. Not sure about merge? It is never a bad idea to keep a copy locally before merge.
+## First, *commit all of your changes* you have made to your private epo. Not sure about merge? It is never a bad idea to keep a copy locally before merge.
 
-1. (Optional) When you want to pull changes from upstream you can first fetch the upstream remote and inspect the difference between the public repo (upstream/Spring2022) and your own repo by
+1. Create a temporary branch
     ```
-    git fetch upstream
-    git diff upstream/Spring2022 Spring2022
+    git checkout -b temp
     ```
 2. You can now merge the upstream 
     ```
-    git pull upstream Spring2022 
+    git pull upstream SP2023 
     ```
     This will create a merge commit for you. If you encounter any conflicts, please checkout this [tutorial](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts).
+3. Inspect all changes that you have made in the temporary branch, then checkout your *SP2023* branch.
+    ```
+    git checkout SP2023
+    git merge temp
+    git branch –delete temp
+    ```
+    
 
 
 
