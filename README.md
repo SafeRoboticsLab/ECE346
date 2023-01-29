@@ -21,7 +21,7 @@ One crucial component of ECE346 is ROS. Even though most of computation will be 
 You can simply clik **fork** button on the top of the page. However, we encourage each group to create a _private_ fork to host your code, and make a clone on your group's robot, by following these [instructions](asset/private_fork.md). Please include your group number in the name of your repo.
 
 ## Still not comfortable with ROS?
-We have a ROS cheat sheet for you! Check it out [here](ROScheatsheet.pdf).
+We have a ROS cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
 ## Frequently Asked Questions
 Please check out our [FAQ](FAQ/readme.md) page for common questions.
 
