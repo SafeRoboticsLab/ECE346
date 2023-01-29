@@ -16,3 +16,27 @@
     - Set the parameters from yaml file
 6. Write a simple P controller to reach a goal
 
+## Get Started
+1. Build the workspace from [`ROS_Core/py_ws`](../../..)
+```
+catkin_make
+```
+2. Source the workspace
+```
+source devel/setup.bash
+```
+if you are using zsh, use
+```
+source devel/setup.zsh
+```
+3. Launch the ros packages and rviz visualization
+```
+roslaunch lab0 lab0_simulation.launch
+```
+Click the **2D Nav Goal** button on the left panel of RViz, and click on the map to set the goal. You should see a green triangle on the map, which is the goal. At the meanwhile, in the terminal you should also see
+```
+[INFO] [xxxx.xxx]: Received a new goal [nan, nan]
+```
+
+4. Write your code in [`scripts/controller/pure_pursuit.py`](scripts/controller/pure_pursuit.py) and finish all TODOs. Repeat step 3 to see if your controller works.
+![](assets/example.png)
