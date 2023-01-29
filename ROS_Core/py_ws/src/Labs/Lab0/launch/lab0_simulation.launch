@@ -1,0 +1,25 @@
+<launch>
+    <arg name="output"            default="screen"    doc="display output to screen or log file"/>
+    <arg name="odom_topic"   default="/sim_pose"    doc="ROS topic for the pose"/>
+    <arg name="control_topic"   default="/control"    doc="ROS topic for control input"/>
+    <arg name="pub_rate"     default="30"        doc="rate at which to publish the pose"/>
+    <arg name="init_x"       default="0"        doc="initial x position"/>
+    <arg name="init_y"       default="0"        doc="initial y position"/>
+    <arg name="init_yaw"       default="0"        doc="initial z position"/>
+
+    <include file="$(find lab0)/launch/controller.launch" >
+        <arg name="odom_topic" value="$(arg odom_topic)" />
+        <arg name="control_topic" value="$(arg control_topic)" />
+        <arg name="simulation" value="true" />
+    </include>
+
+    <include file="$(find racecar_interface)/launch/simulation.launch" >
+        <arg name="odom_topic"           value="$(arg odom_topic)" />
+        <arg name="control_topic"        value="$(arg control_topic)" />
+        <arg name="pub_rate"          value="$(arg pub_rate)" />
+        <arg name="init_x"            value="$(arg init_x)" />
+        <arg name="init_y"            value="$(arg init_y)" />
+        <arg name="init_yaw"          value="$(arg init_yaw)" />
+    </include>
+
+</launch>

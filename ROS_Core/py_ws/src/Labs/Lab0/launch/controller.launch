@@ -1,0 +1,15 @@
+<launch>
+    <arg name="output"             default="screen"    doc="display output to screen or log file"/>
+    <arg name="odom_topic"         default="/slam_pose"    doc="ROS topic for the pose"/>
+    <arg name="control_topic"      default="/control/servo_control"    doc="ROS topic to servo control"/>
+    <arg name="simulation"         default="true"        doc="Boolean to determine if we are running in simulation or real robot"/>
+
+    <rosparam command="load" file="$(find lab0)/configs/config.yaml" />
+
+    <node pkg="lab0" type="lab0_node.py" name="lab0" output="$(arg output)">
+        <param name="odom_topic"           value="$(arg odom_topic)" />
+        <param name="control_topic"        value="$(arg control_topic)" />
+        <param name="simulation"           value="$(arg simulation)" />
+    </node>
+
+</launch>

@@ -13,3 +13,6 @@
 [submodule "ROS_Core/py_ws/src/Utility/PrincetonRaceCar_Interface"]
 	path = ROS_Core/py_ws/src/Utility/Interface
 	url = https://github.com/SafeRoboticsLab/PrincetonRaceCar_Interface.git
+[submodule "ROS_Core/py_ws/src/Utility/Custom_Msgs"]
+	path = ROS_Core/py_ws/src/Utility/Custom_Msgs
+	url = https://github.com/SafeRoboticsLab/PrincetonRaceCar_msgs.git
