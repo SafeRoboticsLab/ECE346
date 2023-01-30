@@ -30,14 +30,14 @@ Very likely, you forgot to run ```source devel/setup.bash``` in your workspace.
 
 
 ## *OMG! My ROS is totally broken*
-Do not panic, let us just try to delete the ROS environment and reinstall it. 
+Do not panic, let's just try to delete the ROS environment and reinstall it. 
 
-First, go back to the base environment
+First, go back to the base environment.
 ```
 conda activate base
 ```
-Then, delete the ROS environment
+Then, delete the ROS environment.
 ```
 conda env remove -n ros_base
 ```
-Finally, reinstall ROS followin this [tutorial](Host_Setup/RoboStack/robotstack.md)
+Finally, reinstall ROS following this [tutorial](Host_Setup/RoboStack/robotstack.md).
