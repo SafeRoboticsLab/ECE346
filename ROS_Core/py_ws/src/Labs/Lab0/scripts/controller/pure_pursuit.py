@@ -3,8 +3,6 @@
 import threading
 import rospy
 import numpy as np
-import os
-
 from .utils import RealtimeBuffer, get_ros_param, State2D, GeneratePwm
 
 from racecar_msgs.msg import ServoMsg 
@@ -72,6 +70,7 @@ class PurePursuitController():
         # 1. Create a subscriber for the Odometry message with callback function self.odometry_callback
         
         ########################### END OF TODO 1#################################
+        
     def odometry_callback(self, odom_msg):
         """
         Subscriber callback function of the robot pose
