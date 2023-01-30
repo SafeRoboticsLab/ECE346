@@ -1,18 +1,9 @@
 [submodule "ROS_ws/src/driver/zed-ros-wrapper"]
 	path = ROS_ws/src/driver/zed-ros-wrapper
 	url = https://github.com/SafeRoboticsLab/zed-ros-wrapper.git
-[submodule "ROS_Core/cpp_ws/Maestro-Controller-ROS"]
-	path = ROS_Core/cpp_ws/Maestro-Controller-ROS
-	url = https://github.com/SafeRoboticsLab/Maestro-Controller-ROS.git
-[submodule "ROS_Core/cpp_ws/AprilTagSLAM_ROS"]
-	path = ROS_Core/cpp_ws/AprilTagSLAM_ROS
-	url = https://github.com/SafeRoboticsLab/AprilTagSLAM_ROS.git
-[submodule "ROS_Core/cpp_ws/apriltag"]
-	path = ROS_Core/cpp_ws/apriltag
-	url = https://github.com/AprilRobotics/apriltag.git
 [submodule "ROS_Core/py_ws/src/Utility/PrincetonRaceCar_Interface"]
-	path = ROS_Core/py_ws/src/Utility/Interface
+	path = ROS_Core/src/Utility/Interface
 	url = https://github.com/SafeRoboticsLab/PrincetonRaceCar_Interface.git
 [submodule "ROS_Core/py_ws/src/Utility/Custom_Msgs"]
-	path = ROS_Core/py_ws/src/Utility/Custom_Msgs
+	path = ROS_Core/src/Utility/Custom_Msgs
 	url = https://github.com/SafeRoboticsLab/PrincetonRaceCar_msgs.git
