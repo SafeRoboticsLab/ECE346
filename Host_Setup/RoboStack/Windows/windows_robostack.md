@@ -28,7 +28,7 @@ You can list your installed Linux distributions and check the version of WSL eac
 ![](asset/wsl-l-v-command.png)
 
 ### Upgrade version from WSL1 to WSL2
-If your Ubuntu Version is 2 you can skip this step. We will be using WSL2 as it provides better support for GUI applications and runs generally faster than WSL1. If your Windows version met the prerequisite, and that you are installing your Linux distribution with `wsl --install` command, then WSL2 is used by default. Move to the next step if you are already using version 2 of WSL.
+If your Ubuntu Version is 2, you can skip this step. We will be using WSL2 as it provides better support for GUI applications and runs generally faster than WSL1. If your Windows version met the prerequisite, and that you are installing your Linux distribution with `wsl --install` command, then WSL2 is used by default. Move to the next step if you are already using version 2 of WSL.
 
 If you see that your installed Linux distribution is running WSL1, run the following command to update from WSL1 to WSL2 for that distribution:
 ```
