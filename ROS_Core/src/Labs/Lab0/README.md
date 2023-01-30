@@ -17,7 +17,7 @@
 6. Write a simple P controller to reach a goal
 
 ## Get Started
-1. Build the workspace from [`ROS_Core/py_ws`](../../..)
+1. Build the workspace from [`ROS_Core`](../..)
 ```
 catkin_make
 ```
