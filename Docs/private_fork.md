@@ -18,7 +18,7 @@
     ```
 5. Set your private repo as the new origin
     ```
-    git remote add origin PRIVATE_REPO_URL
+    git remote add origin <URL of your private Repo>
     ```
 4. Push from your local repo to your new remote one.
     ```
