@@ -33,7 +33,7 @@ source devel/setup.zsh
 ```
 roslaunch lab0 lab0_simulation.launch
 ```
-Click the **2D Nav Goal** button on the left panel of RViz, and click on the map to set the goal. You should see a green triangle on the map, representing the chosen goal. At the same time, in the terminal you should also see:
+Click the **2D Nav Goal** button on the top panel of RViz, and click on the map to set the goal. You should see a green triangle on the map, representing the chosen goal. At the same time, in the terminal you should also see:
 ```
 [INFO] [xxxx.xxx]: Received a new goal [nan, nan]
 ```
