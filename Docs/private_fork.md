@@ -19,7 +19,7 @@
     ```
 5. Set your freshly created private repo as the new `origin` using the URL assigned to it on GitHub.
     ```
-    git remote add origin <YOUR_PRIVATE_REPO_URL>
+    git remote add origin <URL of your private Repo>
     ```
 4. Push the `SP2023` branch from your local clone repo to your new remote one, which has now become a private fork of `ECE346`.
     ```
