@@ -169,6 +169,7 @@ class PurePursuitController():
                     # 4. Otherwise, 
                     #   - apply a pure pursuit controller for steering by assuming 
                     #       the reference path a straight line between the car and the goal
+                    #   - Hint: look-ahead distance l_d is min(self.ld_max, dis2goal)
                     #   - set the reference_velocity to the minimum of vel_max and (dis2goal-self.stop_distance)
                     #   Detail Explanation: 
                     #   https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/PurePursuit.html
