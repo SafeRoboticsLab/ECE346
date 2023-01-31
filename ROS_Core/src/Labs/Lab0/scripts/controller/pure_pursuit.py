@@ -11,7 +11,7 @@ from geometry_msgs.msg import PoseStamped
 
 class PurePursuitController():
     '''
-    Main class for the Receding Horizon trajectory planner
+    Main class for the controller
     '''
 
     def __init__(self):
@@ -57,8 +57,14 @@ class PurePursuitController():
         '''
         This function sets up the publisher for the trajectory
         '''
-        # Publisher for the control command
-        self.control_pub = rospy.Publisher(self.control_topic, ServoMsg, queue_size=1)
+        ################## TODO: 1. Set up a publisher for the ServoMsg message###################
+        # Create a publiser - self.control_pub:
+        #   - subscribes to the topic <self.control_topic>
+        #   - has message type <ServoMsg> (racecar_msgs.msg.Odometry) 
+        #   - with queue size 1
+        self.control_pub = None # TO BE FILLED
+        ########################### END OF TODO 1#################################
+        
             
     def setup_subscriber(self):
         '''
@@ -66,16 +72,22 @@ class PurePursuitController():
         '''
         # This set up a subscriber for the goal you click on the rviz
         self.goal_sub = rospy.Subscriber('/move_base_simple/goal', PoseStamped, self.goal_callback, queue_size=1)
-        ########################## TODO: 1. Set up a subscriber for the odometry message###################
-        # 1. Create a subscriber for the Odometry message with callback function self.odometry_callback
+        ################## TODO: 2. Set up a subscriber for the odometry message###################
+        # Create a subscriber:
+        #   - subscribes to the topic <self.odom_topic>
+        #   - has message type <Odometry> (nav_msgs.msg.Odometry) 
+        #   - with callback function <self.odometry_callback>, which has already been implemented
+        #   - with queue size 1
+        ########################### END OF TODO 2#################################
         
-        ########################### END OF TODO 1#################################
-        
-    def odometry_callback(self, odom_msg):
+    def odometry_callback(self, odom_msg: Odometry):
         """
         Subscriber callback function of the robot pose
+        
+        Parameters:
+            odom_msg: Odometry message with type nav_msgs.msg.Odometry
         """
-        # Retrive state needed for planning from the odometry message
+        # Retrieve state needed for planning from the odometry message
         # [x, y, v, w, delta]
         state_cur = State2D(odom_msg = odom_msg)
 
@@ -83,16 +95,23 @@ class PurePursuitController():
         # Planning thread will read from the buffer
         self.state_buffer.writeFromNonRT(state_cur)
 
-    def goal_callback(self, goal_msg):
-        ########################## TODO: 2. subscribe the goal ###################
-        # 1. Retrieve the goal from the goal message 
+    def goal_callback(self, goal_msg: PoseStamped):
+        """
+        Subscriber callback function of the robot goal point
+        
+        Parameters:
+            goal_msg: goal message with type geometry_msgs.msg.PoseStamped
+        """
+        ############## TODO: 3. Fill in the subscriber callback function ###################
+        # 1. Inspect the data structure of the goal message <geometry_msgs.msg.PoseStamped>
+        # 2. Retrieve the goal from the goal message 
         #   and create a 3-dim numpy array [x,y,1]
-        # 2. add the goal to the buffer (self.goal_buffer)
+        # 3. add the goal to the buffer (self.goal_buffer)
         
         goal_x = np.nan # TO BE FILLED
         goal_y = np.nan # TO BE FILLED
         
-        ########################### END OF TODO 2 #################################
+        ########################### END OF TODO 3 #################################
         rospy.loginfo(f"Received a new goal [{np.round(goal_x, 3)}, {np.round(goal_y,3)}]")
         
     def publish_control(self, accel, steer, state):
@@ -106,13 +125,13 @@ class PurePursuitController():
             # the throttle and steering angle needs to convert to PWM signal
             throttle, steer = self.pwm_converter.convert(accel, steer, state)
             
-        ########################## TODO: 3. Publish the control ###################
+        ########################## TODO: 4. Publish the control ###################
         # 1. Create an empty servo message
         # 2. Set the header time to the current time
         # 3. Set the throttle and steering angle to the servo message
         # 4. Publish the servo message
         
-        ########################### END OF TODO 3 #################################
+        ########################### END OF TODO 4 #################################
 
     def planning_thread(self):
         rospy.loginfo("Planning thread started waiting for ROS service calls...")
@@ -134,7 +153,7 @@ class PurePursuitController():
                     dis2goal = np.sqrt(goal_robot[0]**2 + goal_robot[1]**2)
 
                 
-                    ########################## TODO: 4. Finish the pure pursuit controlle ###################
+                    ########################## TODO: 5. Finish the pure pursuit controlle ###################
                     # 1. Check if the goal is close enough
                     #
                     # 2. if that is the case, stop the car by apply a negative acceleration (eg: -1 m/s^2)
@@ -153,7 +172,7 @@ class PurePursuitController():
                     
                     accel = 0 # TO BE FILLED 
                     steer = 0 # TO BE FILLED
-                    ########################### END OF TODO 4 ###########################################
+                    ########################### END OF TODO 5 ###########################################
                     
                     # publish the control
                     self.publish_control(accel, steer, state_cur)

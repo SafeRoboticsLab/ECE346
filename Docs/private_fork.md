@@ -49,5 +49,7 @@ git push origin
     git checkout SP2023
     git merge temp
     git branch –delete temp
+    # Update submodules in case there are any
+    git submodule update --recursive
     ```
 Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 and pull directly into your local `SP2023` branch.
