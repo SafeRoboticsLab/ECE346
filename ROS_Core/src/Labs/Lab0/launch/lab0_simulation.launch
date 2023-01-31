@@ -1,8 +1,8 @@
 <launch>
     <!-- This section define arguments that can be passed into this launch file -->
     <arg name="output"          default="screen"        doc="display output to screen or log file"/>
-    <arg name="odom_topic"      default="/sim_pose"     doc="ROS topic for the pose"/>
-    <arg name="control_topic"   default="/control"      doc="ROS topic for control input"/>
+    <arg name="odom_topic"      default="/Simulation/Pose"     doc="ROS topic for the pose"/>
+    <arg name="control_topic"   default="/Control"      doc="ROS topic for control input"/>
     <arg name="pub_rate"        default="30"            doc="rate at which to publish the pose"/>
     <arg name="init_x"          default="0"             doc="initial x position"/>
     <arg name="init_y"          default="0"             doc="initial y position"/>
