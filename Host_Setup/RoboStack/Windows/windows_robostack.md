@@ -20,15 +20,19 @@ Enter the `wsl --install` command with flag `-d` to choose your distribution. We
 wsl --install -d Ubuntu-20.04
 ```
 ### Set up your Linux user info
-Once Ubuntu is installed, you will need to create a user account and a password. Once everything is done, restart your device. The first time you launch a newly installed Linux distribution, a console window will open and you'll be asked to wait for files to de-compress and be stored on your machine. All future launches should take less than a second.
+Once Ubuntu is installed, a screen will pop up and ask you for your UNIX username and password. Enter a username and password for this Ubuntu distribution. 
+
+Your Ubuntu is now installed. You can close the Windows Command Prompt now.
 
 ### Check to see if WSL and Ubuntu is installed correctly
-You can list your installed Linux distributions and check the version of WSL each is set to by entering the command `wsl -l -v` in PowerShell or Windows Command Prompt.
+Open a new Windows Command Prompt (`Windows + R`, then type in `cmd`). List your installed Linux distributions and check the version of WSL each is set to by entering the command `wsl -l -v`.
 
 ![](asset/wsl-l-v-command.png)
 
-### (Optional) If your WSL's version is 1, upgrade to WSL2
-If your Ubuntu Version is 2, you can skip this step. We will be using WSL2 as it provides better support for GUI applications and runs generally faster than WSL1. If your Windows version met the prerequisite, and that you are installing your Linux distribution with `wsl --install` command, then WSL2 is used by default. Move to the next step if you are already using version 2 of WSL.
+If your `VERSION` of Ubuntu is 2 instead of 1, you can skip the next step.
+
+### Upgrade version from WSL1 to WSL2
+We will be using WSL2 as it provides better support for GUI applications and runs generally faster than WSL1. If your Windows version met the prerequisite, and that you are installing your Linux distribution with `wsl --install` command, then WSL2 is used by default. Move to the next step if you are already using version 2 of WSL.
 
 If you see that your installed Linux distribution is running WSL1, run the following command to update from WSL1 to WSL2 for that distribution:
 ```
@@ -40,9 +44,8 @@ Example `wsl --set-version Ubuntu-20.04 2` will set your Ubuntu 20.04 distributi
 In your Windows Command Prompt, enter either `wsl` or `bash`, your Ubuntu CLI will be launched.
 
 ![](asset/enter-wsl.png)
-Now that you have installed an Ubuntu distribution on your Windows device, we can install everything else using the install script for Linux devices. 
 
-## 2. Install Robostack
+## 2. Install RoboStack
 
 Let us first clone a local repo in your WSL under your favorite directory
 ```
@@ -62,11 +65,6 @@ chmod +x ros_conda_install_unix.sh
 
 Then run ```roscore``` to start the ROS master. If everything works, you will seee
 ![](asset/ros_core_output.png)
-
-Check if your X11 forwarding is working well with WSL by running an application with GUI interface. As we have installed RoboStack, let's **Open another terminal** then run *rviz*
-```
-rviz
-```
 
 ## 4. Common issues
 Check it out [here](/FAQ/readme.md)!
