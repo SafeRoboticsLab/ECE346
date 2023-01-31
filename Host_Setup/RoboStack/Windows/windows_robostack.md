@@ -58,12 +58,12 @@ chmod +x ros_conda_install_unix.sh
 ```
 
 ## 3. Test it out
-Open a new terminal, and run activate your ROS environment by ```conda activate ros_base```.
+**Open a new terminal**, and run activate your ROS environment by ```conda activate ros_base```.
 
 Then run ```roscore``` to start the ROS master. If everything works, you will seee
 ![](asset/ros_core_output.png)
 
-Check if your X11 forwarding is working well with WSL by running an application with GUI interface. As we have installed RoboStack, let's run rviz
+Check if your X11 forwarding is working well with WSL by running an application with GUI interface. As we have installed RoboStack, let's **Open another terminal** then run *rviz*
 ```
 rviz
 ```
