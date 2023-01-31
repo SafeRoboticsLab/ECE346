@@ -27,7 +27,7 @@ You can list your installed Linux distributions and check the version of WSL eac
 
 ![](asset/wsl-l-v-command.png)
 
-### Upgrade version from WSL1 to WSL2
+### (Optional) If your WSL's version is 1, upgrade to WSL2
 If your Ubuntu Version is 2, you can skip this step. We will be using WSL2 as it provides better support for GUI applications and runs generally faster than WSL1. If your Windows version met the prerequisite, and that you are installing your Linux distribution with `wsl --install` command, then WSL2 is used by default. Move to the next step if you are already using version 2 of WSL.
 
 If you see that your installed Linux distribution is running WSL1, run the following command to update from WSL1 to WSL2 for that distribution:
@@ -40,12 +40,19 @@ Example `wsl --set-version Ubuntu-20.04 2` will set your Ubuntu 20.04 distributi
 In your Windows Command Prompt, enter either `wsl` or `bash`, your Ubuntu CLI will be launched.
 
 ![](asset/enter-wsl.png)
-
-## 2. Install Robostack
 Now that you have installed an Ubuntu distribution on your Windows device, we can install everything else using the install script for Linux devices. 
 
-Enter your Ubuntu dist, navigate to `Host_Setup/RoboStack` then run:
+## 2. Install Robostack
+
+Let us first clone a local repo in your WSL under your favorite directory
 ```
+cd <some directory. eg: ~>
+git clone --recurse-submodules <URL of your forked repo>
+```
+
+Navigate to `Host_Setup/RoboStack` then run:
+```
+cd <Path of your repo>/Host_Setup/RoboStack
 chmod +x ros_conda_install_unix.sh
 ./ros_conda_install_unix.sh
 ```
