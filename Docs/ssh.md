@@ -65,7 +65,7 @@ Running X11 forwarding on Windows can be a bit tricky. We will be using a third 
 You can go to the following link to [download Xming for your computer](https://sourceforge.net/projects/xming/files/latest/download).
 
 Once downloaded, double-click on the **.exe** file to install Xming. Since this is your personal computer, you are able to install Xming to **C:/** drive. Press *Next* for all the options and you have successfully installed Xming on your personal Windows computer.
-![image info](assets/Figures/ssh/../../../Figures/ssh/ssh-windows-xming-personal-1.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-personal-1.png)
 
 #### Install PuTTY for personal Windows computer
 You can install PuTTY by going to [PuTTY download page](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) and choose the correct *Package files* from the package list.
@@ -77,28 +77,28 @@ Once you have already installed Xming and PuTTY, first run Xming as your X11 ser
 
 Check if X11 server is successfully running by checking if there is a Xming logo on your taskbar.
 
-![image info](assets/Figures/ssh/../../../Figures/ssh/ssh-windows-xming-6.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-6.png)
 
 Then open PuTTY by pressing *Windows* key, type ```PuTTY``` and hit *Enter*.
 
 Manually enable X11 forward in PuTTY by going to *Connection*&rarr;*SSH*&rarr;*X11*&rarr;*X11 forwarding* and toggle the *Enable X11 forwarding*.
-![image info](asset/Figures/ssh/../../../Figures/ssh/ssh-windows-putty-2.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-2.png)
 
 Finally go to *Session*, on your right hand side, input the Host Name following the format ```nxXX@192.168.0.1XX``` with ```XX``` is the ID of your robot. Leave everything else unchanged. You can also save all the previous steps to a session settings by using the *Load, save or delete a stored session* part of PuTTY right below where you are editing.
 
-![image info](asset/Figures/../../Figures/ssh/ssh-windows-putty-3.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-3.png)
 
 PuTTY will then attempt to connect to the robot using the aforementioned information. If the process is successful, PuTTY will then ask for the password of the robot, enter ```nvidia``` and then press *Enter*.
 
-![image info](asset/Figures/../../Figures/ssh/ssh-windows-putty-4.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-4.png)
 
 If you see the terminal of your robot, as shown in this figure, with the command line ```nxXX@nxXX-desktop:~$```, you have successfully SSH to your robot using PuTTY.
 
-![image info](asset/Figures/../../Figures/ssh/ssh-windows-putty-5.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-5.png)
 
 Enter ```xclock``` in the terminal and hit *Enter*, do you see a clock showing on another window?
 
-![image info](asset/Figures/../../Figures/ssh/ssh-windows-putty-6.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-6.png)
 
 If the clock is shown, congratulations, you have successfully run PuTTY and Xming on your Windows device.
 
@@ -124,7 +124,7 @@ For **Linux** computer, simply run the same command with the addition of flag ``
 ssh -X nxXX@192.168.0.1XX
 ```
 
-![image info](asset/Figures/../../Figures/ssh/ssh-ubuntu.png)
+![image info](/asset/Figures/ssh/ssh-ubuntu.png)
 
 For **Mac** computer, first you have to install [XQuartz](https://www.xquartz.org/).
 
@@ -135,11 +135,11 @@ ssh -X nxXX@192.168.0.1XX
 
 If successfully connect, you should expect to see something like this on your terminal:
 
-![image info](asset/Figures/../../Figures/ssh/ssh-ubuntu-2.png)
+![image info](/asset/Figures/ssh/ssh-ubuntu-2.png)
 
 You can check if X11 forwarding is working correctly by typing in the terminal ```xclock```. If there is a clock open up on another window, X11 forwarding is correctly configured and running.
 
-![image info](asset/Figures/../../Figures/ssh/ssh-ubuntu-3.png)
+![image info](/asset/Figures/ssh/ssh-ubuntu-3.png)
 
 ## Connect from computer workstation in lab
 If you are using computer workstation in the lab, you can connect to the robot using SSH through either **PowerShell** or default **Windows terminal**.
@@ -164,72 +164,72 @@ Once you have had **H:/** drive shown on your computer workstation, you can go t
 
 Once downloaded, double-click on the **.exe** file to install Xming:
 
-![image info](asset/../Figures/ssh/ssh-windows-xming-1.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-1.png)
 
 Choose *H:\ClusterDesktop\Xming* to install Xming:
 
-![image info](asset/../Figures/ssh/ssh-windows-xming-2.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-2.png)
 
 Press *Next* for all the options.
 
-![image info](asset/../Figures/ssh/ssh-windows-xming-3.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-3.png)
 
 At the last step, you will see several errors on unable to create register keys, remember to press **Ignore** for all of them.
 
-![image info](asset/../Figures/ssh/ssh-windows-xming-4.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-4.png)
 
 Then you will have successfully installed Xming for your compute workstation.
 
-![image info](asset/../Figures/ssh/ssh-windows-xming-5.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-5.png)
 
 #### Install PuTTY for computer workstation
 You can install PuTTY by going to [PuTTY download page](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) and go down to session **Alternative binary files**. There you can find the correct **putty.zip**. The computer workstation in the lab is **64-bit x86**.
 
 Once downloaded, extract the **.zip** file. You can either move the folder to **H:/ClusterDesktop/putty** or leave it in **H:/ClusterDownloads/putty**
 
-![image info](asset/../Figures/ssh/ssh-windows-putty-1.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-1.png)
 
 #### Establish SSH connection with X11 forwarding
 Once you have already installed Xming and PuTTY, first run Xming as your X11 server. You can check to see if Xming server is running by looking at the taskbar and find Xming logo
 
-![image info](assets/Figures/ssh/../../../Figures/ssh/ssh-windows-xming-6.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-6.png)
 
 In case Xming does not start by itself, go to *H:/ClusterDesktop/Xming/* and run *XLaunch*.
 
-![image info](assets/Figures/ssh/../../../Figures/ssh/ssh-windows-xming-7.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-7.png)
 
 Choose *Multiple windows* and press *Next*
 
-![image info](assets/Figures/ssh/../../../Figures/ssh/ssh-windows-xming-8.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-8.png)
 
 Choose *Start no client* and press *Next*
 
-![image info](assets/Figures/ssh/../../../Figures/ssh/ssh-windows-xming-9.png)
+![image info](/asset/Figures/ssh/ssh-windows-xming-9.png)
 
 Check the Taskbar again to see if Xming is now running.
 
 Then open PuTTY by going to the *PuTTY* folder and double-click the *PUTTY* application.
 
-![image info](asset/../Figures/ssh/ssh-windows-putty-1.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-1.png)
 
 Manually enable X11 forward in PuTTY by going to *Connection*&rarr;*SSH*&rarr;*X11*&rarr;*X11 forwarding* and toggle the *Enable X11 forwarding*.
-![image info](asset/Figures/ssh/../../../Figures/ssh/ssh-windows-putty-2.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-2.png)
 
 Finally go to *Session*, on your right hand side, input the Host Name following the format ```nxXX@192.168.0.1XX``` with ```XX``` is the ID of your robot. Leave everything else unchanged. You can also save all the previous steps to a session settings by using the *Load, save or delete a stored session* part of PuTTY right below where you are editing.
 
-![image info](asset/Figures/../../Figures/ssh/ssh-windows-putty-3.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-3.png)
 
 PuTTY will then attempt to connect to the robot using the aforementioned information. If the process is successful, PuTTY will then ask for the password of the robot, enter ```nvidia``` and then press *Enter*.
 
-![image info](asset/Figures/../../Figures/ssh/ssh-windows-putty-4.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-4.png)
 
 If you see the terminal of your robot, as shown in this figure, with the command line ```nxXX@nxXX-desktop:~$```, you have successfully SSH to your robot using PuTTY.
 
-![image info](asset/Figures/../../Figures/ssh/ssh-windows-putty-5.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-5.png)
 
 Enter ```xclock``` in the terminal and hit *Enter*, do you see a clock showing on another window?
 
-![image info](asset/Figures/../../Figures/ssh/ssh-windows-putty-6.png)
+![image info](/asset/Figures/ssh/ssh-windows-putty-6.png)
 
 If the clock is shown, congratulations, you have successfully run PuTTY and Xming on your Windows device.
 
