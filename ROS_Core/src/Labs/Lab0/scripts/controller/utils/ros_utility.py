@@ -5,6 +5,11 @@ from tf.transformations import quaternion_from_euler
 def get_ros_param(param_name, default):
     '''
     Read a parameter from the ROS parameter server. If the parameter does not exist, return the default value.
+    Args:
+        param_name: string, name of the parameter
+        default: default value
+    Return:
+        value of the parameter
     '''
     if rospy.has_param(param_name):
         return rospy.get_param(param_name)

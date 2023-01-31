@@ -104,6 +104,8 @@ class PurePursuitController():
         """
         ############## TODO: 3. Fill in the subscriber callback function ###################
         # 1. Inspect the data structure of the goal message <geometry_msgs.msg.PoseStamped>
+        #   Hint: check the message data structure using the command
+        #       rosmsg show geometry_msgs/PoseStamped
         # 2. Retrieve the goal from the goal message 
         #   and create a 3-dim numpy array [x,y,1]
         # 3. add the goal to the buffer (self.goal_buffer)
@@ -125,8 +127,10 @@ class PurePursuitController():
             # the throttle and steering angle needs to convert to PWM signal
             throttle, steer = self.pwm_converter.convert(accel, steer, state)
             
-        ########################## TODO: 4. Publish the control ###################
-        # 1. Create an empty servo message
+        ########################## TODO: 4. Construct and publish a ROS message ###################
+        # 1. Create an empty ServoMsg message
+        #   Hint: check the message data structure using the command
+        #       rosmsg show racecar_msgs/ServoMsg
         # 2. Set the header time to the current time
         # 3. Set the throttle and steering angle to the servo message
         # 4. Publish the servo message
@@ -162,13 +166,15 @@ class PurePursuitController():
                     # 3. If the target is behind the car, apply maximum steering angle 
                     #   and set the reference_velocity to vel_max
                     # 
-                    # 4. Otherwise, apply a pure pursuit controller for steering by assuming 
-                    #   the reference path a straight line between the car and the goal
-                    #   set the reference_velocity to the minimum of vel_max and (dis2goal-self.stop_distance)
+                    # 4. Otherwise, 
+                    #   - apply a pure pursuit controller for steering by assuming 
+                    #       the reference path a straight line between the car and the goal
+                    #   - set the reference_velocity to the minimum of vel_max and (dis2goal-self.stop_distance)
                     #   Detail Explanation: 
                     #   https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/PurePursuit.html
                     #
-                    # 5. clip the steering angle and apply the simple proportional controller for the acceleration
+                    # 5. clip the steering angle
+                    # 6. apply the simple proportional controller for the acceleration to track the reference_velocity
                     
                     accel = 0 # TO BE FILLED 
                     steer = 0 # TO BE FILLED
