@@ -10,7 +10,7 @@
     - Run the SLAM and controller nodes.
     - Play around with RViz visualization and the QRT control panel.
 4. Learn basic ROS sub/pub:
-    - Subscribe to Odom topic and publish control command.
+    - Subscribe to Odometry topic and publish control command.
 5. Learn ROS parameter server:
     - Set the parameters from launch file and command line.
     - Set the parameters from yaml file.
