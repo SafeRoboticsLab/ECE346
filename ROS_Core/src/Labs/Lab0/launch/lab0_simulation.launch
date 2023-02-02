@@ -19,7 +19,7 @@
         <arg name="init_x"               value="$(arg init_x)" />
         <arg name="init_y"               value="$(arg init_y)" />
         <arg name="init_yaw"             value="$(arg init_yaw)" />
-        <arg name="launch_map"           value="false" />
+        <arg name="launch_map"           value="true" />
     </include>
 
     <!-- This section start a node -->
