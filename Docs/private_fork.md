@@ -17,7 +17,7 @@
     git remote rename origin upstream
     git remote set-url --push upstream DISABLE
     ```
-5. Set your freshly created private repo as the new `origin` using the URL assigned to it on GitHub.
+5. Set your freshly created private repo as the new `origin` using the URL assigned to it on GitHub. The URL of your private repo can be found on the main page of your GitHub repository (online).  After you navigate to the main page of your GitHub repo, select the green <>Code icon.  Under the Clone category, select SSH and copy this URL.  (NOTE: At this point, you should have already setup your GitHub SSH Key.  If you didn't, this step will not work.)
     ```
     git remote add origin <URL of your private Repo>
     ```
