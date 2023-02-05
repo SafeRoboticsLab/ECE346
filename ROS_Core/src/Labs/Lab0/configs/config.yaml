@@ -1,4 +1,4 @@
-throttle_gain: 1
+throttle_gain: 2
 ld_max: 2  # max look ahead distance in meter
 max_steer: 0.35  # max steering angle in radians
 max_vel: 0.5  # max velocity in m/s
@@ -6,5 +6,5 @@ stop_distance: 0.2  # distance to stop at in m
 wheel_base: 0.257  # wheelbase of the truck in m
 
 ##### Following parameters are for truck's low level controller, we set a threshold for safety purpose #####
-max_throttle: 0.2  # max pwm value for throttle (for safety reasons)
+max_throttle: 0.3  # max pwm value for throttle (for safety reasons)
 min_throttle: -0.3 # min pwm value for throttle (for safety reasons)
