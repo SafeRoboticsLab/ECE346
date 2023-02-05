@@ -133,7 +133,7 @@ if [[ $OS == 'Darwin' ]]; then
     pip install osx_arm/pyspline-1.5.2-py3-none-any.whl
   elif [[ $ARCH == 'x86_64' ]]; then  
     echo -e "${GREEN} You are using Mac OS with X86${NC}"
-    # pip install osx/pyspline-1.5.2-py3-none-any.whl
+    pip install osx/pyspline-1.5.2-py3-none-any.whl
   else
     echo -e "${RED} Unrecognized arch type, Mac OS with ${ARCH}. Cannot Install PySpline, Please compile from source${NC}"
     exit 1
