@@ -1,0 +1,23 @@
+<launch>
+    <arg name="output"            default="screen"         doc="display output to screen or log file"/>
+    <arg name="odom_topic"        default="/SLAM/Pose"     doc="ROS topic for the pose"/>
+    <arg name="control_topic"     default="/Control"       doc="ROS topic for control input"/>
+    
+
+    <!-- This line loads ROS parameters from a yaml file -->
+    <rosparam command="load" file="$(find lab0)/configs/config.yaml" />
+
+    <include file="$(find racecar_routing)/launch/routing.launch">
+            <arg name="output" value="$(arg output)"/>
+            <arg name="odom_topic" value="$(arg odom_topic)"/>
+            <arg name="lane_change_cost" value="0"/>
+    </include>
+
+    <!-- This section start a node -->
+    <node pkg="lab0" type="lab0_node.py" name="lab0" output="$(arg output)">
+        <param name="odom_topic"           value="$(arg odom_topic)" />
+        <param name="control_topic"        value="$(arg control_topic)" />
+        <param name="simulation"           value="false" />
+    </node>
+
+</launch>
