@@ -9,7 +9,7 @@ class GeneratePwm():
         self.read_parameters()
         
     def read_parameters(self):
-        self.max_throttle = get_ros_param('~max_throttle', 0.2)
+        self.max_throttle = get_ros_param('~max_throttle', 0.5)
         self.min_throttle = get_ros_param('~min_throttle', -0.3)
         
         
@@ -17,14 +17,14 @@ class GeneratePwm():
         
         v = state.v_long        
         if accel<0:
-            throttle_pwm = accel/10 - 0.5
+            d = accel/10 - 0.5
         else:
             temp = np.array([v**3, v**2, v, accel**3, accel**2, accel, v**2*accel, v*accel**2, v*accel, 1])
             d = temp@self.d_open_loop
-            d += min(steer*steer*0.5,0.05)
+            d += min(steer*steer*0.8,0.05)
         
         throttle_pwm = np.clip(d, self.min_throttle, self.max_throttle)
-        steer_pwm = np.clip(steer/0.3, -1, 1)
+        steer_pwm = -np.clip(steer/0.3, -1, 1)
         
         return throttle_pwm, steer_pwm
         
