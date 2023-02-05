@@ -9,8 +9,21 @@ NC='\033[0m' # No Color
 OS=$(uname -s)
 ARCH=$(uname -m)
 
+echo -e "${BLUE}Install Dependency${NC}"
+
 conda activate ros_base
-mamba install networkx --yes
+
+mamba install compilers cmake pkg-config make ninja -c conda-forge --override-channels --yes
+
+mamba install catkin_tools -c conda-forge -c robostack -c robostack-experimental --yes
+
+mamba install networkx shapely -c conda-forge --yes
+
+mamba install numpy scipy matplotlib -c conda-forge --yes
+
+mamba install jupyter notebook -c conda-forge --yes
+
+mamba install networkx -c conda-forge --yes
 
 echo -e "${BLUE}Install PySpline${NC}"
 # Mac OS
@@ -54,7 +67,5 @@ mamba install jax=0.3.22 'jaxlib=0.3.22=cpu*' -c conda-forge --yes
 echo -e "${BLUE}Install Hpp-FCL${NC}"
 
 mamba install -c conda-forge hpp-fcl --yes
-conda deactivate 
-conda activate ros_base
 
 echo -e "${Green}Finished! Reopen a new terminal to see if everything works. ${NC}"
