@@ -101,7 +101,7 @@ conda activate ros_base
 
 mamba install compilers cmake pkg-config make ninja -c conda-forge --override-channels --yes
 
-mamba install catkin_tools -c conda-forge --yes
+mamba install catkin_tools -c conda-forge -c robostack -c robostack-experimental --yes
 
 mamba install networkx shapely -c conda-forge --yes
 
@@ -112,16 +112,16 @@ conda activate ros_base
 
 
 # if you want to use rosdep, also do:
-mamba install rosdep --yes
+mamba install rosdep -c conda-forge -c robostack -c robostack-experimental --yes
 rosdep init  # note: do not use sudo!
 rosdep update
 
 echo -e "${BLUE}Install Dependency${NC}"
 
-mamba install numpy scipy matplotlib --yes
-mamba install jupyter notebook --yes
+mamba install numpy scipy matplotlib -c conda-forge --yes
+mamba install jupyter notebook -c conda-forge --yes
 
-mamba install networkx --yes
+mamba install networkx -c conda-forge --yes
 
 echo -e "${BLUE}Install PySpline${NC}"
 # Mac OS
@@ -133,7 +133,7 @@ if [[ $OS == 'Darwin' ]]; then
     pip install osx_arm/pyspline-1.5.2-py3-none-any.whl
   elif [[ $ARCH == 'x86_64' ]]; then  
     echo -e "${GREEN} You are using Mac OS with X86${NC}"
-    pip install osx/pyspline-1.5.2-py3-none-any.whl
+    # pip install osx/pyspline-1.5.2-py3-none-any.whl
   else
     echo -e "${RED} Unrecognized arch type, Mac OS with ${ARCH}. Cannot Install PySpline, Please compile from source${NC}"
     exit 1
