@@ -15,7 +15,7 @@ conda activate ros_base
 
 mamba install compilers cmake pkg-config make ninja -c conda-forge --override-channels --yes
 
-mamba install catkin_tools -c conda-forge -c robostack -c robostack-experimental --yes
+mamba install catkin_tools -c conda-forge --yes
 
 mamba install networkx shapely -c conda-forge --yes
 
