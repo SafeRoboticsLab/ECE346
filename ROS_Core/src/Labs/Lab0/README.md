@@ -40,3 +40,10 @@ Click the **2D Nav Goal** button on the top panel of RViz, and click on the map 
 
 4. Write your code in [`scripts/controller/pure_pursuit.py`](scripts/controller/pure_pursuit.py) and finish all TODOs. Repeat step 3 to see if your controller works.
 ![](assets/example.png)
+
+## Common Issues
+This lab depends on several external packages, such as [pySpline](https://github.com/mdolab/pyspline) and [networkx](https://networkx.org/). If you encounter **Cannot find module** errors, try to use install those packages with this [script](/Host_Setup/RoboStack/install_dependency.sh). 
+```
+cd <Path of your repo>/Host_Setup/RoboStack
+source install_dependency.sh
+```
