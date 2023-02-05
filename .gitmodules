@@ -7,3 +7,9 @@
 [submodule "ROS_Core/py_ws/src/Utility/Custom_Msgs"]
 	path = ROS_Core/src/Utility/Custom_Msgs
 	url = https://github.com/SafeRoboticsLab/PrincetonRaceCar_msgs.git
+[submodule "ROS_Core/src/Utility/PrincetonRaceCar_routing"]
+	path = ROS_Core/src/Utility/Routing
+	url = https://github.com/SafeRoboticsLab/PrincetonRaceCar_routing.git
+[submodule "ROS_Core/src/Utility/AprilTagSLAM_ROS"]
+	path = ROS_Core/src/Utility/AprilTagSLAM_ROS
+	url = https://github.com/SafeRoboticsLab/AprilTagSLAM_ROS.git

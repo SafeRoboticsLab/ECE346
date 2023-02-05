@@ -1,25 +1,26 @@
 <launch>
     <!-- This section define arguments that can be passed into this launch file -->
-    <arg name="output"          default="screen"        doc="display output to screen or log file"/>
-    <arg name="odom_topic"      default="/Simulation/Pose"     doc="ROS topic for the pose"/>
-    <arg name="control_topic"   default="/Control"      doc="ROS topic for control input"/>
-    <arg name="pub_rate"        default="30"            doc="rate at which to publish the pose"/>
-    <arg name="init_x"          default="0"             doc="initial x position"/>
-    <arg name="init_y"          default="0"             doc="initial y position"/>
-    <arg name="init_yaw"        default="0"             doc="initial z position"/>
+    <arg name="output"          default="screen"                doc="display output to screen or log file"/>
+    <arg name="odom_topic"      default="/Simulation/Pose"      doc="ROS topic for the pose"/>
+    <arg name="control_topic"   default="/Control"              doc="ROS topic for control input"/>
+    <arg name="pub_rate"        default="30"                    doc="rate at which to publish the pose"/>
+    <arg name="init_x"          default="2"                     doc="initial x position"/>
+    <arg name="init_y"          default="0.15"                  doc="initial y position"/>
+    <arg name="init_yaw"        default="0"                     doc="initial z position"/>
+    <arg name="enable_routing"  default="false"                 doc="launch routing map server"/>
 
     <!-- This line loads ROS parameters from a yaml file -->
     <rosparam command="load" file="$(find lab0)/configs/config.yaml" />
 
     <!-- This section launch another launch file -->
     <include file="$(find racecar_interface)/launch/simulation.launch" >
-        <arg name="odom_topic"           value="$(arg odom_topic)" />
-        <arg name="control_topic"        value="$(arg control_topic)" />
-        <arg name="pub_rate"             value="$(arg pub_rate)" />
-        <arg name="init_x"               value="$(arg init_x)" />
-        <arg name="init_y"               value="$(arg init_y)" />
-        <arg name="init_yaw"             value="$(arg init_yaw)" />
-        <arg name="launch_map"           value="false" />
+        <arg name="odom_topic"              value="$(arg odom_topic)" />
+        <arg name="control_topic"           value="$(arg control_topic)" />
+        <arg name="pub_rate"                value="$(arg pub_rate)" />
+        <arg name="init_x"                  value="$(arg init_x)" />
+        <arg name="init_y"                  value="$(arg init_y)" />
+        <arg name="init_yaw"                value="$(arg init_yaw)" />
+        <arg name="enable_routing"                 value="$(arg enable_routing)" />
     </include>
 
     <!-- This section start a node -->
@@ -28,6 +29,4 @@
         <param name="control_topic"        value="$(arg control_topic)" />
         <param name="simulation"           value="true" />
     </node>
-
-    
 </launch>
