@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # define color
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -72,7 +74,7 @@ else
   echo -e "${BLUE}Found Conda in $CONDA_EXE${NC}, install Mamba to base environment"
   eval "$($CONDA_EXE shell.bash hook)"
   conda activate base
-  conda install mamba -c conda-forge --yes
+  conda install -n base mamba -c conda-forge --yes
   mamba init --all
 
   # manually enable mamba
@@ -102,9 +104,9 @@ echo -e "${BLUE}Finish Settting up RoboStack Env${NC}"
 
 conda activate ros_base
 
-mamba install compilers cmake pkg-config make ninja -c conda-forge --override-channels --yes
+mamba install -n ros_base compilers cmake pkg-config make ninja -c conda-forge --override-channels --yes
 
-mamba install catkin_tools -c conda-forge -c robostack -c robostack-experimental --yes
+mamba install -n ros_base catkin_tools -c conda-forge -c robostack -c robostack-experimental --yes
 
 # reload environment to activate required scripts before running anything
 # on Windows, please restart the Anaconda Prompt / Command Prompt!
@@ -113,13 +115,13 @@ conda activate ros_base
 
 
 # if you want to use rosdep, also do:
-mamba install rosdep -c conda-forge -c robostack -c robostack-experimental --yes
+mamba install -n ros_base rosdep -c conda-forge -c robostack -c robostack-experimental --yes
 rosdep init  # note: do not use sudo!
 rosdep update
 
 echo -e "${BLUE}Install Dependency${NC}"
 
-mamba install numpy scipy matplotlib networkx shapely jupyter notebook -c conda-forge --yes
+mamba install -n ros_base numpy scipy matplotlib networkx shapely jupyter notebook -c conda-forge --yes
 
 
 echo -e "${BLUE}Install PySpline${NC}"
@@ -128,7 +130,7 @@ if [[ $OS == 'Darwin' ]]; then
   if [[ $ARCH == 'arm64' ]]; then
     echo -e "${GREEN} You are using Mac OS with Apple Silicon${NC}"
     # this avoid segfault when importing hppfcl 
-    mamba install eigenpy=2.7.10 --yes -c conda-forge 
+    mamba install -n ros_base eigenpy=2.7.10 --yes -c conda-forge 
     pip install osx_arm/pyspline-1.5.2-py3-none-any.whl
   elif [[ $ARCH == 'x86_64' ]]; then  
     echo -e "${GREEN} You are using Mac OS with X86${NC}"
@@ -159,10 +161,10 @@ fi
 
 echo -e "${BLUE}Install Jax${NC}"
 # Instal Jax https://github.com/google/jax#conda-installation
-mamba install jax=0.3.22 'jaxlib=0.3.22=cpu*' -c conda-forge --yes
+mamba install -n ros_base jax=0.3.22 'jaxlib=0.3.22=cpu*' -c conda-forge --yes
 
 echo -e "${BLUE}Install Hpp-FCL${NC}"
 
-mamba install -c conda-forge hpp-fcl --yes
+mamba install -n ros_base -c conda-forge hpp-fcl --yes
 
 echo -e "${Green}Finished! Reopen a new terminal to see if everything works. ${NC}"
