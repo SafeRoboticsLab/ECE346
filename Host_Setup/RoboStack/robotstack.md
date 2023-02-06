@@ -1,6 +1,13 @@
 # Install ROBOSTACK ROS-Noetic 
 [RoboStack](https://robostack.github.io/index.html) is a bundling of the Robot Operating System (ROS) by Open Robotics for Linux, Mac and Windows using the Conda package manager. Traditionaly, ROS is only available to Linux and does not work well with Conda.
 
+# Update: 2023.2.5
+RoboStack has released a new version of ROS Noetic. It uses a more recent version of Boost, which allows use to use newer version of Jax, PyTorch, and HPP-FCL. This means your algorithms will run (potentially) faster and more stable. If you want to try out, please follow the instructions below.
+```
+./ros_conda_install_unix_new.sh
+```
+It will create a new environment called ```ros_base2```. You can activate it by ```conda activate ros_base2```. Your old environment ```ros_base``` will still be there.
+
 ## Mac OS and Linux
 If you are using Mac OS or Linux, we provide you a simple script to automate the process. Simply open a terminal, then run
 

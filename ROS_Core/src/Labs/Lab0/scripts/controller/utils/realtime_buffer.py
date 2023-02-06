@@ -46,4 +46,3 @@ class RealtimeBuffer:
         Reset the buffer to None
         '''
         self.writeFromNonRT(None)
-        self.new_data_available = False
