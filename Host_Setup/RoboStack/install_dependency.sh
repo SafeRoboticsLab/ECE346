@@ -11,19 +11,17 @@ ARCH=$(uname -m)
 
 echo -e "${BLUE}Install Dependency${NC}"
 
+# manually enable mamba
+. $($CONDA_EXE info --base)/etc/profile.d/conda.sh
+. $($CONDA_EXE info --base)/etc/profile.d/mamba.sh
+
 conda activate ros_base
 
 mamba install compilers cmake pkg-config make ninja -c conda-forge --override-channels --yes
 
 mamba install catkin_tools -c conda-forge --yes
 
-mamba install networkx shapely -c conda-forge --yes
-
-mamba install numpy scipy matplotlib -c conda-forge --yes
-
-mamba install jupyter notebook -c conda-forge --yes
-
-mamba install networkx -c conda-forge --yes
+mamba install numpy scipy matplotlib networkx shapely jupyter notebook -c conda-forge --yes
 
 echo -e "${BLUE}Install PySpline${NC}"
 # Mac OS

@@ -13,11 +13,15 @@ class PurePursuitController():
     '''
     Main class for the controller
     '''
-
     def __init__(self):
-        
+        '''
+        Constructor for the PurePursuitController class
+        '''
+        # Initialize the real-time buffer for the state and goal
         self.state_buffer = RealtimeBuffer()
         self.goal_buffer = RealtimeBuffer()
+        
+        # Initialize the PWM converter
         self.pwm_converter = GeneratePwm()
 
         # Read Parameters from the parameter server
@@ -36,26 +40,36 @@ class PurePursuitController():
         '''
         This function reads the parameters from the parameter server
         '''
-        # Read ROS topic names to subscribe 
-        self.odom_topic = get_ros_param('~odom_topic', '/slam_pose')
+        # ROS topic name to subscribe odometry 
+        self.odom_topic = get_ros_param('~odom_topic', '/SLAM/Pose')
         
-        # Read ROS topic names to publish
-        self.control_topic = get_ros_param('~control_topic', '/control/servo_control')
+        # Read ROS topic name to publish control command
+        self.control_topic = get_ros_param('~control_topic', '/Control')
         
-        # Read controller parameters
+        # Proportional gain for the throttle
         self.throttle_gain = get_ros_param('~throttle_gain', 0.05)
+        
+        # maximum look ahead distance
         self.ld_max = get_ros_param('~ld_max', 2)
         
         # Read controller thresholds
         self.max_steer = get_ros_param('~max_steer', 0.35)
         self.max_vel = get_ros_param('~max_vel', 0.5)
+        
+        # Distance threshold to stop
         self.stop_distance = get_ros_param('~stop_distance', 0.5)
+        
+        # Read the wheel base of the robot
         self.wheel_base = get_ros_param('~wheel_base', 0.257)
+        
+        # Read the simulation flag, 
+        # if the flag is true, we are in simulation 
+        # and no need to convert the throttle and steering angle to PWM
         self.simulation = get_ros_param('~simulation', True)
         
     def setup_publisher(self):
         '''
-        This function sets up the publisher for the trajectory
+        This function sets up the publisher for the control command
         '''
         ################## TODO: 1. Set up a publisher for the ServoMsg message###################
         # Create a publiser - self.control_pub:
@@ -68,10 +82,11 @@ class PurePursuitController():
             
     def setup_subscriber(self):
         '''
-        This function sets up the subscriber for the odometry and path
+        This function sets up the subscriber for the odometry and goal message
         '''
         # This set up a subscriber for the goal you click on the rviz
         self.goal_sub = rospy.Subscriber('/move_base_simple/goal', PoseStamped, self.goal_callback, queue_size=1)
+        
         ################## TODO: 2. Set up a subscriber for the odometry message###################
         # Create a subscriber:
         #   - subscribes to the topic <self.odom_topic>
@@ -82,8 +97,7 @@ class PurePursuitController():
         
     def odometry_callback(self, odom_msg: Odometry):
         """
-        Subscriber callback function of the robot pose
-        
+        Subscriber callback function for the robot odometry message
         Parameters:
             odom_msg: Odometry message with type nav_msgs.msg.Odometry
         """
@@ -98,7 +112,6 @@ class PurePursuitController():
     def goal_callback(self, goal_msg: PoseStamped):
         """
         Subscriber callback function of the robot goal point
-        
         Parameters:
             goal_msg: goal message with type geometry_msgs.msg.PoseStamped
         """
@@ -114,16 +127,23 @@ class PurePursuitController():
         goal_y = np.nan # TO BE FILLED
         
         ########################### END OF TODO 3 #################################
+        # Log the goal to the console using "rospy.loginfo"
         rospy.loginfo(f"Received a new goal [{np.round(goal_x, 3)}, {np.round(goal_y,3)}]")
         
     def publish_control(self, accel, steer, state):
-        
+        '''
+        Helper function to publish the control command
+        Parameters:
+            accel: float, linear acceleration of the robot [m/s^2]
+            steer: float, steering angle of the robot [rad]
+            state: State2D, current state of the robot
+        '''
         # If we are in simulation,
         # the throttle and steering angle are acceleration and steering angle
         if self.simulation:
             throttle = accel
         else:
-            # If we are in real truck,
+            # If we are using robot,
             # the throttle and steering angle needs to convert to PWM signal
             throttle, steer = self.pwm_converter.convert(accel, steer, state)
             
@@ -138,12 +158,20 @@ class PurePursuitController():
         ########################### END OF TODO 4 #################################
 
     def planning_thread(self):
+        '''
+        Main thread for the planning
+        '''
         rospy.loginfo("Planning thread started waiting for ROS service calls...")
         while not rospy.is_shutdown():
             # determine if we need to replan
+            # if the current state is not None and a new state is available
+            # we need to re-calculate the control command
             if self.state_buffer.new_data_available:
+               
+                # read the current state and goal from the buffer
                 state_cur = self.state_buffer.readFromRT()
                 goal_cur = self.goal_buffer.readFromRT()
+                
                 # current longitudinal velocity
                 vel_cur = state_cur.v_long 
 
@@ -151,12 +179,13 @@ class PurePursuitController():
                 if goal_cur is not None:
                     # First, transform the goal to the robot frame
                     goal_robot = np.linalg.inv(state_cur.transformation_matrix()).dot(goal_cur)
+                    
                     # relative heading angle of the goal wrt the car
                     alpha = np.arctan2(goal_robot[1], goal_robot[0])
+                    
                     # relative distance between the car and the goal
                     dis2goal = np.sqrt(goal_robot[0]**2 + goal_robot[1]**2)
 
-                
                     ########################## TODO: 5. Finish the pure pursuit controlle ###################
                     # 1. Check if the goal is close enough
                     #
@@ -174,7 +203,7 @@ class PurePursuitController():
                     #   Detail Explanation: 
                     #   https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/PurePursuit.html
                     #
-                    # 5. clip the steering angle
+                    # 5. clip the steering angle between "-self.steer_max" and "self.steer_max"
                     # 6. apply the simple proportional controller for the acceleration to track the reference_velocity
                     
                     accel = 0 # TO BE FILLED 

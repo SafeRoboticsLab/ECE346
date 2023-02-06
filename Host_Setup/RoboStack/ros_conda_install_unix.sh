@@ -118,10 +118,8 @@ rosdep update
 
 echo -e "${BLUE}Install Dependency${NC}"
 
-mamba install numpy scipy matplotlib -c conda-forge --yes
-mamba install jupyter notebook -c conda-forge --yes
+mamba install numpy scipy matplotlib networkx shapely jupyter notebook -c conda-forge --yes
 
-mamba install networkx -c conda-forge --yes
 
 echo -e "${BLUE}Install PySpline${NC}"
 # Mac OS
