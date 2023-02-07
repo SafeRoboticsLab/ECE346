@@ -9,7 +9,7 @@ RoboStack has released a new version of ROS Noetic. It uses a more recent versio
 It will create a new environment called ```ros_base2```. You can activate it by ```conda activate ros_base2```. Your old environment ```ros_base``` will still be there. Both will work well for this class.
 
 ## Mac OS and Linux
-If you are using Mac OS or Linux, we provide you a simple script to automate the process. Simply open a terminal, then run
+If you are using Mac OS or Linux, we provide you a simple script to automate the process. Simply open a terminal, navigate to ```<Your Repo>/Host_Setup/RoboStack```, then run
 
 ```
 chmod +x ros_conda_install_unix.sh
