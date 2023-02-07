@@ -9,6 +9,9 @@
 
 > **ECE 346 students:** please fork this repository and work within your own forked repo (see instructions below). 
 
+## Windows Users:
+You might want to setup the Windows Linux Subsystem first by following this [guide](Host_Setup/RoboStack/Windows/windows_robostack.md).
+
 ## First Things First!
 [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) on your computer if you haven't done this before.
 
