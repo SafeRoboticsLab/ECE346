@@ -72,7 +72,7 @@ class PurePursuitController():
         This function sets up the publisher for the control command
         '''
         ################## TODO: 1. Set up a publisher for the ServoMsg message###################
-        # Create a publiser - self.control_pub:
+        # Create a publisher - self.control_pub:
         #   - subscribes to the topic <self.control_topic>
         #   - has message type <ServoMsg> (racecar_msgs.msg.Odometry) 
         #   - with queue size 1
