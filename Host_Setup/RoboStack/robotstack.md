@@ -15,7 +15,7 @@ If you are using Mac OS or Linux, we provide you a simple script to automate the
 chmod +x ros_conda_install_unix.sh
 ./ros_conda_install_unix.sh
 ```
-If you already have conda (anaconda/miniconda/miniforge, etc) installed, it will install [**mamba**](https://mamba.readthedocs.io/en/latest/installation.html) in your base environments, and then create a new python3.9 environment with ROS Noetic installed. If your original conda is very old, you might experience siginificantly slow installation and even errors. It might be a good idea to backup your old conda environments, uninstall your current conda, and fresh install mambaforge instead.
+If you already have conda (anaconda/miniconda/miniforge, etc) installed, it will install [**mamba**](https://mamba.readthedocs.io/en/latest/installation.html) in your base environments, and then create a new python3.9 environment with ROS Noetic installed. **If your original conda is very old, you might experience siginificantly slow installation and even errors. It might be a good idea to [backup your old conda environments, uninstall your current conda](https://docs.anaconda.com/anaconda/install/uninstall/), and fresh install mambaforge instead.**
 
 If you do not have conda installed, the script will first install [**mambaforge**](https://github.com/conda-forge/miniforge#mambaforge), and then create a new ROS Noetic environment. 
 
