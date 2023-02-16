@@ -48,7 +48,7 @@ git push origin
     ```
     git checkout SP2023
     git merge temp
-    git branch –delete temp
+    git branch –-delete temp
     # Update submodules in case there are any
     git submodule update --init --recursive
     ```
