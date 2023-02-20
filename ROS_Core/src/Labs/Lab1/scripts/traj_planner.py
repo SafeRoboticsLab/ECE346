@@ -47,7 +47,7 @@ class TrajectoryPlanner():
         # start planning and control thread
         threading.Thread(target=self.control_thread).start()
         if self.open_loop:
-            threading.Thread(target=self.open_loop_planning_thread).start()
+            threading.Thread(target=self.policy_planning_thread).start()
         else:
             threading.Thread(target=self.receding_horizon_planning_thread).start()
     
@@ -341,7 +341,7 @@ class TrajectoryPlanner():
             # end of while loop
             rate.sleep()
 
-    def open_loop_planning_thread(self):
+    def policy_planning_thread(self):
         '''
         This function is the main thread for open loop planning
         We plan entire trajectory (policy) everytime when a new reference path is available
