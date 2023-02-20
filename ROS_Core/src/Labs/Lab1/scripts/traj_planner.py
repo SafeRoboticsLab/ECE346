@@ -346,7 +346,7 @@ class TrajectoryPlanner():
         This function is the main thread for open loop planning
         We plan entire trajectory (policy) everytime when a new reference path is available
         '''
-        rospy.loginfo('Open Loop Planning thread started waiting for ROS service calls...')
+        rospy.loginfo('Policy Planning thread started waiting for ROS service calls...')
         while not rospy.is_shutdown():
             # determine if we need to replan
             if self.path_buffer.new_data_available and self.planner_ready:
