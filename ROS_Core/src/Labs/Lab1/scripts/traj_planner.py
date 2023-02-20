@@ -27,7 +27,6 @@ class TrajectoryPlanner():
 
     def __init__(self):
         # Indicate if the planner is used to generate a new trajectory
-        self.planner_ready = False
         self.update_lock = threading.Lock()
         self.latency = 0.0
         
@@ -51,8 +50,7 @@ class TrajectoryPlanner():
             threading.Thread(target=self.open_loop_planning_thread).start()
         else:
             threading.Thread(target=self.receding_horizon_planning_thread).start()
-            
-
+    
     def read_parameters(self):
         '''
         This function reads the parameters from the parameter server
@@ -102,6 +100,8 @@ class TrajectoryPlanner():
         self.policy_buffer = RealtimeBuffer()
         self.path_buffer = RealtimeBuffer()
         self.obstacle_buffer = RealtimeBuffer()
+        # Indicate if the planner is ready to generate a new trajectory
+        self.planner_ready = True
 
     def setup_publisher(self):
         '''
@@ -124,8 +124,8 @@ class TrajectoryPlanner():
         '''
         Set up ros service
         '''
-        self.start_srv = rospy.Service('/planning/start_planning', Empty, self.start_planning_cb)
-        self.stop_srv = rospy.Service('/planning/stop_planning', Empty, self.stop_planning_cb)
+        self.start_srv = rospy.Service('/Planning/Start', Empty, self.start_planning_cb)
+        self.stop_srv = rospy.Service('/Planning/Stop', Empty, self.stop_planning_cb)
         
         self.dyn_server = Server(plannerConfig, self.reconfigure_callback)
 
@@ -187,7 +187,37 @@ class TrajectoryPlanner():
             rospy.loginfo('Path received!')
         except:
             rospy.logwarn('Invalid path received! Move your robot and retry!')
-    
+
+    @staticmethod
+    def compute_control(x, x_ref, u_ref, K_closed_loop):
+        '''
+        Given the current state, reference trajectory, control command 
+        and closed loop gain, compute the control command
+        
+        Args:
+            x: np.ndarray, [dim_x] current state
+            x_ref: np.ndarray, [dim_x] reference trajectory
+            u_ref: np.ndarray, [dim_u] reference control command
+            K_closed_loop: np.ndarray, [dim_u, dim_x] closed loop gain
+
+        Returns:
+            accel: float, acceleration command [m/s^2]
+            steer_rate: float, steering rate command [rad/s]
+        '''
+
+        ###############################
+        #### TODO: Task 2 #############
+        ###############################
+        # Implement your control law here using iLQR policy
+        # Hint: make sure that the difference in heading is between [-pi, pi]
+        
+        accel = 0 # TO BE REPLACED
+        steer_rate = 0 # TO BE REPLACED
+
+        ##### END OF TODO ##############
+
+        return accel, steer_rate
+  
     def control_thread(self):
         '''
         Main control thread to publish control command
@@ -277,16 +307,10 @@ class TrajectoryPlanner():
                     state_ref, u_ref, K = policy.get_policy_by_state(state_cur)
                 else:
                     state_ref, u_ref, K = policy.get_policy(t_act)
-                    
+
                 if state_ref is not None:
-                    # TODO: use ilqr policy to compute the control command
-                    # Hint: make sure the difference in angle is between -pi and pi
-                    dx = state_cur - state_ref
-                    dx[3] = np.mod(dx[3] + np.pi, 2 * np.pi) - np.pi
-                    u = u_ref + K @ dx
-                    accel = u[0]
-                    steer = max(-0.35, min(0.35, prev_u[1] + u[1]*dt))
-                    # end of TODO
+                    accel, steer_rate = self.compute_control(state_cur, state_ref, u_ref, K)
+                    steer = max(-0.35, min(0.35, prev_u[1] + steer_rate*dt))
                 else:
                     # reset the policy buffer if the policy is not valid
                     rospy.logwarn("Try to retrieve a policy beyond the horizon! Reset the policy buffer!")
@@ -317,59 +341,6 @@ class TrajectoryPlanner():
             # end of while loop
             rate.sleep()
 
-    def receding_horizon_planning_thread(self):
-        '''
-        This function is the main thread for receding horizon planning
-        We repeatedly call iLQR to replan the trajectory (policy) once the new state is available
-        '''
-        
-        rospy.loginfo('Receding Horizon Planning thread started waiting for ROS service calls...')
-        t_last_replan = 0
-        while not rospy.is_shutdown():
-            # determine if we need to replan
-            if self.plan_state_buffer.new_data_available:
-                state_cur = self.plan_state_buffer.readFromRT()
-                
-                t_cur = state_cur[-1] # the last element is the time
-                dt = t_cur - t_last_replan
-                
-                # Do replanning
-                if dt >= self.replan_dt:
-                    # Get the initial controls for hot start
-                    init_controls = None
-
-                    original_policy = self.policy_buffer.readFromRT()
-                    if original_policy is not None:
-                        init_controls = original_policy.get_ref_controls(t_cur)
-
-                    # Update the path
-                    if self.path_buffer.new_data_available:
-                        new_path = self.path_buffer.readFromRT()
-                        self.planner.update_ref_path(new_path)
-                    
-                    # Replan use ilqr
-                    new_plan = self.planner.plan(state_cur[:-1], init_controls, verbose=False)
-                    
-                    plan_status = new_plan['status']
-                    if plan_status == -1:
-                        rospy.logwarn_once('No path specified!')
-                        continue
-                    
-                    if self.planner_ready:
-                        # If stop planning is called, we will not write to the buffer
-                        new_policy = Policy(X = new_plan['trajectory'], 
-                                            U = new_plan['controls'],
-                                            K = new_plan['K_closed_loop'], 
-                                            t0 = t_cur, 
-                                            dt = self.planner.dt,
-                                            T = self.planner.T)
-                        
-                        self.policy_buffer.writeFromNonRT(new_policy)
-                        
-                        # publish the new policy for RVIZ visualization
-                        self.trajectory_pub.publish(new_policy.to_msg())        
-                        t_last_replan = t_cur
-                        
     def open_loop_planning_thread(self):
         '''
         This function is the main thread for open loop planning
@@ -434,3 +405,43 @@ class TrajectoryPlanner():
                 
                 # publish the new policy for RVIZ visualization
                 self.trajectory_pub.publish(new_policy.to_msg())        
+
+    def receding_horizon_planning_thread(self):
+        '''
+        This function is the main thread for receding horizon planning
+        We repeatedly call iLQR to replan the trajectory (policy) once the new state is available
+        '''
+        
+        rospy.loginfo('Receding Horizon Planning thread started waiting for ROS service calls...')
+        t_last_replan = 0
+        while not rospy.is_shutdown():
+            ###############################
+            #### TODO: Task 3 #############
+            ###############################
+
+            '''
+            Implement the receding horizon planning thread
+            Hint: Make sure you are familiar with the <Policy> class in utils/policy.py
+            1. Determine if we need to replan by
+                - checking if there is new data in the plan_state_buffer using 
+                    <self.plan_state_buffer.new_data_available>
+                - checking if the time since <t_last_replan> is larger than <self.replan_dt>
+                - checking if <self.planner_ready> is True
+            2. If we need to replan, 
+                - Get the current state from the plan_state_buffer using <self.plan_state_buffer.readFromRT>
+                - Get the previous policy from the policy_buffer using <self.policy_buffer.readFromRT>
+                - Get the initial controls for hot start if there is a previous policy
+                    you can use helper function <get_ref_controls> in the <Policy> class
+                - Check if there is a new path in the path_buffer using <self.path_buffer.new_data_available>.
+                    if true, Update the reference path in iLQR using <self.planner.update_ref_path(new path)>
+                - Replan using iLQR 
+            3. If the replan is successful,
+                - Create a new <Policy> object using your new plan
+                - Write the new policy to the policy buffer using <self.policy_buffer.writeFromNonRT>
+                - Publish the new policy for RVIZ visualization
+                    for example: self.trajectory_pub.publish(new_policy.to_msg())       
+            '''
+            ###############################
+            #### END OF TODO #############
+            ###############################
+            time.sleep(0.01)

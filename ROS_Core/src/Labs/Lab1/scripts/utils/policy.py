@@ -53,6 +53,10 @@ class Policy():
     def get_ref_controls(self, t):
         '''
         Return the nominal control at time t and forward
+        Args:
+            t: float time in seconds
+        Returns:
+            ref_u: np.array of shape (dim_u, T) reference controls at time t and forward
         '''
         i = self.get_index(t)
         if i>= self.T:
