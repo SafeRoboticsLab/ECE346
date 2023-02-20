@@ -7,7 +7,7 @@
     <arg name="obstacle_topic"      default="/Prediction/Obstacles" doc="ROS topic for obstacles"/>
     <arg name="traj_topic"          default="/Planning/Trajectory"  doc="ROS topic for trajectory"/>
     <arg name="path_topic"          default="/Routing/Path"         doc="ROS topic for reference path"/>
-    <arg name="open_loop"           default="true"                 doc="whether to use open loop planner"/>
+    <arg name="receding_horizon"    default="false"                 doc="whether to use receding horizon planner"/>
     <arg name="replan_dt"           default="0.1"                   doc="time step for replanning"/>
     <arg name="ilqr_config"         default="configs/lab1.yaml"     doc="path to ilqr config file"/>
 
@@ -20,7 +20,7 @@
         <param name="package_path"         value="$(find racecar_planner)" />
         <param name="simulation"           value="False" />
         <param name="replan_dt"            value="$(arg replan_dt)" />
-        <param name="open_loop"            value="$(arg open_loop)" />
+        <param name="receding_horizon"     value="$(arg receding_horizon)" />
         <param name="ilqr_params_file"     value="$(arg ilqr_config)" />
         <param name="PWM_model"            value="$(find racecar_planner)/configs/mlp_model.sav" />
     </node>

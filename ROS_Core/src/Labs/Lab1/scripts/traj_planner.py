@@ -46,7 +46,7 @@ class TrajectoryPlanner():
 
         # start planning and control thread
         threading.Thread(target=self.control_thread).start()
-        if self.open_loop:
+        if not self.receding_horizon:
             threading.Thread(target=self.policy_planning_thread).start()
         else:
             threading.Thread(target=self.receding_horizon_planning_thread).start()
@@ -58,7 +58,7 @@ class TrajectoryPlanner():
         # Required parameters
         self.package_path = rospy.get_param('~package_path')
         
-        self.open_loop = get_ros_param('~open_loop', True)
+        self.receding_horizon = get_ros_param('~receding_horizon', False)
         
         # Read ROS topic names to subscribe 
         self.odom_topic = get_ros_param('~odom_topic', '/slam_pose')
@@ -303,7 +303,7 @@ class TrajectoryPlanner():
             # Generate control command from the policy
             if policy is not None:
                 # get policy
-                if self.open_loop:
+                if not self.receding_horizon:
                     state_ref, u_ref, K = policy.get_policy_by_state(state_cur)
                 else:
                     state_ref, u_ref, K = policy.get_policy(t_act)
