@@ -7,8 +7,8 @@ import os
 import time
 
 from utils import RealtimeBuffer, get_ros_param, Policy, GeneratePwm
-from iLQR import RefPath
-from iLQR import iLQR_np as iLQR
+from ILQR import RefPath
+from ILQR import ILQR
 
 from racecar_msgs.msg import ServoMsg 
 from racecar_planner.cfg import plannerConfig
@@ -78,7 +78,7 @@ class TrajectoryPlanner():
         # if true, the planner will load a path from a file rather than subscribing to a path topic           
         self.replan_dt = get_ros_param('~replan_dt', 0.1)
         
-        # Read the iLQR parameters file, if empty, use the default parameters
+        # Read the ILQR parameters file, if empty, use the default parameters
         ilqr_params_file = get_ros_param('~ilqr_params_file', '')
         if ilqr_params_file == '':
             self.ilqr_params_abs_path = None
@@ -89,10 +89,10 @@ class TrajectoryPlanner():
         
     def setup_planner(self):
         '''
-        This function setup the iLQR solver
+        This function setup the ILQR solver
         '''
-        # Initialize iLQR solver
-        self.planner = iLQR(self.ilqr_params_abs_path)
+        # Initialize ILQR solver
+        self.planner = ILQR(self.ilqr_params_abs_path)
 
         # create buffers to handle multi-threading
         self.plan_state_buffer = RealtimeBuffer()
@@ -208,7 +208,7 @@ class TrajectoryPlanner():
         ###############################
         #### TODO: Task 2 #############
         ###############################
-        # Implement your control law here using iLQR policy
+        # Implement your control law here using ILQR policy
         # Hint: make sure that the difference in heading is between [-pi, pi]
         
         accel = 0 # TO BE REPLACED
@@ -409,7 +409,7 @@ class TrajectoryPlanner():
     def receding_horizon_planning_thread(self):
         '''
         This function is the main thread for receding horizon planning
-        We repeatedly call iLQR to replan the trajectory (policy) once the new state is available
+        We repeatedly call ILQR to replan the trajectory (policy) once the new state is available
         '''
         
         rospy.loginfo('Receding Horizon Planning thread started waiting for ROS service calls...')
@@ -433,8 +433,8 @@ class TrajectoryPlanner():
                 - Get the initial controls for hot start if there is a previous policy
                     you can use helper function <get_ref_controls> in the <Policy> class
                 - Check if there is a new path in the path_buffer using <self.path_buffer.new_data_available>.
-                    if true, Update the reference path in iLQR using <self.planner.update_ref_path(new path)>
-                - Replan using iLQR 
+                    if true, Update the reference path in ILQR using <self.planner.update_ref_path(new path)>
+                - Replan using ILQR 
             3. If the replan is successful,
                 - Create a new <Policy> object using your new plan
                 - Write the new policy to the policy buffer using <self.policy_buffer.writeFromNonRT>

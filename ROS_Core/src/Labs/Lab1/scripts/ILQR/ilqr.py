@@ -14,7 +14,7 @@ status_lookup = ['Iteration Limit Exceed',
                 'Converged',
                 'Failed Line Search']
 
-class iLQR():
+class ILQR():
 	def __init__(self, config_file = None) -> None:
 
 		self.config = Config()  # Load default config.
@@ -22,7 +22,7 @@ class iLQR():
 			self.config.load_config(config_file)  # Load config from file.
 		
 		self.load_parameters()
-		print('iLQR setting:', self.config)
+		print('ILQR setting:', self.config)
 
 		# Set up Jax parameters
 		jax.config.update('jax_platform_name', self.config.platform)
@@ -45,9 +45,9 @@ class iLQR():
 
 	def load_parameters(self):
 		'''
-		This function defines iLQR parameters from <self.config>.
+		This function defines ILQR parameters from <self.config>.
 		'''
-		# iLQR parameters
+		# ILQR parameters
 		self.dim_x = self.config.num_dim_x
 		self.dim_u = self.config.num_dim_u
 		self.T = int(self.config.T)
@@ -90,9 +90,9 @@ class iLQR():
 		self.update_obstacles(obs_list)
 
 		x_init = np.array([0.0, -1.0, 1, 0, 0])
-		print('Start warm up iLQR...')
+		print('Start warm up ILQR...')
 		self.plan(x_init)
-		print('iLQR warm up finished.')
+		print('ILQR warm up finished.')
 		
 		self.ref_path = None
 		self.obstacle_list = []
@@ -133,7 +133,7 @@ class iLQR():
 	def plan(self, init_state: np.ndarray,
 				controls: Optional[np.ndarray] = None) -> Dict:
 		'''
-		Main iLQR loop.
+		Main ILQR loop.
 		Args:
 			init_state: [num_dim_x] np.ndarray: initial state.
 			control: [num_dim_u, T] np.ndarray: initial control.
@@ -141,8 +141,8 @@ class iLQR():
 			A dictionary with the following keys:
 				status: int: -1 for failure, 0 for success. You can add more status if you want.
 				t_process: float: time spent on planning.
-				trajectory: [num_dim_x, T] np.ndarray: iLQR planned trajectory.
-				controls: [num_dim_u, T] np.ndarray: iLQR planned controls sequence.
+				trajectory: [num_dim_x, T] np.ndarray: ILQR planned trajectory.
+				controls: [num_dim_u, T] np.ndarray: ILQR planned controls sequence.
 				K_closed_loop: [num_dim_u, num_dim_x, T] np.ndarray: closed loop gain.
 				k_closed_loop: [num_dim_u, T] np.ndarray: closed loop bias.
 		'''
@@ -172,7 +172,7 @@ class iLQR():
 		J = self.cost.get_traj_cost(trajectory, controls, path_refs, obs_refs)
 
 		##########################################################################
-		# TODO 1: Implement the iLQR algorithm. Feel free to add any helper functions.
+		# TODO 1: Implement the ILQR algorithm. Feel free to add any helper functions.
 		# You will find following implemented functions useful:
 
 		# ******** Functions to compute the Jacobians of the dynamics  ************
