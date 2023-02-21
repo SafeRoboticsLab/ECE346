@@ -222,7 +222,7 @@ class TrajectoryPlanner():
         '''
         Main control thread to publish control command
         '''
-        rate = rospy.Rate(50)
+        rate = rospy.Rate(40)
         u_queue = queue.Queue()
         
         # values to keep track of the previous control command
@@ -234,7 +234,7 @@ class TrajectoryPlanner():
             dx = np.array([x[2]*np.cos(x[3]),
                         x[2]*np.sin(x[3]),
                         u[0],
-                        x[2]*np.tan(u[1]*1.05)/0.257,
+                        x[2]*np.tan(u[1]*1.1)/0.257,
                         0
                         ])
             x_new = x + dx*dt
@@ -258,10 +258,11 @@ class TrajectoryPlanner():
             # check if there is new state available
             if self.control_state_buffer.new_data_available:
                 odom_msg = self.control_state_buffer.readFromRT()
-                t_prev = odom_msg.header.stamp.to_sec()
+                t_slam = odom_msg.header.stamp.to_sec()
                 
                 u = np.zeros(3)
-                while not u_queue.empty() and u_queue.queue[0][-1] < t_prev:
+                u[-1] = t_slam
+                while not u_queue.empty() and u_queue.queue[0][-1] < t_slam:
                     u = u_queue.get() # remove old control commands
                 
                 # get the state from the odometry message
@@ -277,27 +278,26 @@ class TrajectoryPlanner():
                             psi,
                             u[1]
                         ])
+               
+                # predict the current state use past control command
+                for i in range(u_queue.qsize()):
+                    u_next = u_queue.queue[i]
+                    dt = u_next[-1] - u[-1]
+                    state_cur = dyn_step(state_cur, u, dt)
+                    u = u_next
+                    
+                # predict the cur state with the most recent control command
+                state_cur = dyn_step(state_cur, u, t_act - u[-1])
                 
                 # update the state buffer for the planning thread
                 plan_state = np.append(state_cur, t_act)
                 self.plan_state_buffer.writeFromNonRT(plan_state)
                 
-                # update the current state use past control command
-                for i in range(u_queue.qsize()):
-                    u_next = u_queue.queue[i]
-                    dt = u_next[-1] - t_prev
-                    state_cur = dyn_step(state_cur, u, dt)
-                    u = u_next
-                    t_prev = u[-1]
-                    
-                # update the cur state with the most recent control command
-                state_cur = dyn_step(state_cur, u, t_act - t_prev)
-                
             # if there is no new state available, we do one step forward integration to predict the state
             elif prev_state is not None:
                 t_prev = prev_u[-1]
                 dt = t_act - t_prev
-                # predict the state when the control command is executed
+                # predict the state using the last control command is executed
                 state_cur = dyn_step(prev_state, prev_u, dt)
             
             # Generate control command from the policy
@@ -310,20 +310,20 @@ class TrajectoryPlanner():
 
                 if state_ref is not None:
                     accel, steer_rate = self.compute_control(state_cur, state_ref, u_ref, K)
-                    steer = max(-0.35, min(0.35, prev_u[1] + steer_rate*dt))
+                    steer = max(-0.37, min(0.37, prev_u[1] + steer_rate*dt))
                 else:
                     # reset the policy buffer if the policy is not valid
                     rospy.logwarn("Try to retrieve a policy beyond the horizon! Reset the policy buffer!")
                     self.policy_buffer.reset()
                         
             # generate control command
-            if self.simulation:
-                throttle_pwm = accel
-                steer_pwm = steer
-            else:
+            if not self.simulation and state_cur is not None:
                 # If we are using robot,
                 # the throttle and steering angle needs to convert to PWM signal
                 throttle_pwm, steer_pwm = self.pwm_converter.convert(accel, steer, state_cur[2])
+            else:
+                throttle_pwm = accel
+                steer_pwm = steer                
             
             # publish control command
             servo_msg = ServoMsg()

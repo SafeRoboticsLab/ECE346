@@ -45,7 +45,7 @@ class GeneratePwm():
             v_bounded = v
         
         # negative pwm means turn left (positive steering angle)
-        steer_pwm = -np.clip(steer/0.35, -1, 1)
+        steer_pwm = -np.clip(steer/0.37, -1, 1)
         accel_bounded = np.sign(accel)*min(abs(accel), 2+v)
 
         # Generate Input vector
