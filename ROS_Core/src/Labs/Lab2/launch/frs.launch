@@ -1,0 +1,10 @@
+<launch>
+    <arg name="output"              default="screen"                doc="display output to screen or log file"/>
+    <arg name="dyn_obs_topic"       default="/Obstacles/Dynamic"    doc="ROS topic for dynamic obstacles"/>
+
+    <node pkg="racecar_obs_detection" type="dyn_obstacle_node.py" name="dynamic_obs" output="$(arg output)">
+        <param name="dyn_obs_topic"       value="$(arg dyn_obs_topic)" />
+        <param name="map_file"             value="$(find racecar_routing)/cfg/track.pkl" />
+    </node>
+
+</launch>

@@ -1,0 +1,100 @@
+####################################################
+############### General Parameters #################
+####################################################
+num_dim_x: 5
+num_dim_u: 2
+T: 10 # horizon length
+dt: 0.1
+# time step
+platform: "cpu" # "cpu" or "gpu" or "tpu"
+
+####################################################
+###########Optimization Parameters #################
+####################################################        
+max_iter: 100 # maximum number of iterations
+# tolerance for the ILQR convergence
+# Make sure this is smaller than the minimum line search step size
+tol: 0.005
+
+# line search parameters
+# We assume line search parameter is base**np.arange(a, b, c)
+line_search_base: 0.1
+line_search_a: 0 # line search parameter a
+line_search_b: 3 # line search parameter b
+line_search_c: 1 # line search parameter c
+
+# regularization parameters
+reg_min: 1e-5 # minimum regularization
+reg_max: 1e8 # maximum regularization
+reg_scale_down: 5 # scale down factor for regularization
+reg_scale_up: 5 # scale up factor for regularization
+reg_init: 1.0 # initial regularization
+
+# max number of re-attempts after unsuccessful line search
+max_attempt: 5
+
+####################################################
+############### Dynamics Parameters ################
+####################################################
+wheelbase: 0.257 # wheelbase of the vehicle
+width: 0.22 # width of the vehicle
+length: 0.40 # length of the vehicle
+
+# steering angle limits
+delta_max: 0.35 # maximum steering angle
+delta_min: -0.35 # minimum steering angle
+
+# velocity limits
+v_max: 5.0 # maximum velocity
+v_min: 0.0 # minimum velocity
+
+# turn rate limits
+omega_min: -6.0 # minimum turn rate
+omega_max: 6.0 # maximum turn rate
+
+# acceleration limits
+a_max: 5.0 # maximum acceleration
+a_min: -5.0 # minimum acceleration
+
+# reference velocity
+v_ref: 1 # reference velocity
+####################################################
+########## Parameters for ILQR COST ################
+####################################################
+
+########        State Cost          ############
+
+# Path Offset Cost
+path_weight: 4.0 # weight for the path deviation cost
+
+# Velocity Cost
+vel_weight: 4.0 # weight for the velocity cost
+
+# Speed Limit Cost
+vel_limit_a: 10.0 # parameter for speed limit cost
+vel_limit_b: 1.0 # parameter for ExpLinear Cost
+
+# Heading Cost
+heading_weight: 2  # weight for the heading cost
+
+# Lateral Acceleration Cost
+# We use ExpLinearCost for lateral acceleration cost
+lat_accel_thres: 6.0 # threshold for lateral acceleration cost
+lat_accel_a: 5.0 # parameter for lateral acceleration cost
+lat_accel_b: 2.0 # parameter for ExpLinear Cost
+
+# Progress Cost
+progress_weight: 0  # weight for the progress cost
+
+# Lane Boundary Cost
+lane_boundary_a: 100.0 # parameter for lane boundary cost
+lane_boundary_b: 5.0 # parameter for ExpLinear Cost
+
+########        Control Cost          ############
+# those value should not be too small
+ctrl_cost_accel_weight: 1.0
+ctrl_cost_steer_weight: 0.5
+
+########        Obstacle Cost          ############
+obs_a: 25.0 # parameter for obstacle cost
+obs_b: 10.0 # parameter for ExpLinear Cost

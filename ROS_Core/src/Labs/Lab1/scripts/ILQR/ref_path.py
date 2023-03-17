@@ -7,7 +7,8 @@ from pyspline.pyCurve import Curve
 
 class RefPath:
     def __init__(self, center_line: np.ndarray, width_left: Union[np.ndarray, float],
-                    width_right: Union[np.ndarray, float], speed_limt: Union[np.ndarray, float], loop: Optional[bool] = True) -> None:
+                    width_right: Union[np.ndarray, float], speed_limt: Union[np.ndarray, float],
+                    loop: Optional[bool] = True, section_length: float = 5.0) -> None:
         '''
         Considers a track with fixed width.
 
@@ -43,6 +44,12 @@ class RefPath:
         
         self.loop = loop
         self.length = self.center_line.getLength()
+        
+        # local centerline for getting reference
+        self.section_length = section_length
+        self.local_center_line = None
+        self.local_s0 = None
+        self.local_s1 = None
 
         # variables for plotting
         self.build_track()
@@ -121,9 +128,28 @@ class RefPath:
             
     def get_reference(self, points: np.ndarray,
             normalize_progress: Optional[bool] = False, 
-            eps: Optional[float] = 1e-5) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+            eps: Optional[float] = 1e-3) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         
-        closest_pt, slope, s = self.get_closest_pts(points, eps=eps)
+        if self.local_center_line is None:
+            # print("recaculate local centerline")
+            s0, _ = self.center_line.projectPoint(points[:,0], eps=eps)
+            self.local_s0 = s0*0.9
+            self.local_s1 = min(s0+self.section_length/self.length, 1)
+            self.local_center_line = self.center_line.windowCurve(self.local_s0, self.local_s1)
+        
+        # project to local centerline
+        s_local, d_local = self.local_center_line.projectPoint(points.T, eps=eps)
+        
+        inital_error = d_local[0,0]**2 + d_local[0,1]**2
+        
+        recalculate = inital_error > 1.0 or \
+            (s_local[0]>=0.5 and self.local_s1 <= 0.95)
+        # print(s_local, self.local_s0, self.local_s1, inital_error, recalculate)
+        if recalculate:
+            self.local_center_line = None
+        
+        s = s_local*(self.local_s1-self.local_s0) + self.local_s0
+        closest_pt, slope = self._interp_s(s)
         
         v_ref = self.speed_limit.getValue(s)[:,1]
         
@@ -138,10 +164,12 @@ class RefPath:
         
         if not normalize_progress:
             s = s * self.length
+            
         s = s[np.newaxis, :]
+        slope = slope[np.newaxis, :]
         return np.concatenate([closest_pt, slope, v_ref, s, width_right, width_left], axis=0)
 
-    def get_closest_pts(self, points: np.ndarray, eps: Optional[float] = 1e-5) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    def get_closest_pts(self, points: np.ndarray, eps: Optional[float] = 1e-3) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         Gets the closest points on the centerline, the slope of their tangent
         lines, and the progress given the points in the global frame.
@@ -153,18 +181,18 @@ class RefPath:
         Returns:
             np.ndarray: the position of the closest points on the centerline. This
                 array is of the shape (2, N).
-            np.ndarray: the slope of of trangent line on those points. This vector
+            np.ndarray: the slope of of tangent line on those points. This vector
                 is of the shape (1, N).
             np.ndarray: the normalized progress along the centerline. This vector is of the
                 shape (1, N).
         """
         if len(points.shape) == 1:
             points = points[:, np.newaxis]
-            
-        s, _ = self.center_line.projectPoint(points.T, eps=eps)
-        
-        if points.shape[1] == 1:
+            s, _ = self.center_line.projectPoint(points.T, eps=eps)
             s = np.array([s])
+        else:
+            s, _ = self.center_line.projectPoint(points.T, eps=eps)
+            
         closest_pt, slope = self._interp_s(s)
         slope = slope[np.newaxis, :]
 

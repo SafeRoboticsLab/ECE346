@@ -1,0 +1,54 @@
+<launch>
+    <arg name="output"              default="screen"                doc="display output to screen or log file"/>
+    <arg name="odom_topic"          default="/Simulation/Pose"      doc="ROS topic for the pose"/>
+    <arg name="control_topic"       default="/Control"              doc="ROS topic for control input"/>
+    <arg name="obstacle_topic"      default="/Prediction/Obstacles" doc="ROS topic for obstacles"/>
+    <arg name="traj_topic"          default="/Planning/Trajectory"  doc="ROS topic for trajectory"/>
+    <arg name="path_topic"          default="/Routing/Path"         doc="ROS topic for reference path"/>
+    <arg name="pub_rate"            default="20"                    doc="rate at which to publish the pose"/>
+    <arg name="receding_horizon"    default="true"                 doc="whether to use open loop planner"/>
+    <arg name="init_x"              default="2"                     doc="initial x position"/>
+    <arg name="init_y"              default="0.15"                  doc="initial y position"/>
+    <arg name="init_yaw"            default="0"                     doc="initial z position"/>
+    <arg name="lane_change_cost"    default="2"                     doc="cost of lane change"/>
+    <arg name="replan_dt"           default="0.1"                   doc="time step for replanning"/>
+    <arg name="ilqr_config"         default="configs/lab2_task1.yaml"     doc="path to ilqr config file"/>
+    <!-- Obstacles Paramerets  -->
+    <arg name="num_dyn_obs"         default="0"                     doc="number of dynamic obsects"/>
+    <arg name="num_static_obs"      default="1"                     doc="number of static obsects"/>
+    <arg name="static_obs_size"     default="0.18"                   doc="type of static obsects"/>
+    <arg name="static_obs_topic"    default="/Obstacles/Static"     doc="ROS topic for static obstacles"/>
+    <arg name="dyn_obs_topic"       default="/Obstacles/Dynamic"    doc="ROS topic for dynamic obstacles"/>
+
+    <!-- This section launch another launch file -->
+    <include file="$(find racecar_interface)/launch/traffic_simulation.launch" >
+        <arg name="odom_topic"              value="$(arg odom_topic)" />
+        <arg name="control_topic"           value="$(arg control_topic)" />
+        <arg name="pub_rate"                value="$(arg pub_rate)" />
+        <arg name="init_x"                  value="$(arg init_x)" />
+        <arg name="init_y"                  value="$(arg init_y)" />
+        <arg name="init_yaw"                value="$(arg init_yaw)" />
+        <arg name="enable_routing"          value="true" />
+        <arg name="lane_change_cost"        value="$(arg lane_change_cost)"/>
+        <arg name="num_dyn_obs"             value="$(arg num_dyn_obs)"/>
+        <arg name="num_static_obs"          value="$(arg num_static_obs)"/>
+        <arg name="static_obs_size"         value="$(arg static_obs_size)"/>
+        <arg name="static_obs_topic"        value="$(arg static_obs_topic)"/>
+        <arg name="dyn_obs_topic"           value="$(arg dyn_obs_topic)"/>
+    </include>
+
+    <node pkg="racecar_planner" type="traj_planning_node.py" name="traj_planning" output="$(arg output)">
+        <param name="odom_topic"           value="$(arg odom_topic)" />
+        <param name="control_topic"        value="$(arg control_topic)" />
+        <param name="obstacle_topic"       value="$(arg obstacle_topic)" />
+        <param name="traj_topic"           value="$(arg traj_topic)" />
+        <param name="path_topic"           value="$(arg path_topic)" />
+        <param name="package_path"         value="$(find racecar_planner)" />
+        <param name="simulation"           value="True" />
+        <param name="receding_horizon"            value="$(arg receding_horizon)" />
+        <param name="replan_dt"            value="$(arg replan_dt)" />
+        <param name="ilqr_params_file"     value="$(arg ilqr_config)" />
+        <param name="PWM_model"            value="$(find racecar_planner)/configs/mlp_model.sav" />
+    </node>
+
+</launch>

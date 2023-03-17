@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>racecar_obs_detection</name>
+  <version>0.1.0</version>
+  <description>The traj_tracking_ros package</description>
+
+  <maintainer email="zixuz@princeton.edu">Zixu Zhang</maintainer>
+  <license>BSD</license>
+
+  <author >Zixu Zhang</author>
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>racecar_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <depend>dynamic_reconfigure</depend>
+  <depend>nav_msgs</depend>
+</package>
