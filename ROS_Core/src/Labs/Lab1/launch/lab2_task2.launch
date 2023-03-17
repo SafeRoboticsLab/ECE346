@@ -14,7 +14,7 @@
     <arg name="replan_dt"           default="0.1"                   doc="time step for replanning"/>
     <arg name="ilqr_config"         default="configs/lab2_task2.yaml"     doc="path to ilqr config file"/>
     <!-- Obstacles Paramerets  -->
-    <arg name="num_dyn_obs"         default="5"                     doc="number of dynamic obsects"/>
+    <arg name="num_dyn_obs"         default="2"                     doc="number of dynamic obsects"/>
     <arg name="num_static_obs"      default="0"                     doc="number of static obsects"/>
     <arg name="static_obs_size"     default="0.18"                   doc="type of static obsects"/>
     <arg name="static_obs_topic"    default="/Obstacles/Static"     doc="ROS topic for static obstacles"/>
