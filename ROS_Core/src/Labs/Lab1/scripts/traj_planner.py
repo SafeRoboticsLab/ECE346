@@ -9,7 +9,7 @@ import time
 from utils import RealtimeBuffer, get_ros_param, Policy, GeneratePwm, get_obstacle_vertices
 from utils import frs_to_obstacle, frs_to_msg
 from ILQR import RefPath
-from ILQR import ILQR_np as ILQR
+from ILQR import ILQR
 
 from racecar_msgs.msg import ServoMsg, OdometryArray
 from racecar_planner.cfg import plannerConfig
