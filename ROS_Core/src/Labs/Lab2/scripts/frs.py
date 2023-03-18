@@ -1,9 +1,46 @@
-from quickzonoreach.zono import get_zonotope_reachset
+from quickzonoreach.zono import onestep_zonotope_reachset, zono_from_box
 import numpy as np
 import rospy
 from nav_msgs.msg import Odometry
 import pickle
 from tf.transformations import euler_from_quaternion
+
+
+
+def multistep_zonotope_reachset(init_box, a_mat, b_mat, input_box, dt_list, quick=True):
+    '''
+    Generator for multiple step reachable set for a zonotope at dt
+    params:
+        init_box: bounding box of the initial state, 
+            np.ndarray [N,2] for N dimensions state space, 
+            each row is [min, max] value of the state space, 
+        a_mat: a matrices, [N,N] np.ndarray
+        b_mat: b matrices, [N,M] np.ndarray for M-dimensional input space
+        input_box: list of input boxes, [M,2] np.ndarray for M-dimensional input space
+            each row is [min, max] value of the input space 
+        dt_list: list of time steps
+    '''
+    reachable_set_list = []
+    # Create a zonotope to represent the initial state
+    init_z = zono_from_box(init_box)
+    
+    ############################
+    #### TODO ##################
+    # Use helper function <onestep_zonotope_reachset> to get the reachable set for each time step
+    # This function have following parameters:
+    # Input:
+    #     init_z: initial set represented as a zonotope
+    #     a_mat: a matrices, [N,N] np.ndarray for N-dimensional state space
+    #     b_mat: b matrices, [N,M] np.ndarray for M-dimensional input space
+    #     input_box: list of input boxes, [M,2] np.ndarray for M-dimensional input space
+    #     dt: time step
+    #     quick: if True, use the quick method, otherwise use the Kamenev method. Default: False
+    # Output:
+    #     z: the reachable set as a zonotope
+    ############################
+    
+    return reachable_set_list
+        
 
 class FRS():
     def __init__(self, map_file = None):
@@ -29,7 +66,7 @@ class FRS():
 
     def get(self, state: Odometry, t_list, K_vx, K_y, K_vy, dx, dy, v_ref = None, allow_lane_change=True):
         '''
-        Get the zonotope reachable set for given time steps
+        Get the zonotope reachable set for given time steps in cartesian coordinates
         Parameters:
             t_list: [N,] np.ndarray, time to calculate the reachable set [s] 
                 Note: this is the absolute wall time in your ROS system
@@ -128,7 +165,7 @@ class FRS():
                 input_box_list.append(input_box)
             
             # get the zonotope in frenet frame
-            zonotopes = get_zonotope_reachset(init_box, a_mat_list, b_mat_list, input_box_list, dt_list, quick=True)
+            zonotopes = multistep_zonotope_reachset(init_box, a_hat_mat, self.b_mat, input_box, dt_list, quick=True)
             
             # max in x
             d_max = np.max(np.array(zonotopes[-1].verts())[:,0])+0.3

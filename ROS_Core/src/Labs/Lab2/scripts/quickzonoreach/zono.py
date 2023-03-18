@@ -12,91 +12,38 @@ import matplotlib.pyplot as plt
 from quickzonoreach.util import compress_init_box, Freezable, to_discrete_time_mat
 from quickzonoreach import kamenev
 
-def get_zonotope_reachset(init_box, a_mat_list, b_mat_list, input_box_list, dt_list, save_list=None, quick=False):
-    '''get the discrete-time zonotope reachable set at each time step
+class Zonotope(Freezable):pass
 
-    b_mat list can include 'None' entries, in which case no inputs are applied for that step
-
-    if save_list is not None, it is a list of booleans, one longer than the other lists, indicating if the
-    zonotope should be saved in the return value (the first entry is for time zero). The default is to save
-    every step
+def onestep_zonotope_reachset(init_z: Zonotope, a_mat: np.array, b_mat, input_box, dt, quick=False):
     '''
-
-    assert len(a_mat_list) == len(b_mat_list) == len(input_box_list) == len(dt_list), "all lists should be same length"
-
-    # save everything by default
-    if save_list is None:
-        save_list = [True] * (len(a_mat_list) + 1)
-
-    assert len(save_list) == len(a_mat_list) + 1, "Save mat list should be one longer than the other lists"
-
-    rv = []
-
-    def custom_func(index, zonotope):
-        'custom function that gets called on each zonotope in iterate_zonotope_reachset'
-
-        if save_list[index]:
-            rv.append(zonotope.clone())
-
-    iterate_zonotope_reachset(init_box, a_mat_list, b_mat_list, input_box_list, dt_list, custom_func, quick=quick)
-
-    return rv
-
-def iterate_zonotope_reachset(init_box, a_mat_list, b_mat_list, input_box_list, dt_list, custom_func, quick=False):
+    Generator one step reachable set for a zonotope at dt
+    params:
+        init_z: initial set represented as a zonotope
+        a_mat: a matrices, [N,N] np.ndarray for N-dimensional state space
+        b_mat: b matrices, [N,M] np.ndarray for M-dimensional input space
+        input_box: list of input boxes, [M,2] np.ndarray for M-dimensional input space
+        dt: time step
+        quick: if True, use the quick method, otherwise use the Kamenev method. Default: False
+    returns:
+        z: the reachable set as a zonotope
     '''
-    iterate over each element of the reach set, running a custom function each time which can be used to do 
-    processing such as checking for bad state intersections, saving states, or plotting
+    disc_a_mat, disc_b_mat = to_discrete_time_mat(a_mat, b_mat, dt, quick=quick)
+    z = init_z.clone()
+    z.center = np.dot(disc_a_mat, z.center)
+    z.mat_t = np.dot(disc_a_mat, z.mat_t)
+    # add new generators for inputs
+    if disc_b_mat is not None:
+        z.mat_t = np.concatenate((z.mat_t, disc_b_mat), axis=1)
 
-    params are same as get_zonotope_reach_set, except for custom_func which takes in two arguments: 
-    (index, Zonotope), where index is an int that is 0 for the initial zonotope and increments at each step
-    '''
-
-    z = zono_from_box(init_box)
-
-    index = 0
-    custom_func(index, z)
-    index += 1
-
-    # reduces computation if not changes between steps
-    last_a_mat = None
-    last_b_mat = None
-    last_disc_a_mat = None
-    last_disc_b_mat = None
-    last_dt = None
-
-    for a_mat, b_mat, input_box, dt in zip(a_mat_list, b_mat_list, input_box_list, dt_list):
-
-        if a_mat is last_a_mat and b_mat is last_b_mat and dt == last_dt:
-            # if a and b matrices haven't changed
-            disc_a_mat = last_disc_a_mat
-            disc_b_mat = last_disc_b_mat
-        else:       
-            disc_a_mat, disc_b_mat = to_discrete_time_mat(a_mat, b_mat, dt, quick=quick)
-
-            last_a_mat = a_mat
-            last_b_mat = b_mat
-            last_disc_a_mat = disc_a_mat
-            last_disc_b_mat = disc_b_mat
-            last_dt = dt
-
-        z.center = np.dot(disc_a_mat, z.center)
-        z.mat_t = np.dot(disc_a_mat, z.mat_t)
-
-        # add new generators for inputs
-        if disc_b_mat is not None:
-            z.mat_t = np.concatenate((z.mat_t, disc_b_mat), axis=1)
-
-            if isinstance(input_box, np.ndarray):
-                input_box = input_box.tolist()
-                
-            z.init_bounds += input_box
+        if isinstance(input_box, np.ndarray):
+            input_box = input_box.tolist()
             
-            num_gens = z.mat_t.shape[1]
-            assert len(z.init_bounds) == num_gens, f"Zonotope had {num_gens} generators, " + \
-                f"but only {len(z.init_bounds)} bounds were there."
-
-        custom_func(index, z)
-        index += 1
+        z.init_bounds += input_box
+        
+        num_gens = z.mat_t.shape[1]
+        assert len(z.init_bounds) == num_gens, f"Zonotope had {num_gens} generators, " + \
+            f"but only {len(z.init_bounds)} bounds were there."
+    return z
 
 def zono_from_box(box):
     'create a (compressed) zonotope from a box'
