@@ -46,7 +46,7 @@ class DynObstacle():
         #    <ROS_Core/src/Utility/Custom_Msgs/msg/OdometryArray.msg>
         ###############################################
         # Class variable to store the most recent dynamic obstacle's poses
-        self.dyn_obstacles = None
+        self.dyn_obstacles = []
         
         ###############################################
         ############## TODO ###########################
