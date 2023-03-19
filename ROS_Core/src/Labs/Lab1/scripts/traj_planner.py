@@ -5,23 +5,26 @@ import rospy
 import numpy as np
 import os
 import time
+import queue
 
-from utils import RealtimeBuffer, get_ros_param, Policy, GeneratePwm, get_obstacle_vertices
-from utils import frs_to_obstacle, frs_to_msg
+from utils import RealtimeBuffer, Policy, GeneratePwm
 from ILQR import RefPath
 from ILQR import ILQR
 
-from racecar_msgs.msg import ServoMsg, OdometryArray
+from racecar_msgs.msg import ServoMsg
 from racecar_planner.cfg import plannerConfig
-from visualization_msgs.msg import MarkerArray
 
 from dynamic_reconfigure.server import Server
 from tf.transformations import euler_from_quaternion
 from nav_msgs.msg import Odometry
 from nav_msgs.msg import Path as PathMsg # used to display the trajectory on RVIZ
 from std_srvs.srv import Empty, EmptyResponse
+
+# You will use those for lab2   
+from racecar_msgs.msg import OdometryArray
+from utils import frs_to_obstacle, frs_to_msg, get_obstacle_vertices, get_ros_param
+from visualization_msgs.msg import MarkerArray
 from racecar_obs_detection.srv import GetFRS, GetFRSResponse
-import queue
 
 class TrajectoryPlanner():
     '''

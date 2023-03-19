@@ -14,11 +14,14 @@ def multistep_zonotope_reachset(init_box, a_mat, b_mat, input_box, dt_list, quic
         init_box: bounding box of the initial state, 
             np.ndarray [N,2] for N dimensions state space, 
             each row is [min, max] value of the state space, 
-        a_mat: a matrices, [N,N] np.ndarray
-        b_mat: b matrices, [N,M] np.ndarray for M-dimensional input space
+        a_mat: a matrices for dynamics, [N,N] np.ndarray
+        b_mat: b matrices for dynamics, [N,M] np.ndarray for M-dimensional input space
         input_box: list of input boxes, [M,2] np.ndarray for M-dimensional input space
             each row is [min, max] value of the input space 
-        dt_list: list of time steps
+        dt_list: list of time steps. 
+            Note: i-th dt in this list is the time difference i and i-1 steps of reachable set
+    return: 
+        reachable_set_list: a list of reachable sets, each reachable set is a zonotope
     '''
     reachable_set_list = []
     # Create a zonotope to represent the initial state
@@ -30,8 +33,8 @@ def multistep_zonotope_reachset(init_box, a_mat, b_mat, input_box, dt_list, quic
     # This function have following parameters:
     # Input:
     #     init_z: initial set represented as a zonotope
-    #     a_mat: a matrices, [N,N] np.ndarray for N-dimensional state space
-    #     b_mat: b matrices, [N,M] np.ndarray for M-dimensional input space
+    #     a_mat: a matrices for dynamics, [N,N] np.ndarray for N-dimensional state space
+    #     b_mat: b matricesfor dynamics, [N,M] np.ndarray for M-dimensional input space
     #     input_box: list of input boxes, [M,2] np.ndarray for M-dimensional input space
     #     dt: time step
     #     quick: if True, use the quick method, otherwise use the Kamenev method. Default: False
