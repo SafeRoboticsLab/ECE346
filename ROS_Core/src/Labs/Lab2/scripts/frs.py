@@ -67,15 +67,15 @@ class FRS():
             self.lanelet_map = pickle.load(f)
         self.lanelet_map.build_graph(0)
 
-    def get(self, state: Odometry, t_list, K_vx, K_y, K_vy, dx, dy, v_ref = None, allow_lane_change=True):
+    def get(self, state: Odometry, t_list, K_vx, K_vy, K_y, dx, dy, v_ref = None, allow_lane_change=True):
         '''
         Get the zonotope reachable set for given time steps in cartesian coordinates
         Parameters:
             t_list: [N,] np.ndarray, time to calculate the reachable set [s] 
                 Note: this is the absolute wall time in your ROS system
             K_vx: float, gain for longitudinal velocity
-            K_y: float, gain for lateral state
             K_vy: float, gain for lateral velocity
+            K_y: float, gain for lateral state
             v_ref: float, reference velocity
             dx: float, disturbance in x direction [m/s^2]
             dy: float, disturbance in y direction [m/s^2]
@@ -178,7 +178,7 @@ class FRS():
 
             for route in reachable_routes:
                 reachable_sets = []
-                for zonotope in zonotopes[1:]:
+                for zonotope in zonotopes:
                     # Reachable set is rectangular
                     x_min = np.min(np.array(zonotope.verts())[:,0])-0.1
                     x_max = np.max(np.array(zonotope.verts())[:,0])+0.3
