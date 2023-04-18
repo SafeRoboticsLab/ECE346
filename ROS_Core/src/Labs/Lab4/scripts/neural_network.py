@@ -70,8 +70,8 @@ class NeuralNetwork():
         self.model.zero_grad()
 
         if isinstance(x, np.ndarray):
-            x = torch.from_numpy(x).float()
-            y = torch.from_numpy(y).float().reshape(-1, 1)
+            x = torch.from_numpy(x).float().to(self.device)
+            y = torch.from_numpy(y).float().reshape(-1, 1).to(self.device)
         
         y_pred = self.model(x).reshape(-1, self.output_size)
         
