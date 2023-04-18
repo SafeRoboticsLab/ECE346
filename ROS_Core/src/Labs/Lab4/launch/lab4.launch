@@ -1,0 +1,21 @@
+<launch>
+    <arg name="output"              default="screen"                doc="display output to screen or log file"/>
+    <arg name="odom_topic"          default="/SLAM/Pose"            doc="ROS topic for the pose"/>
+    <arg name="control_topic"       default="/Control"              doc="ROS topic for control input"/>
+    <arg name="path_topic"          default="/Routing/Path"         doc="ROS topic for reference path"/>
+    <arg name='model_path'          default=""                      doc='path to the model file'/>
+    <arg name='lr'                  default="0.01"                  doc='learning rate'/>
+
+
+    <node pkg="racecar_learning" type="learning_node.py" name="imitation_learning" output="$(arg output)">
+        <param name="odom_topic"           value="$(arg odom_topic)" />
+        <param name="control_topic"        value="$(arg control_topic)" />
+        <param name="path_topic"           value="$(arg path_topic)" />
+        <param name="package_path"         value="$(find racecar_learning)" />
+        <param name="simulation"           value="False" />
+        <param name="PWM_model"            value="$(find racecar_learning)/models/pwm.sav" />
+        <param name="model_path"           value="$(arg model_path)" />
+        <param name="lr"                   value="$(arg lr)" />
+    </node>
+
+</launch>
