@@ -1,0 +1,63 @@
+<launch>
+    <!-- This fix the library linkage issue in RoboStack -->
+    <env name="LD_PRELOAD" value="$(env CONDA_PREFIX)/lib/libyaml-cpp.so" />
+    <arg name="output"              default="screen"                doc="display output to screen or log file"/>
+    <arg name="odom_topic"          default="/SLAM/Pose"      doc="ROS topic for the pose"/>
+    <arg name="control_topic"       default="/Control"              doc="ROS topic for control input"/>
+    <arg name="lane_change_cost"    default="1"                     doc="cost of lane change"/>
+    <arg name="static_obs_size"     default="0.2"                   doc="type of static obsects"/>
+    <arg name="static_obs_topic"    default="/Obstacles/Static"     doc="ROS topic for static obstacles"/>
+    <arg name="dyn_obs_topic"       default="/Obstacles/Dynamic"    doc="ROS topic for dynamic obstacles"/>
+    
+    <rosparam file="$(find final_project)/task1.yaml" command="load" />
+
+    <node pkg="racecar_interface" type="simulation_node.py" name="simulation_node" output="$(arg output)">
+        <param name="odom_topic"           value="$(arg odom_topic)" />
+        <param name="control_topic"        value="$(arg control_topic)" />
+        <param name="pub_rate"             value="$(arg pub_rate)" />
+        <param name="init_x"               value="$(arg init_x)" />
+        <param name="init_y"               value="$(arg init_y)" />
+        <param name="init_yaw"             value="$(arg init_yaw)" />
+    </node>
+
+    <node pkg="final_project" type="task1_obstacle_detection_node.py" name="static_obstacle_detection_node" output="$(arg output)">
+        <!-- <param name="map_file"             value="$(find racecar_routing)/cfg/track.pkl" /> -->
+        <!-- <param name="num_dyn_obs"          value="$(arg num_dyn_obs)" /> -->
+        <!-- <param name="num_static_obs"       value="$(arg num_static_obs)" /> -->
+        <param name="odom_topic"           value="$(arg odom_topic)" />
+        <param name="static_obs_size"      value="$(arg static_obs_size)" />
+        <param name="static_obs_topic"     value="$(arg static_obs_topic)" />
+        <param name="static_tag_topic"     value="/SLAM/Tag_Detections_Dynamic" />
+        <param name="dyn_obs_topic"        value="$(arg dyn_obs_topic)" />
+        <param name="pub_rate"             value="$(arg pub_rate)" />
+    </node>
+
+    <include file="$(find racecar_routing)/launch/routing.launch">
+        <arg name="output"              value="$(arg output)"/>
+        <arg name="odom_topic"          value="$(arg odom_topic)"/>
+        <arg name="lane_change_cost"    value="$(arg lane_change_cost)"/>
+    </include>
+
+    <node pkg="racecar_interface" type="visualization_node.py" name="visualization_node" output="$(arg output)">
+        <param name="odom_topic"           value="$(arg odom_topic)" />
+        <param name="control_topic"        value="$(arg control_topic)"/>
+    </node>
+    
+    <include file="$(find racecar_routing)/launch/visualize_map.launch">
+            <arg name="output"              value="$(arg output)"/>
+    </include>
+
+    <include file="$(find racecar_routing)/launch/routing.launch">
+            <arg name="output"              value="$(arg output)"/>
+            <arg name="odom_topic"          value="$(arg odom_topic)"/>
+            <arg name="lane_change_cost"    value="$(arg lane_change_cost)"/>
+            <arg name="click_goal"          value="false"/>
+    </include>
+
+    <node type="rviz" name="rviz" pkg="rviz" 
+        args="-d $(find racecar_interface)/rviz/simulation.rviz" />
+    
+    <node type="rqt_gui" name="rqt_gui" pkg="rqt_gui" 
+        args="--perspective-file $(find racecar_interface)/rviz/rqt_sim.perspective"/>
+    
+</launch>

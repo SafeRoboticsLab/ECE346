@@ -1,0 +1,45 @@
+<launch>
+    <arg name="output"              default="screen"                doc="display output to screen or log file"/>
+    <arg name="odom_topic"          default="/Simulation/Pose"      doc="ROS topic for the pose"/>
+    <arg name="control_topic"       default="/Control"              doc="ROS topic for control input"/>
+    <arg name="obstacle_topic"      default="/Prediction/Obstacles" doc="ROS topic for obstacles"/>
+    <arg name="pub_rate"            default="20"                    doc="rate at which to publish the pose"/>
+    <arg name="init_x"              default="2.5"                     doc="initial x position"/>
+    <arg name="init_y"              default="0.15"                  doc="initial y position"/>
+    <arg name="init_yaw"            default="0"                     doc="initial z position"/>
+    <arg name="lane_change_cost"    default="2"                     doc="cost of lane change"/>
+
+    <!-- TODO: add your decision making and trajectory planning nodes here -->
+    <!-- This section launch the simulation of the student truck -->
+    <include file="$(find racecar_interface)/launch/visualization.launch" >
+        <arg name="odom_topic"              value="$(arg odom_topic)" />
+        <arg name="control_topic"           value="$(arg control_topic)" />
+        <arg name="lane_change_cost"        value="$(arg lane_change_cost)"/>
+    </include>
+
+    <!-- This section launch the simulation of the boss truck -->
+    <!-- You DO NOT need to modify this section -->
+    <node pkg="racecar_interface" type="simulation_node.py" name="boss_simulation_node" output="$(arg output)">
+        <param name="odom_topic"           value="/Boss/Pose" />
+        <param name="control_topic"        value="/Boss/servo_control" />
+        <param name="pub_rate"             value="$(arg pub_rate)" />
+        <param name="init_x"               value="3.5" />
+        <param name="init_y"               value="0.15" />
+        <param name="init_yaw"             value="0" />
+        <param name="serice_name"          value="Boss/reset" />
+    </node>
+
+    <!-- This section launch the world model -->
+    <!-- You DO NOT need to modify this section -->
+    <node pkg="final_project" type="task2_world_node.py" name="task2_world_node" output="$(arg output)">
+        <param name="time_limit"                value="300" />
+        <param name="dt_refresh"                value="5" />
+        <param name="warehouse_yaml"            value="$(find final_project)/task2.yaml" />
+        <param name="student_pose_topic"        value="$(arg odom_topic)" />
+        <param name="PWM_model"                 value="$(find final_project)/pwm.sav" />
+        <param name="boss_odom_topic"           value="/Boss/Pose" />
+        <param name="boss_control_topic"        value="/Boss/servo_control" />
+        <param name="simulation"                value="True" />
+    </node>
+
+</launch>

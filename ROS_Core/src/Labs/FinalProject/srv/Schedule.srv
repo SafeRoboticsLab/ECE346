@@ -1,0 +1,5 @@
+---
+int32[] start_warehouse_index
+int32[] goal_warehouse_index
+float64[] rewards
+float64[] schedule

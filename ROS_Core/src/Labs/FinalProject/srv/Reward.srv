@@ -1,0 +1,4 @@
+int32 task # goal of the current task
+---
+bool done # whether the task is done
+float64 total_reward # total reward since the beginning of the session

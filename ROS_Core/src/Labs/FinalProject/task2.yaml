@@ -1,0 +1,30 @@
+# This file defines the parameters for the task 2 of the final project.
+warehouse_A:
+  id: 0
+  location: [3, 0.15] # [x, y] location of the warehouse
+  dxdy: [0.5, 0.25]
+  probability: [0.3, 0.05, 0.15, 0.3, 0.2] # probability of each goal being the goal of the warehouse
+
+warehouse_B:
+  id: 1
+  location: [5.9, 3.5]
+  dxdy: [0.25, 0.5]
+  probability: [0.1, 0.4, 0.2, 0.2, 0.1]
+
+warehouse_C:
+  id: 2
+  location: [0.15, 3.5]
+  dxdy: [0.25, 0.5]
+  probability: [0.5, 0.3, 0.1, 0.05, 0.05]
+
+warehouse_D:
+  id: 3
+  location: [3, 2.2]
+  dxdy: [0.5, 0.5]
+  probability: [0.2, 0.2, 0.3, 0.1, 0.2]
+
+warehouse_E:
+  id: 4
+  location: [3, 1.1]
+  dxdy: [0.5, 0.25]
+  probability: [0.2, 0.1, 0.3, 0.25, 0.15]
