@@ -20,11 +20,11 @@ class StaticObstacle():
                                     [0.0, 1.0, 0.0, -0.06],
                                     [0.0, 0.0, 1.0, 0], #wheelbase
                                     [0.0, 0.0, 0.0, 1.0]]) # camera to rear axis transform
-        self.T_cam2rob = np.linalg.inv(self.T_base2cam)
+        self.T_cam2rob = np.linalg.inv(self.T_rob2cam)
 
         self.T_obs2tag = np.array([[1.0, 0.0, 0.0, 0.0],
                                     [0.0, 1.0, 0.0, 0.0],
-                                    [0.0, 0.0, 1.0, -self.obstacle_size/2.0],
+                                    [0.0, 0.0, 1.0, -self.static_obs_size/2.0],
                                     [0.0, 0.0, 0.0, 1.0]])  
         
         self.static_obs_publisher = rospy.Publisher(self.static_obs_topic, MarkerArray, queue_size=1)
