@@ -14,14 +14,14 @@ cd $CUR_DIR/ROS_Core/src/Utility/Interface
 git checkout main
 git pull
 
-# Planning
-cd $CUR_DIR/ROS_Core/src/Utility/Labs/Lab1
-git checkout main
-git pull
+# # Planning
+# cd $CUR_DIR/ROS_Core/src/Utility/Labs/Lab1
+# git checkout main
+# git pull
 
 
 # Message
-cd $CUR_DIR/ROS_Core/src/Utility/ROS_msgs
+cd $CUR_DIR/ROS_Core/src/Utility/Custom_Msgs
 git checkout main
 git pull
 
