@@ -420,7 +420,7 @@ class SwiftHaul:
             ref =  self.ref_path[warehouse_idx][task] 
             if ref is not None:
                 reward = ref[1] * self.boss_task_discount # 50% discount
-            rospy.loginfo(f"Student truck is at warehouse %c, receiving task %d, and reward %f", chr(ord('A') +warehouse_idx), task, reward)
+            rospy.loginfo("Student truck is at warehouse %c, receiving task %d, and reward %f", chr(ord('A') +warehouse_idx), task, reward)
             self.cur_student_reward = reward
             self.cur_student_task = task
             self.doing_boss_task = True
