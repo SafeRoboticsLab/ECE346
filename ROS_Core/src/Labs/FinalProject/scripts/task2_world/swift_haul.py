@@ -409,7 +409,8 @@ class SwiftHaul:
         
         t_now = rospy.get_time() - self.start_time
         if t_now > (start_time + 5): # 5 seconds buffer
-            rospy.logwarn("Boss task %d has expired", boss_task)
+            rospy.logwarn("Boss task has expired")
+            return TaskResponse(-1, 0)
         
         cur_warehouse = self.warehouse_location[warehouse_idx]
         dis_x = abs(cur_warehouse[0] - cur_student_pose[0])
@@ -419,13 +420,13 @@ class SwiftHaul:
             ref =  self.ref_path[warehouse_idx][task] 
             if ref is not None:
                 reward = ref[1] * self.boss_task_discount # 50% discount
-            rospy.loginfo("Student truck is at warehouse %c, receiving task %d, and reward %f", chr(ord('A') +warehouse_idx), task, reward)
+            rospy.loginfo(f"Student truck is at warehouse %c, receiving task %d, and reward %f", chr(ord('A') +warehouse_idx), task, reward)
             self.cur_student_reward = reward
             self.cur_student_task = task
             self.doing_boss_task = True
             return TaskResponse(task, reward)
         else:
-            rospy.logwarn("Student truck is not at warehouse %d", chr(ord('A') +warehouse_idx))
+            rospy.logwarn("Student truck is not at warehouse %c", chr(ord('A') +warehouse_idx))
             
         return TaskResponse(task, reward)
     
