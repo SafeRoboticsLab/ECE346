@@ -45,31 +45,22 @@ In your Windows Command Prompt, enter either `wsl` or `bash`, your Ubuntu CLI wi
 
 ![](asset/enter-wsl.png)
 
-## 2. Install RoboStack
+## 2. Install Robostack
+Now that you have installed an Ubuntu distribution on your Windows device, we can install everything else using the install script for Linux devices. 
 
-Let us first clone a local repo in your WSL under your favorite directory
+Enter your Ubuntu dist, navigate to `Host_Setup/RoboStack` then run:
 ```
-cd <some directory. eg: ~>
-git clone --recurse-submodules <URL of your forked repo>
-```
-
-Navigate to `Host_Setup/RoboStack` then run:
-```
-cd <Path of your repo>/Host_Setup/RoboStack
 chmod +x ros_conda_install_unix.sh
 ./ros_conda_install_unix.sh
 ```
 
 ## 3. Test it out
-**Open a new terminal**, and run activate your ROS environment by ```conda activate ros_base```.
+Open a new terminal, and run activate your ROS environment by ```conda activate ros_base```.
 
 Then run ```roscore``` to start the ROS master. If everything works, you will seee
 ![](asset/ros_core_output.png)
 
-## 4. Common issues
-Check it out [here](/FAQ/readme.md)!
-
-## 5. Tips and tricks with WSL
+## 4. Tips and tricks with WSL
 You can think of Ubuntu WSL2 is a native Linux distribution running on top of your Windows OS. Meaning that, you can run basically everything that will run on a Linux device, including vscode directly inside WSL. Your vscode windows will show something like this at the bottom left corner indicating that the vscode server is hosted within WSL.
 
 ![](asset/wsl-vscode.png)
