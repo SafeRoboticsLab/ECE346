@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from functools import partial
 from typing import Optional
-from jaxlib.xla_extension import DeviceArray
+from jaxlib.xla_extension import ArrayImpl
 import jax
 from jax import numpy as jnp
 import numpy as np
@@ -76,7 +76,7 @@ class StateCost(BaseCost):
     
     @partial(jax.jit, static_argnums=(0,))
     def get_terminal_cost(
-			self, ref: DeviceArray
+			self, ref: ArrayImpl
 	) -> float:
         '''
         Since the progress is calulate from PySpline,

@@ -1,7 +1,7 @@
 from typing import Tuple, Any
 import numpy as np
 from functools import partial
-from jaxlib.xla_extension import DeviceArray
+from jaxlib.xla_extension import ArrayImpl
 import jax
 from jax import numpy as jnp
 
@@ -71,7 +71,7 @@ class Bicycle5D():
 		return np.asarray(state_nxt), np.asarray(ctrl_clip)
 
 	def get_jacobian_np(
-		self, trajectory: DeviceArray, controls: DeviceArray
+		self, trajectory: ArrayImpl, controls: ArrayImpl
 	) -> Tuple[np.ndarray, np.ndarray]:
 		"""
 		A, B = self.dyn.get_jacobian_np(trajectory, controls)
@@ -91,8 +91,8 @@ class Bicycle5D():
 		return np.asarray(A_jax), np.asarray(B_jax)
 
 	def rollout_nominal_np(
-			self, initial_state: np.ndarray, controls: DeviceArray
-	) -> Tuple[DeviceArray, DeviceArray]:
+			self, initial_state: np.ndarray, controls: ArrayImpl
+	) -> Tuple[ArrayImpl, ArrayImpl]:
 		'''
 		Rolls out the nominal trajectory Given the controls and initial state.
 
@@ -113,7 +113,7 @@ class Bicycle5D():
 	@partial(jax.jit, static_argnums=(0,))
 	def rollout_nominal_jax(
 			self, initial_state: np.ndarray, controls: np.ndarray,
-	) -> Tuple[DeviceArray, DeviceArray]:
+	) -> Tuple[ArrayImpl, ArrayImpl]:
 		'''
 		Rolls out the nominal trajectory Given the controls and initial state.
 
@@ -122,8 +122,8 @@ class Bicycle5D():
 			controls (np.ndarray): controls.
 
 		Returns:
-			trajectory (DeviceArray): roll out trajectory along the nominal trajectory.
-			ctrls_clip (DeviceArray): clipped control sequence
+			trajectory (ArrayImpl): roll out trajectory along the nominal trajectory.
+			ctrls_clip (ArrayImpl): clipped control sequence
 		'''
 		n = controls.shape[1]
 		@jax.jit
@@ -148,19 +148,19 @@ class Bicycle5D():
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_jacobian_jax(
-		self, trajectory: DeviceArray, controls: DeviceArray
-	) -> Tuple[DeviceArray, DeviceArray]:
+		self, trajectory: ArrayImpl, controls: ArrayImpl
+	) -> Tuple[ArrayImpl, ArrayImpl]:
 		"""
 		Returns the linearized 'A' and 'B' matrix of the ego vehicle around
 		nominal trajectory and controls.
 
 		Args:
-			trajectory (DeviceArray): trajectory along the nominal trajectory.
-			controls (DeviceArray): controls along the trajectory.
+			trajectory (ArrayImpl): trajectory along the nominal trajectory.
+			controls (ArrayImpl): controls along the trajectory.
 
 		Returns:
-			A (DeviceArray): the Jacobian of the dynamics w.r.t. the state.
-			B (DeviceArray): the Jacobian of the dynamics w.r.t. the control.
+			A (ArrayImpl): the Jacobian of the dynamics w.r.t. the state.
+			B (ArrayImpl): the Jacobian of the dynamics w.r.t. the control.
 		"""
 		_jac = jax.jacfwd(self._integrate_forward, argnums=[0, 1])
 		jac = jax.jit(jax.vmap(_jac, in_axes=(1, 1), out_axes=(2, 2)))
@@ -168,19 +168,19 @@ class Bicycle5D():
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_hessian_jax(
-		self, trajectory: DeviceArray, controls: DeviceArray
-	) -> Tuple[DeviceArray, DeviceArray]:
+		self, trajectory: ArrayImpl, controls: ArrayImpl
+	) -> Tuple[ArrayImpl, ArrayImpl]:
 		"""
 		Returns the linearized 'A' and 'B' matrix of the ego vehicle around
 		nominal trajectory and controls.
 
 		Args:
-			trajectory (DeviceArray): trajectory along the nominal trajectory.
-			controls (DeviceArray): controls along the trajectory.
+			trajectory (ArrayImpl): trajectory along the nominal trajectory.
+			controls (ArrayImpl): controls along the trajectory.
 
 		Returns:
-			A (DeviceArray): the Jacobian of the dynamics w.r.t. the state.
-			B (DeviceArray): the Jacobian of the dynamics w.r.t. the control.
+			A (ArrayImpl): the Jacobian of the dynamics w.r.t. the state.
+			B (ArrayImpl): the Jacobian of the dynamics w.r.t. the control.
 		"""
 		_fxx = jax.jacfwd(jax.jacrev(self._integrate_forward, argnums=0), argnums=0)
 		_fuu = jax.jacfwd(jax.jacrev(self._integrate_forward, argnums=1), argnums=1)
@@ -192,17 +192,17 @@ class Bicycle5D():
 
 	@partial(jax.jit, static_argnums=(0,))
 	def integrate_forward_jax(
-		self, state: DeviceArray, control: DeviceArray
-	) -> Tuple[DeviceArray, DeviceArray]:
+		self, state: ArrayImpl, control: ArrayImpl
+	) -> Tuple[ArrayImpl, ArrayImpl]:
 		"""Clips the control and computes one-step time evolution of the system.
 
 		Args:
-			state (DeviceArray): [x, y, v, psi, delta].
-			control (DeviceArray): [accel, omega].
+			state (ArrayImpl): [x, y, v, psi, delta].
+			control (ArrayImpl): [accel, omega].
 
 		Returns:
-			DeviceArray: next state. [5]
-			DeviceArray: clipped control. [2]
+			ArrayImpl: next state. [5]
+			ArrayImpl: clipped control. [2]
 		"""
 		# Clips the controller values between min and max accel and steer values.
 		ctrl_clip = jnp.clip(control, self.ctrl_limits[:, 0], self.ctrl_limits[:, 1])
@@ -221,7 +221,7 @@ class Bicycle5D():
 	################ Helper functions for the dynamics model ######################
 	###############################################################################
 	@partial(jax.jit, static_argnums=(0,))
-	def deriv(self, state: DeviceArray, control: DeviceArray) -> DeviceArray:
+	def deriv(self, state: ArrayImpl, control: ArrayImpl) -> ArrayImpl:
 		""" Computes the continuous system dynamics x_dot = f(x, u).
 			dx_k = v_k cos(psi_k)
 			dy_k = v_k sin(psi_k)
@@ -230,11 +230,11 @@ class Bicycle5D():
 			ddelta_k = u[1]_k
 
 		Args:
-			state (DeviceArray): [x, y, v, psi, delta].
-			control (DeviceArray): [accel, omega].
+			state (ArrayImpl): [x, y, v, psi, delta].
+			control (ArrayImpl): [accel, omega].
 
 		Returns:
-			DeviceArray: next state.
+			ArrayImpl: next state.
 		"""
 		deriv = jnp.zeros((self.dim_x,))
 		deriv = deriv.at[0].set(state[2] * jnp.cos(state[3]))
@@ -246,8 +246,8 @@ class Bicycle5D():
 
 	@partial(jax.jit, static_argnums=(0,))
 	def _integrate_forward(
-		self, state: DeviceArray, control: DeviceArray
-	) -> DeviceArray:
+		self, state: ArrayImpl, control: ArrayImpl
+	) -> ArrayImpl:
 		""" Computes one-step time evolution of the system: x_+ = f(x, u).
 		The discrete-time dynamics is as below:
 			x_k+1 = x_k + v_k cos(psi_k) dt
@@ -257,28 +257,28 @@ class Bicycle5D():
 			delta_k+1 = delta_k + u1_k dt
 
 		Args:
-			state (DeviceArray): [x, y, v, psi, delta].
-			control (DeviceArray): [accel, omega].
+			state (ArrayImpl): [x, y, v, psi, delta].
+			control (ArrayImpl): [accel, omega].
 
 		Returns:
-			DeviceArray: next state.
+			ArrayImpl: next state.
 		"""
 		state_nxt = self._integrate_forward_dt(state, control, self.dt)
 		return state_nxt
 
 	@partial(jax.jit, static_argnums=(0,))
 	def _integrate_forward_dt(
-		self, state: DeviceArray, control: DeviceArray, dt: float
-	) -> DeviceArray:
+		self, state: ArrayImpl, control: ArrayImpl, dt: float
+	) -> ArrayImpl:
 		"""4th-order Runge-Kutta method.
 
 		Args:
-			state (DeviceArray): current state
-			control (DeviceArray): current control
+			state (ArrayImpl): current state
+			control (ArrayImpl): current control
 			dt (float): time horizon to intergrate
 
 		Returns:
-			DeviceArray: next state
+			ArrayImpl: next state
 		"""
 		k1 = self.deriv(state, control)
 		k2 = self.deriv(state + k1*dt/2, control)

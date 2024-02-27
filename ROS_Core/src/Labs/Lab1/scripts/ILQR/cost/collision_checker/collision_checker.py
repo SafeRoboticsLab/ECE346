@@ -2,7 +2,7 @@ from typing import Union
 import jax
 from functools import partial
 import jax.numpy as jnp
-from jaxlib.xla_extension import DeviceArray
+from jaxlib.xla_extension import ArrayImpl
 import hppfcl
 import numpy as np
 import time

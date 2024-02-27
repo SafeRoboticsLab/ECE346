@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from functools import partial
 from typing import Union
-from jaxlib.xla_extension import DeviceArray
+from jaxlib.xla_extension import ArrayImpl
 import jax
 from jax import numpy as jnp
 
@@ -14,7 +14,7 @@ class BaseCost(ABC):
 
 	@abstractmethod
 	def get_running_cost(
-			self, state: DeviceArray, ctrl: DeviceArray, ref: DeviceArray
+			self, state: ArrayImpl, ctrl: ArrayImpl, ref: ArrayImpl
 	) -> float:
 		'''
 		Abstract method for computing the cost at a single timestep.
@@ -38,13 +38,13 @@ class BaseCost(ABC):
 	@classmethod
 	@partial(jax.jit, static_argnums=(0,))
 	def get_terminal_cost(
-			self, ref: DeviceArray
+			self, ref: ArrayImpl
 	) -> float:
 		return 0
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_traj_cost(
-			self, trajectory: DeviceArray, controls: DeviceArray, path_refs: DeviceArray
+			self, trajectory: ArrayImpl, controls: ArrayImpl, path_refs: ArrayImpl
 	) -> float:
 		'''
 		Given a state, control, and time index, return the sum of the cost.
@@ -63,8 +63,8 @@ class BaseCost(ABC):
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_derivatives_jax(
-			self, trajectory: DeviceArray, controls: DeviceArray, path_refs: DeviceArray
-	) -> DeviceArray:
+			self, trajectory: ArrayImpl, controls: ArrayImpl, path_refs: ArrayImpl
+	) -> ArrayImpl:
 		return (
 				self.get_cx(trajectory, controls, path_refs),
 				self.get_cu(trajectory, controls, path_refs),
@@ -75,8 +75,8 @@ class BaseCost(ABC):
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_cx(
-			self, trajectory: DeviceArray, controls: DeviceArray, path_refs: DeviceArray
-	) -> DeviceArray:
+			self, trajectory: ArrayImpl, controls: ArrayImpl, path_refs: ArrayImpl
+	) -> ArrayImpl:
 		'''
 		Given a state, control, and time index, return the jacobian of cost w.r.t the state.
 		Input:
@@ -93,8 +93,8 @@ class BaseCost(ABC):
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_cu(
-			self, trajectory: DeviceArray, controls: DeviceArray, path_refs: DeviceArray
-	) -> DeviceArray:
+			self, trajectory: ArrayImpl, controls: ArrayImpl, path_refs: ArrayImpl
+	) -> ArrayImpl:
 		'''
 		Given a state, control, and time index, return the jacobian of cost w.r.t the control.
 		Input:
@@ -112,8 +112,8 @@ class BaseCost(ABC):
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_cxx(
-			self, trajectory: DeviceArray, controls: DeviceArray, path_refs: DeviceArray
-	) -> DeviceArray:
+			self, trajectory: ArrayImpl, controls: ArrayImpl, path_refs: ArrayImpl
+	) -> ArrayImpl:
 		'''
 		Given a state, control, and time index, return the hessian of cost w.r.t the state.
 		Input:
@@ -130,8 +130,8 @@ class BaseCost(ABC):
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_cuu(
-			self, trajectory: DeviceArray, controls: DeviceArray, path_refs: DeviceArray
-	) -> DeviceArray:
+			self, trajectory: ArrayImpl, controls: ArrayImpl, path_refs: ArrayImpl
+	) -> ArrayImpl:
 		'''
 		Given a state, control, and time index, return the hessian of cost w.r.t the control.
 		Input:
@@ -148,8 +148,8 @@ class BaseCost(ABC):
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_cux(
-			self, trajectory: DeviceArray, controls: DeviceArray, path_refs: DeviceArray
-	) -> DeviceArray:
+			self, trajectory: ArrayImpl, controls: ArrayImpl, path_refs: ArrayImpl
+	) -> ArrayImpl:
 		'''
 		Given a state, control, and time index, return the hessian of cost w.r.t the control and state.
 		Input:
@@ -166,8 +166,8 @@ class BaseCost(ABC):
 
 	@partial(jax.jit, static_argnums=(0,))
 	def get_cxu(
-			self, trajectory: DeviceArray, controls: DeviceArray, path_refs: DeviceArray
-	) -> DeviceArray:
+			self, trajectory: ArrayImpl, controls: ArrayImpl, path_refs: ArrayImpl
+	) -> ArrayImpl:
 		'''
 		Given a state, control, and time index, return the hessian of cost w.r.t the control and state.
 		Input:
@@ -183,9 +183,9 @@ class BaseCost(ABC):
 
 @jax.jit
 def exp_linear_cost(
-		y: Union[float, DeviceArray], a: Union[float, DeviceArray] = 1,
-		b: Union[float, DeviceArray] = 1
-    ) -> Union[float, DeviceArray]:
+		y: Union[float, ArrayImpl], a: Union[float, ArrayImpl] = 1,
+		b: Union[float, ArrayImpl] = 1
+    ) -> Union[float, ArrayImpl]:
 	'''
 	Base Class of Exponential Linear Cost defined as following
 	Take y = func(x, u, t) 
@@ -204,9 +204,9 @@ def exp_linear_cost(
 
 @jax.jit
 def quadratic_cost(
-		y: Union[float, DeviceArray], a: Union[float, DeviceArray] = 1,
+		y: Union[float, ArrayImpl], a: Union[float, ArrayImpl] = 1,
 		not_used = None
-	) -> Union[float, DeviceArray]:
+	) -> Union[float, ArrayImpl]:
 	'''
 	Base Class of Quadratic Cost defined as following
 	Take y = func(x, u, t) 
@@ -219,9 +219,9 @@ def quadratic_cost(
 
 @jax.jit
 def huber_cost(
-		y: Union[float, DeviceArray], a: Union[float, DeviceArray] = 1,
-		delta: Union[float, DeviceArray] = 1
-    ) -> Union[float, DeviceArray]:
+		y: Union[float, ArrayImpl], a: Union[float, ArrayImpl] = 1,
+		delta: Union[float, ArrayImpl] = 1
+    ) -> Union[float, ArrayImpl]:
 	'''
     Base Class of Huber Cost defined as following
     Take y = func(x, u, t) 
