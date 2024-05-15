@@ -41,7 +41,7 @@ git push origin
     ```
 2. You can now merge the original `upstream` repo into your local branch.
     ```
-    git pull upstream SP2023 
+    git pull upstream SP2024 
     ```
     This will create a merge commit for you. If you encounter any conflicts, this [tutorial](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts) can help you take care of them.
 3. Inspect all changes that you have made in the temporary branch, then checkout your *SP2023* branch.
