@@ -21,9 +21,9 @@
     ```
     git remote add origin <URL of your private Repo>
     ```
-4. Push the `SP2023` branch from your local clone repo to your new remote one, which has now become a private fork of `ECE346`.
+4. Push the `SP2024` branch from your local clone repo to your new remote one, which has now become a private fork of `ECE346`.
     ```
-    git push -u origin SP2023
+    git push -u origin SP2024
     ```
     
 # Push to your private repo
@@ -44,12 +44,12 @@ git push origin
     git pull upstream SP2024 
     ```
     This will create a merge commit for you. If you encounter any conflicts, this [tutorial](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts) can help you take care of them.
-3. Inspect all changes that you have made in the temporary branch, then checkout your *SP2023* branch.
+3. Inspect all changes that you have made in the temporary branch, then checkout your *SP2024* branch.
     ```
-    git checkout SP2023
+    git checkout SP2024
     git merge temp
     git branch –-delete temp
     # Update submodules in case there are any
     git submodule update --init --recursive
     ```
-Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 and pull directly into your local `SP2023` branch.
+Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 and pull directly into your local `SP2024` branch.
