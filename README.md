@@ -6,13 +6,52 @@
 <!-- To keep your forked repo updated, please fetch upstream every time we release a new lab assignment. If you are not familiar with fetch, please check out this [tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork). -->
 
 # Getting Started
+> **Note:** If you are following this repository outside of ECE 346 or are refreshing your ECE 346 laptop, please follow these [instructions](Host_Setup/robotstack.md) to set up a working ROS2 Humble environment using [RoboStack](https://robostack.github.io/) for Linux/MacOS. 
 
-> **ECE 346 students:** please fork this repository and work within your own forked repo (see instructions below). 
+## Connect to Wi-Fi
+First, you will need to connect your ECE 346 laptop to a Wi-Fi network. To connect to eduroam, open your terminal and run
 
-## Windows Users:
-You might want to setup the Windows Linux Subsystem first by following this [guide](Host_Setup/Windows/windows_robostack.md).
+```
+python3 ~/Downloads/eduroam-linux-Princeton_University-Princeton_eduroam.py
+```
+If you don't see this file, you can temporarily connect to puvisitor using a non-Princeton email to [download it](https://cat.eduroam.org). Click 'Yes' and enter one group member's username, i.e., netid@princeton.edu and corresponding password. Then navigate to your Wi-Fi networks by clicking the top right of your screen, selecting the Wi-Fi logo followed by 'Select Network', 'eduroam', 'Connect'.
 
-## First Things First!
+## Set up GitHub on your laptop
+Next, you will connect your laptop to one group member's GitHub account using an SSH key. In your terminal, run
+```
+# Install packages to use GitHub and copy/paste
+sudo apt install git xclip
+```
+```
+# Replace with your GitHub email address
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+Press enter three times to skip requiring a password for each push/pull. Then run,
+```
+# Start the ssh-agent and add your private key to it
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+Open Google Chrome and log into [GitHub](http://github.com) using the same email from previous steps. In the upper-right corner of any page on GitHub, click your profile photo, then click 'Settings'. In the "Access" section of the sidebar, click  'SSH and GPG keys'. Click 'New SSH key'. In your terminal, run this command to copy your SSH key
+
+```
+# Copy public ssh key to your clipboard:
+cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
+```
+
+Now in your browser, enter 'ece346-XX' for 'Title', where XX is your group number. For 'Key', simply paste the SSH key that you just copied.
+
+Finally, complete your GitHub configuration in your terminal
+```
+# Replace with your GitHub email address and full name or a fun alias ;). Note this will appear on GitHub
+git config –global user.email “your_email@example.com”
+git config –global user.name “Your Name”
+```
+
+## Fork this repository
+
+Set up GitHub 
 [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) on your computer if you haven't done this before.
 
 Before cloning this repo, you will also need to setup your Github SSH key. Refer to [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [Adding a new SSH key to your Github account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to generate and setup SSH key for your Github.
