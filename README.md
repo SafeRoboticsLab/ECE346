@@ -6,7 +6,7 @@
 <!-- To keep your forked repo updated, please fetch upstream every time we release a new lab assignment. If you are not familiar with fetch, please check out this [tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork). -->
 
 # Getting Started
-> **Note:** If you are following this repository outside of ECE 346 or are refreshing your ECE 346 laptop, please follow these [instructions](Host_Setup/robotstack.md) to set up a working ROS2 Humble environment using [RoboStack](https://robostack.github.io/) for Linux/MacOS. 
+> **Note:** If you are following this repository outside of ECE 346 or are refreshing your ECE 346 laptop, please skip to [Set up ROS2 Environment via RoboStack](https://github.com/SafeRoboticsLab/ECE346/tree/SP2024?tab=readme-ov-file#set-up-ros2-environment-via-robostack) after cloning the repository with `git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git`. 
 
 ## Connect to Wi-Fi
 First, you will need to connect your ECE 346 laptop to a Wi-Fi network. To connect to eduroam, open your terminal and run
@@ -82,14 +82,14 @@ git config –global user.name “Your Name”
     git push -u origin SP2025
     ```
     
-### Push to your private repo
+### Push to your private repository
 
 When working on the labs and making changes to your code, you can push the code to your private repo on GitHub by simply doing:
 ```
 git push origin
 ```
 
-### Pull updates from the original ECE346 repo
+### Pull updates from the original ECE346 repository
 **Not sure about merge? It is never a bad idea to keep a copy locally before merging.**
 1. Commit all of your changes
    ```
@@ -115,11 +115,24 @@ git push origin
     ```
 Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 and `git pull` directly into your local `SP2025` branch.
 
-## Set up your machine
-One crucial component of ECE346 is ROS. Even though most of the computation will be handled on board our robots, it's still very useful to set up ROS on your computer for development, testing, and visualization. ROS used to only be available for Linux (at least painlessly). However, thanks to recent developments on [RoboStack](https://robostack.github.io/) it can now run on Windows and Mac too. Here, we provide detailed [instructions](Host_Setup/robotstack.md) and a script to help you set up ROS on your favorite operating system.
+## Set up ROS2 Environment via RoboStack
+One crucial component of ECE346 is the Robot Operating System (ROS) by Open Robotics. Even though most your robot's computation will be handled on board, it's very useful to set up ROS on your computer for development, testing, and visualization. We use [ROS2 Humble](https://docs.ros.org/en/humble/index.html) on [RoboStack](https://robostack.github.io/) for portability across Linux and MacOS and to easily manage packages with conda/mamba. To set up our environment, `cd` to the ECE346 directory in a terminal, then run
 
-## Still not comfortable with ROS?
-We have a ROS cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
+```
+sudo apt install curl
+cd Host_Setup
+chmod +x ros_conda_install_unix.sh
+./ros_conda_install_unix.sh
+```
+This process should take ~5 minutes. If you already have conda (anaconda/miniconda/miniforge, etc) installed, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new python3.11 environment with ROS2 Humble installed.
+
+If you do not have conda installed, the script will first install [**miniforge**](https://github.com/conda-forge/miniforge), and then create a new ROS Noetic environment. 
+
+We create an alias for activating the new environment called ```start_ros```. You can activate the environment by running either `start_ros` or `
+conda activate ros_base`.
+
+## Want practice with ROS2?
+We have a ROS2 cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
 
 ## Frequently Asked Questions
 Please check out our [FAQ](FAQ/readme.md) page for common questions.
