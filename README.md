@@ -49,6 +49,11 @@ git config –global user.email “your_email@example.com”
 git config –global user.name “Your Name”
 ```
 
+**Setting up GitHub on VSCode**
+
+In VSCode, log into [GitHub](https://github.com/). Click the settings icon, then 'Back up and sync settings', 'Sign in', 'Sign in with GitHub'.
+
+
 ## Create a private fork
 **If you've never used git before, we recommend this introductory [tutorial](https://www.atlassian.com/git/tutorials).**
 
