@@ -49,22 +49,74 @@ git config –global user.email “your_email@example.com”
 git config –global user.name “Your Name”
 ```
 
-## Fork this repository
+## Create a private fork
+**If you've never used git before, we recommend this introductory [tutorial](https://www.atlassian.com/git/tutorials).**
 
-Set up GitHub 
-[Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) on your computer if you haven't done this before.
+1. In the upper-right corner of any page on [GitHub](https://github.com/), select '+', then click New repository.
 
-Before cloning this repo, you will also need to setup your Github SSH key. Refer to [Generating a new SSH key and adding it to the ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and [Adding a new SSH key to your Github account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) to generate and setup SSH key for your Github.
+2. Type ECE346_GroupXX as the name for your repository, and an optional description.
 
-Once SSH key setup is done, create a clone of this repo locally. **Important**: `--recurse-submodules` option is neccessary to get all submodules!
+3. Choose 'Private' as your repository visibility.
+
+4. Click 'Create repository'.
+
+5. In your terminal, run the following command. **Important**: `--recurse-submodules` is neccessary to get all submodules, i.e., linked specific commits of separate GitHub repositories!
+    ```
+    git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git
+    ```
+
+6. From inside the cloned directory, rename the original 'ECE346' GitHub repo to 'upstream' (default is 'origin'), which you'll use to fetch future lab assignments and updates.
+    ```
+    cd ECE346
+    git remote rename origin upstream
+    git remote set-url --push upstream DISABLE
+    ```
+    
+7. Add your new private repository as a new remote named 'origin'. Note, this is just typical name for the 'primary' remote (online repository). To locate your private repo's URL, navigate to its main page on GitHub, select the green <>Code icon, select SSH and copy this URL to your clipboard. 
+    ```
+    git remote add origin <URL of your private Repo>
+    ```
+    
+8. Push the 'SP2025' branch of your local cloned repository to your new private remote one, which has now become a private fork of 'ECE346'.
+    ```
+    git push -u origin SP2025
+    ```
+    
+### Push to your private repo
+
+When working on the labs and making changes to your code, you can push the code to your private repo on GitHub by simply doing:
 ```
-git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git 
+git push origin
 ```
+
+### Pull updates from the original ECE346 repo
+**Not sure about merge? It is never a bad idea to keep a copy locally before merging.**
+1. Commit all of your changes
+   ```
+   git add .
+   git commit -m "Updates for Lab X"
+   ```
+2. Create a temporary local branch on your computer.
+    ```
+    git checkout -b temp
+    ```
+3. You can now merge the original 'upstream' repo into your temporary local branch.
+    ```
+    git pull upstream SP2025
+    ```
+    This will create a merge commit for you. If you encounter any conflicts, this [tutorial](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts) can help you take care of them.
+4. Inspect all changes that you have made in the temporary branch, then checkout your `SP2025` branch.
+    ```
+    git checkout SP2025
+    git merge temp
+    git branch –-delete temp
+    # Update submodules in case there are any
+    git submodule update --init --recursive
+    ```
+Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 and `git pull` directly into your local `SP2025` branch.
+
 ## Set up your machine
 One crucial component of ECE346 is ROS. Even though most of the computation will be handled on board our robots, it's still very useful to set up ROS on your computer for development, testing, and visualization. ROS used to only be available for Linux (at least painlessly). However, thanks to recent developments on [RoboStack](https://robostack.github.io/) it can now run on Windows and Mac too. Here, we provide detailed [instructions](Host_Setup/robotstack.md) and a script to help you set up ROS on your favorite operating system.
-
-## Create your own fork
-You can simply click the **fork** button on the top of the page. However, we encourage each group to create a _private_ fork to host your code, and make a local clone on your group's robot, by following these [instructions](Docs/private_fork.md). Please include your group number in the name of your repo.
 
 ## Still not comfortable with ROS?
 We have a ROS cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
