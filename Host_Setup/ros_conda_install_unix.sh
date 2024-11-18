@@ -23,7 +23,7 @@ if [ -d "$HOME/miniforge3" ]; then
   conda config --add channels conda-forge
   conda install -n base mamba -c conda-forge --yes
 else
-  echo -e "${RED} Miniforge3 is not installed, install Miniforge3 ${NC}"
+  echo -e "${RED} Miniforge3 is not currently installed, will install Miniforge3 ${NC}"
   # Mac OS
   if [[ $OS == 'Darwin' ]]; then
     if [[ $ARCH == 'arm64' ]]; then
@@ -93,7 +93,9 @@ for i in $(seq ${CONDA_SHLVL}); do
 done
 conda activate base
 
-mamba create -n ros_base ros-noetic-desktop python=3.9 \
+# Update to ROS2 Humble and appropriate dependencies
+
+mamba create -n ros_base ros-humble-desktop python=3.11 \
              -c robostack-staging -c conda-forge \
              --no-channel-priority --override-channels --yes
 
@@ -140,8 +142,8 @@ if [[ $OS == 'Darwin' ]]; then
     echo -e "${RED} Unrecognized arch type, Mac OS with ${ARCH}. Cannot Install PySpline, Please compile from source${NC}"
     exit 1
   fi
-  # create a command to start ros env in the terminal
-  echo -e "alias ros_env='source $HOME/miniforge3/start_ros.sh'" >> $HOME/.zshrc
+  # create a command to start ros_base env in the terminal
+  echo -e "alias start_ros='source $HOME/miniforge3/start_ros.sh'" >> $HOME/.zshrc
 
 elif [[ $OS == "Linux" ]]; then
   # Linux
@@ -156,8 +158,8 @@ elif [[ $OS == "Linux" ]]; then
     return 1 2>/dev/null
     exit 1
   fi
-  # create a command to start ros env in the terminal
-  echo -e "alias ros_env='source $HOME/miniforge3/start_ros.sh'" >> $HOME/.bashrc
+  # create a command to start ros_base env in the terminal
+  echo -e "alias start_ros='source $HOME/miniforge3/start_ros.sh'" >> $HOME/.bashrc
 else
   echo -e "${RED} OS: ${OS} not supported ${NC}"
   return 1 2>/dev/null
