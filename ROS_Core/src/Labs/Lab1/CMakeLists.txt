@@ -1,15 +1,13 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(racecar_planner)
+project(lab0)
 
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  dynamic_reconfigure
   rospy 
   std_msgs
-  nav_msgs
   racecar_msgs
 )
 
@@ -84,9 +82,10 @@ catkin_python_setup()
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-generate_dynamic_reconfigure_options(
-  cfg/planner.cfg
-)
+# generate_dynamic_reconfigure_options(
+#   cfg/DynReconf1.cfg
+#   cfg/DynReconf2.cfg
+# )
 
 
 ###################################
@@ -99,12 +98,7 @@ generate_dynamic_reconfigure_options(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-    CATKIN_DEPENDS 
-    rospy
-    std_msgs 
-    racecar_msgs 
-    nav_msgs 
-    dynamic_reconfigure
+    CATKIN_DEPENDS rospy std_msgs racecar_msgs 
 )
 
 #############
@@ -117,7 +111,7 @@ catkin_package(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
-  scripts/traj_planning_node.py
+  scripts/lab0_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
