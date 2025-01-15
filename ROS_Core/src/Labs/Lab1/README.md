@@ -180,7 +180,7 @@ conda activate ros_base
 cd <Path to your repo>/ECE346/ROS_Core 
 # Build ROS packages
 catkin_make 
-# Setup environment
+# Set up environment
 source devel/setup.bash 
 # Launch Nodes
 roslaunch lab1 lab1_simulation.launch
@@ -199,7 +199,7 @@ The second window, shown in **Figure 3b**, is the [RQT](http://wiki.ros.org/rqt0
 You can [adjust the layout and panels](https://www.clearpathrobotics.com/assets/guides/kinetic/ros/Creating%20RQT%20Dashboard.html) and even [create your own plugins](https://wiki.ros.org/rqt/Tutorials/).
 
 
-![Diagrams of the remote controller](assets/lab1_rqt.png)
+![Node graph of Lab 1 from RQT GUI](assets/lab1_rqt.png)
 ***Figure 4**: Node graph of Lab 1 from RQT GUI*
 
 From the RQT GUI, let's first take a look at the node graph page. If the node graph is not shown on your GUI, you can add one from **Plugins** menu on the top of the panel. **Figure 4** shows a node graph of Lab 1 with 6 nodes. The `/rosout` node starts automatically with ROS Master, and it logs messages to your console. The `/rviz`, `/visualization_node` and `/rqt_gui` nodes handle visualization and process monitoring. The `/simulation_node` simulates the dynamics of our robot after executing control commands from the `/lab1` node. All these nodes are started with a single `roslaunch` command. In the next section, we will take a look at the basic functionality of roslaunch.
@@ -330,7 +330,7 @@ This snippet of code is where we make everything happen. It is the main block of
 ### Task 1: Set up a publisher for the ServoMsg message ###
 
 Now you know how to publish a ROS message. Let's write our first ROS code! Open your `pure_pursuit.py` file in the text editor of your choice (file path: `<Path of your
-repo>/ECE346/ROS Core/src/Labs/Lab0/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g topic name). Once you are finished, show your code to a lab TA, either by sending a photo (e.g., a screenshot or clear a photo of your screen with a phone camera) on slack or showing in-person during lab OH, and proceed. Note: you can proceed before receiving confirmation from a lab TA, but to receive full credit for this lab you must show your completed, correct work for each required section before the lab's deadline. This applies for all of Lab 1.
+repo>/ECE346/ROS Core/src/Labs/Lab0/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g topic name). **Once you are finished, show your code to a lab TA**, either by sending a photo (e.g., a screenshot or clear a photo of your screen with a phone camera) on slack or showing in-person during lab OH, and proceed. Note: you can proceed before receiving confirmation from a lab TA, but to receive full credit for this lab you must show your completed, correct work for each required section before the lab's deadline. This applies for all of Lab 1.
 
 ### ROS Subscriber ###
 The code for the subscriber is very similar to the publisher and can be seen below. Now, instead of publishing to the `chatter` topic, we are subscribing to it.
@@ -391,7 +391,7 @@ listener()
 This last snippet of code is where we actually run the listener code.
 
 ### Task 2: Set up a subscriber for the Odometry message ###
-Open your `pure_pursuit.py` file.  Your second task is to set up a missing subscriber in the function `setup_subscriber` following instructions under **TODO**. Once you are finished, show your code to a lab TA (as a reminder, either by sending a photo on slack or in-person during lab OH).
+Open your `pure_pursuit.py` file.  Your second task is to set up a missing subscriber in the function `setup_subscriber` following instructions under **TODO**. **Once you are finished, show your code to a lab TA** (as a reminder, either by sending a photo on slack or in-person during lab OH).
 
 ### Inspecting ROS Messages using [`rostopic`](http://wiki.ros.org/rostopic) and [`rosmsg`](http://wiki.ros.org/rosmsg) ###
 Now you are an expert in setting up ROS publisher and subscriber. However, you may be wondering how to decode those ROS messages or figure out what's inside of each datatype in order to write a callback function. The command line tool [`rostopic`](http://wiki.ros.org/rostopic) and [`rosmsg`](http://wiki.ros.org/rosmsg) are designed for this usage.
@@ -415,269 +415,167 @@ This will print out ROS messages from a desired topic in your terminal
 This will first look up the datatype of the topic, then print out its data structure.  
 
 
-A full list of \href{http://wiki.ros.org/rostopic}{`rostopic}} and \href{http://wiki.ros.org/rosmsg}{`rosmsg}} functionalities can be found in their documentations.
+A full list of [`rostopic`](http://wiki.ros.org/rostopic) and [`rosmsg`](http://wiki.ros.org/rosmsg) functionalities can be found in their documentations.
 
-\subsection\*{Task 3: Fill in the subscriber callback function}
-\addcontentsline{toc}{subsection}
-{**Task 3: Fill in the subscriber callback function}}
-Open your `pure_pursuit.py} file. Your third task is to fill in the missing code of the function `goal_callback} following instructions under **TODO}.\\
-Once you are finished, **restart} `lab0_simulation.launch}. From the RViz simulator, you can add a desired goal location by selecting **2D Nav Goal} from the top panel and then clicking a point on the map. You will see that the position of your clicked point is printed on your terminal.
+### Task 3: Fill in the subscriber callback function ###
+Open your `pure_pursuit.py` file. Your third task is to fill in the missing code of the function `goal_callback` following instructions under **TODO**.
 
-\subsection\*{Task 4: Construct and publish a ROS message}
-\addcontentsline{toc}{subsection}{**Task 4: Construct and publish a ROS message}}
-Open your `pure_pursuit.py} file. Your fourth task is to fill in the missing code of the function `publish_control} following instructions under **TODO}. Once you are finished, show your code to your TA.
+Once you are finished, **restart** `lab1_simulation.launch`. From the RViz simulator, you can add a desired goal location by selecting **2D Nav Goal** from the top panel and then clicking a point on the map. You will see that the position of your clicked point is printed on your terminal.
 
-\section{Goal Reaching Controller}
+### Task 4: Construct and publish a ROS message ###
 
-In this Lab, you will implement a simple goal-reaching controller. We will use a proportional controller for the throttle, and a pure pursuit controller for steering.
+Open your `pure_pursuit.py` file. Your fourth task is to fill in the missing code of the function `publish_control` following instructions under **TODO**. **Once you are finished, show your code to a lab TA.**
 
-\subsection{Throttle Control}
+## Goal Reaching Controller ##
+
+As a reminder, in this lab, you are implementing a simple goal-reaching controller. We will use a proportional controller for the throttle, and a pure pursuit controller for steering.
+
+### Throttle Control ###
 Our robot can control its acceleration through the motor's throttle input. In this Lab, we will implement a proportional controller to track reference speed $V_{ref}$.
-\begin{equation}
-a = K*p(V*{ref}-V\_{robot})
-\end{equation}
 
-\subsection{Steering Control}
-The pure pursuit method is a geometry-based algorithm to determine desired steering angle for a car to follow a path. As shown in \autoref{fig: pure-pursuit}, pure pursuit calculates the steering angle $\delta$ to ensure the vehicle reaches the target point (\*\*TP}) according to the kinematic bicycle model. This \href{https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/PurePursuit.html}{tutorial} provides an excellent interactive explanation of the pure pursuit algorithm.
+$ a = K_p(V_{ref}-V\_{robot})$
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{lab0/figures/pure-pursuit.png}
-\caption{Geometric Interpretation of Pure-Pursuit Algorithm [\href{https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/PurePursuit.html}{source}]}
-\label{fig: pure-pursuit}
-\end{figure}
+### Steering Control ###
+The pure pursuit method is a geometry-based algorithm to determine desired steering angle for a car to follow a path. As shown in Figure 5, pure pursuit calculates the steering angle $\delta$ to ensure the vehicle reaches the target point (**TP**) according to the kinematic bicycle model. This [tutorial](https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/PurePursuit.html) provides an excellent interactive explanation of the pure pursuit algorithm.
 
-In short, you can obtain the steering angle $\delta$ by \autoref{eq: pure-pursuit}, where $L$ is the wheelbase of the robot, $\alpha$ is the relative angle of the look-ahead point w.r.t the robot, and $l_d$ is the distance between the robot and the look-ahead point.
 
-\begin{equation}
+![Node graph of Lab 1 from RQT GUI](assets/pure-pursuit.png)
+***Figure 5**: Geometric Interpretation of Pure-Pursuit Algorithm. [[source](https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/PurePursuit.html)]*
+
+In short, you can obtain the steering angle $\delta$ by the equation below, where $L$ is the wheelbase of the robot, $\alpha$ is the relative angle of the look-ahead point w.r.t the robot, and $l_d$ is the distance between the robot and the look-ahead point.
+
+$
 \delta = \arctan \left(\frac{2 L \sin(\alpha)}{l_d}\right)
-\label{eq: pure-pursuit}
-\end{equation}
+$
 
-In this Lab, we assume the reference path is the straight line connecting your robot and goal point. Therefore, the \*\*TP} is a point on this line segment defined by user parameters. \\
+In this lab, we assume the reference path is the straight line connecting your robot and goal point. Therefore, the **TP** is a point on this line segment defined by user parameters.
 
-\subsection\*{Task 5: Implement the goal reaching controller}
-\addcontentsline{toc}{subsection}{**Task 5: Implementing Goal Reaching Controller}}
-Open your `pure_pursuit.py} file. You will finish the function `planning_thread} following the implementation details under the **TODO} block. This task concludes all coding parts of Lab 0. Re-launch the simulation, set **2D Nav Goal} as any points on Rviz, and drive your robot towards the goal point. The default parameter should work well in the simulation if your implementation is correct. **Show your simulation results to your TAs. }
+### Task 5: Implement the goal reaching controller ###
+Open your `pure_pursuit.py` file. You will finish the function `planning_thread` following the implementation details under the **TODO** block. This task concludes all coding parts of Lab 1. Relaunch the simulation, set **2D Nav Goal** as any points on RViz, and drive your robot towards the goal point. The default parameter should work well in the simulation if your implementation is correct. **Once you are finished, show your simulation results to a lab TA.**
 
-\section{Let's Get Real}
+# Let's Get Real - Intro to *Mini Truck*  #
+Autonomous driving has sparked much public interest in the last few years. In this lab, we will work with a 1/14-scale autonomous *mini truck* as our mobile robot platform (**Figure 6**). 
+
+![The 1/14-scale autonomous \emph{mini truck} used in Intelligent Robotic Systems.](assets/robot.jpg)
+***Figure 6**: The 1/14-scale autonomous **mini truck** used in ECE346 - Intelligent Robotic Systems.*
+
 The modularity of ROS allows us to quickly deploy our algorithms from the simulated environment into the real robot with minimal changes to your code.
 
-\subsection\*{Task 6: Try Out On Mini Truck}
-\addcontentsline{toc}{subsection}{\*\*Task 6: Try Out On Mini Truck}}
+### Task 6: Try Out On Mini Truck on the  Track! ###
 
-Follow the instructions in the \textit{Intro to Mini Truck} tutorial and test your goal-reaching controller on the Mini Truck with the provided `lab0_truck.launch}. \*\*Demo your robot to your TAs.}
+Read the information about your mini truck robot below (beware lots of reading). Afterwards, follow the instructions and test your goal-reaching controller on the mini truck **in F111** with the provided `lab1_truck.launch`. **Demo your robot (in-person or via video recording on the F111 track) to a lab TA.**
 
-# HERE IS INTRO TO RC CAR
+# Intro to Mini Truck!
+![A hardware schematic of the robotic platform.](assets/schematic.png)
+***Figure 7**: A hardware schematic of the robotic platform.*
 
-\section{Intro to the \emph{Mini Truck} Robotic Platform}
+**Figure 7** overviews the mini truck's key physical components.
+The robot's **body** carries an [NVIDIA Jetson Xavier NX](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-xavier-nx/) onboard computer, a [ZED 2 stereo camera](https://www.stereolabs.com/zed-2/), and a battery that powers them. These components form the core of the robot's perception and decision-making hardware.
 
-Autonomous driving has sparked much public interest in the last few years. In this lab, we will work with a 1/14-scale autonomous \emph{mini truck} as our mobile robot platform (\autoref{fig:robot}).
+The robot's **chassis** consists of drivetrain components that steer and drive the truck. We use a [TAMIYA TT-01 Type-E](https://www.tamiyausa.com/shop/110-4wd-shaft-drive-road-tt/rc-team-hahn-racing-man-tgs-2/) RC chassis (**Figure 8**), which is a shaft-driven 4WD platform powered by a single 25 turn 540 brushed DC motor. The Jetson is connected with a [Maestro Servo Controller](https://www.pololu.com/product/1350), which translates the command from the Jetson and sends a Pulse Width Modulation (PWM) signal to the steering servo and motor ESC. In order to allow the robot to be driven through a remote controller, we added an additional [servo multiplexer](https://www.pololu.com/product/2806) to switch signals.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{lab0/figures/robot.jpg}
-\caption{The 1/14-scale autonomous \emph{mini truck} used in Intelligent Robotic Systems.}
-\label{fig:robot}
-\end{figure}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{lab0/figures/schematic.pdf}
-\caption{A hardware schematic of the robotic platform.}
-\label{fig:schematic}
-\end{figure}
+![TT-01 Type-E Chassis that is used as the base of our robot platform.](assets/TT01E_chassis.jpg)
+***Figure 8**: TT-01 Type-E Chassis that is used as the base of our robot platform.*
 
-\autoref{fig:schematic} overviews the robot's key physical components.
-The robot's \*\*body} carries an \href{https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-xavier-nx/}{NVIDIA Jetson Xavier NX} onboard computer, a \href{https://www.stereolabs.com/zed-2/}{ZED 2 stereo camera}, and a battery that powers them. These components form the core of the robot's perception and decision-making hardware.\\
+## Safety First ##
+Read the following instructions **carefully** before operating the robot, and keep them handy.
+### Robot Rules & Responsibilities ###
+Please keep the robot and its accessories stored when you are not working with them. You can keep the robot in F111 or take it with you if it is convenient. Either way, please note that **you are responsible for your assigned robot for the duration of the semester**.
 
-The robot's \*\*chassis} consists of drivetrain components that steer and drive the truck. We use a \href{https://www.tamiyausa.com/shop/110-4wd-shaft-drive-road-tt/rc-team-hahn-racing-man-tgs-2/}{TAMIYA TT-01 Type-E} RC chassis (\autoref{fig:TT01}), which is a shaft-driven 4WD platform powered by a single 25 turn 540 brushed DC motor. The Jetson is connected with a \href{https://www.pololu.com/product/1350}{Mastro Servo Controller}, which translates the command from the Jetson and sends a Pulse Width Modulation (PWM) signal to the steering servo and motor ESC. In order to allow the robot to be driven through a remote controller, we added an additional \href{https://www.pololu.com/product/2806}{servo multiplexer} to switch signals.
+* **Use caution and common sense when operating your robot.** Avoid driving it around potential hazards -- including stairs -- or unsuspecting civilians! Beyond basic "bench tests", we strongly recommend you only drive the robot inside the F111 lab space.
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.7\textwidth]{lab0/figures/TT01E_chassis.jpg}
-\caption{TT-01 Type-E Chassis that is used as the base of our robot platform}
-\label{fig:TT01}
-\end{figure}
-\newpage
-\subsection{Safety First}
-\vspace{-1mm}
-Read the following instructions **carefully} before operating the robot, and keep them handy.
-\newmdenv[linecolor=red,linewidth=3pt, backgroundcolor=white]{callout}
-\begin{callout}[frametitle=Robot Rules \& Responsibilities]
-Please keep the robot and its accessories stored when you are not working with them. You can keep the robot in F111 or take it with you if it is convenient. Either way, please note that **you are responsible for your assigned robot for the duration of the semester}.
-\begin{itemize}
-\item \*\*Use caution and common sense when operating your robot.} Avoid driving it around potential hazards---including stairs---or unsuspecting civilians! Beyond basic ``bench tests'', we strongly recommend you only drive the robot inside the F111 lab space.
+* **Let us know immediately if any component is damaged or goes missing,** so that we can address the issue as quickly as possible.If you are experiencing hardware issues with the robot, please consult with a course AI **before** you try to fix it by yourself.
 
-    \item **Let us know immediately if any component is damaged or goes missing,}
-    so that we can address the issue as quickly as possible.
-    If you are experiencing hardware issues with the robot, please consult with a course AI **before} you try to fix it by yourself.
+* **Practice with the remote control and drive slowly!** The robot can achieve a maximum speed of over 15 mph (25 km/h). **Injuries and bone fractures are likely** if a person is hit at that level of speed.
 
-    \item {**Practice with the remote control and drive slowly!}} The robot can achieve a maximum speed of over 15 mph (25 km/h). \textcolor{red}{\mbox{**Injuries and bone fractures are likely}}} if a person is hit at that level of speed.
+* Be **extremely careful** when handling and connecting batteries. **Shorted batteries will cause a fire.**
 
-    \item Be **extremely careful} when handling and connecting batteries. {\color{red}**Shorted batteries will cause a fire}}.
+* Motors can become very **hot** while driving the robot **and** shortly after!
 
-    \item Motors can become very {\color{red}**hot}} while driving the robot **and} shortly after!
+* The motor ESC will automatically cut off power if the Ni-MH battery voltage is too low. However, if the robot has been running for over 30 minutes or you notice a significant power drop, you should **immediately** place the battery in the **uncharged battery bin** and replace it with a charged battery.
 
-    \item The motor ESC will automatically cut off power if the Ni-MH battery voltage is too low. However, if the robot has been running for over 30 minutes or you notice a significant power drop, you should **immediately} place the battery in the \mbox{**Uncharged Battery Bin}} and replace it with a charged battery.
+* Please be aware that our ability to repair the robots is limited, so take care of your robot accordingly. **If your robot suffers severe damage, you may not be able to complete the lab and final project components of the class.**
 
-    \item Please be aware that our ability to repair the robots is limited, so take care of your robot accordingly. \textcolor{red}{**If your robot suffers severe damage, you may not be able to complete the Lab and Final Project components of the class.}}
+## Connecting to Mini Truck ##
+### Turning On the Jetson ###
+The NVIDIA Jetson Xavier NX takes 12 V - 20 V DC power provided by the power bank mounted right below the Jetson. The power bank can output various DC voltages ranging from **5 V** to **20 V**. In order to avoid damage to the Jetson, **make sure you unplug the power cord before turning on the battery**. First, hold the power button on the battery until it lights up. Then, cycle through the voltage by double-clicking the power button until it shows **20 V**. Underpower will lead to hardware malfunctions. Finally, plug in the power cord, and the Jetson will turn on automatically.
 
-\end{itemize}
-\end{callout}
+You will see the remaining battery life on the screen. Please note that the power will last less than two hours. To program the Jetson, use the external power supply, labeled **NX PWR**, instead of using the battery.
 
-\subsection{Connecting to the Robot}
-\subsubsection{Turning On the Jetson}
-The NVIDIA Jetson Xavier NX takes 12 V -- 20 V DC power provided by the power bank mounted right below the Jetson. The power bank can output various DC voltages ranging from \mbox{5 V} to \mbox{20 V}. In order to avoid damage to the Jetson, {\color{red}**make sure you unplug the power cord before turning on the battery}.} First, hold the power button on the battery until it lights up. Then, cycle through the voltage by double-clicking the power button until it shows {\color{red}**20 V}}. Underpower will lead to hardware malfunctions. Finally, plug in the power cord, and the Jetson will turn on automatically.\\
+### Working on the Jetson Directly ###
+The Jetson NX runs Ubuntu 20.04 desktop OS and can be used as a regular PC by connecting with a keyboard, a mouse, and a monitor through the HDMI port. The password for login is **nvidia**.
 
-\looseness=-1
-You will see the remaining battery life on the screen. Please note that the power will last less than two hours. To program the Jetson, use the external power supply, labeled \*\*NX PWR}, instead of using the battery.
+### Working on the Jetson Through SSH Connection ###
+When the robot cannot be connected to a monitor and keyboard, for example when it is running on the ground, SSH becomes a useful tool to log into your robot and run programs through the command-line interface. SSH stands for **S**ecure **Sh**ell, a protocol that allows you to securely and remotely connect to your robot using a wired/wireless network connection.
 
-\subsubsection{Working on the Jetson Directly}
-The Jetson NX runs Ubuntu 20.04 desktop OS and can be used as a regular PC by connecting with a keyboard, a mouse, and a monitor through the HDMI port. The password for login is \*\*nvidia}.
-The F110 Lab space provides Windows workstations, and you can borrow a mouse, keyboard, and monitor for the Jetson.
+All robots are connected to the local Wi-Fi network **ECE346** at startup. Each will have a reserved IP address **192.168.1.2XX**, where XX is the ID of the robot. For example, if the Jetson on your robot has the label NX-7, the IP address is **192.168.1.207**. Similarly, if your robot is NX-11, the IP address is **192.168.1.211**. Before running SSH, first, connect your computer to the **ECE346** Wi-Fi with password **ece346sp2025**. 
 
-\subsubsection{Working on the Jetson Through SSH Connection}
-When the robot cannot be connected to a monitor and keyboard, for example when it is running on the ground, SSH becomes a useful tool to log into your robot and run programs through the command-line interface. SSH stands for **S}ecure **Sh}ell, a protocol that allows you to securely and remotely connect to your robot using a wired/wireless network connection.\\
+### Task 6.1: Connect to Jetson via SSH ### 
+Once you have connected to the network, open a terminal/power shell and type
+```bash
+ssh nvidia@192.168.1.2XX
+```
+It will ask you for the login password for the Jetson: enter **nvidia** and you are all set.
 
-All robots are connected to the local Wi-Fi network **ECE346} at startup. Each will have a reserved IP address **192.168.1.1XX}, where XX is the ID of the robot. For example, if the Jetson on your robot has the label NX-7, the IP address is \emph{192.168.1.107}. Similarly, if your robot is NX-11, the IP address is \emph{192.168.1.111}. Before running SSH, first, connect your computer to the **ECE346} Wi-Fi with password **ece346sp2023}. Once you have connected to the network, open a terminal/power shell and type
-\begin{lstlisting}[language=bash]
-ssh nvidia@192.168.1.1XX
-\end{lstlisting}
-It will ask you for the login password for the Jetson: enter **nvidia} and you are all set.\\
-% \item If you are using a **Mac} computer, first install \href{https://www.xquartz.org/}{XQuarts}, then you can follow the same procedure with a terminal.
-% \item If you are using a \*\*Windows} computer, first install \href{https://www.x.org/wiki/}{Xming}, then you can follow the same procedure from PowerShell. On the other hand, you can install the \href{https://www.putty.org/}{PuTTY} SSH client for convenient interface. If PuTTY is used, you might need to enable X11 forwarding:
-% \begin{itemize}
-% \item In Putty, click on the plus sign to the left of "SSH" in the left hand panel \item Click "X11" and check the box labelled "Enable X11 Forwarding".
-% \end{itemize}
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.6\textwidth]{B7r4t.png}
-% \caption{Enable X11 Forwarding in PuTTY}
-% \label{fig: tx}
-% \end{figure}
+### Coding Remotely with VS Code ###
+If you want to code directly on your laptop but have the code saved in Jetson directly, one solution is to SSH into the Jetson and use vim or nano through the terminal. On the other hand, if you enjoy using modern IDEs, [VS Code allows you to code remotely through SSH](https://code.visualstudio.com/docs/remote/ssh-tutorial).
 
-SSH is a feature that can be found in any modern OS (Mac/Linux/Windows) machine. You can either use one of the Windows workstations in the F111 lab or bring your own laptop to connect to the robot. The process to get SSH working may differ across operating systems. If you do not have previous experience with SSH, we provide a detailed set of instructions in the \href{https://github.com/SafeRoboticsLab/ECE346/blob/SP2023/Docs/ssh.md}{class GitHub repo}.%\\
+### Mini Truck + Laptop Network Communication via ROS ###
+Before we run any decision-making algorithms, we need to ensure our mini-truck knows where it is and can execute our control command. These functionalities have been built on your robot as ROS nodes. We also want to easily visualize the state and future plan of our robot on your own computers. Luckily, ROS has made this easy for us since it is naturally a distributed computing environment that can comprise hundreds of nodes across multiple machines with [network setups](http://wiki.ros.org/ROS/NetworkSetup). 
 
-% \subsubsection{Coding Remotely with VS Code}
-% If you want to code directly on your laptop but have the code saved in Jetson directly, one solution is to SSH into the Jetson and use vim or nano through the terminal. On the other hand, if you enjoy using modern IDEs, \href{https://code.visualstudio.com/docs/remote/ssh-tutorial}{VS Code allows you to code remotely through SSH}.  
-% \subsection\*{Checkpoint 3: Create your repository}
-% \addcontentsline{toc}{subsection}{\*\*Checkpoint 3}}
-% Each team is required to create a repository that forks the \href{https://github.com/SafeRoboticsLab/ECE346}{class GitHub repo}. We recommend you to follow the repo's `README} file and create a \emph{private} fork. In addition, please add all course AIs (zzx9636, kaichiehhsu, buzi-princeton) to your forked GitHub repo by the due date.
+In general, to pass ROS messages between the robot and your laptop, each must be connected to the same network. We provide two useful scripts for network setups, which we use in the steps below and future labs, but **no need to run these commands now**.
+```bash
+ # Mini truck robot hosts ROS Master 
+source network_ros_host.sh <ROBOT_IP>
+# Laptop is "client" of ROS Master (mini truck) 
+source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
+```
 
-\subsection{Driving the Robot with the Remote Controller}
-% https://manuals.plus/spektrum/2-4ghz-digital-radio-system-transmitter-manual
-\looseness=-1
-The remote controller (\autoref{fig: tx}) allows you to drive the robot manually---as you would a regular RC car---and also serves as a \emph{dead man's switch} for the robot. We list each element's function below.
-\begin{enumerate}[label=\Alph*.]
-\item **Throttle Trim}: Adjusts the throttle neutral point
-\item **Steering Trim}: Adjusts the steering centerpoint. Normally, the steering trim is adjusted until the vehicle tracks straight.
-\item **LED}: Indicates the power is ON
-\item **Steering Wheel}: Controls the steering angle of the front wheels.
-\item **Throttle/Brake}: Controls the vehicle's acceleration.
-\item **Steering Rate}: Adjusts the sensitivity (gain) of the steering wheel.
-\item **Channel 3}: Three-position momentary switch (not used here).
-\item **Throttle Limit}: Limits throttle output to 50/75/100\%. Note: you should keep it at 50\%.
-\item **Throttle Reversing}: Flip the switch to reverse the throttle channel.
-\item **Steering Reversing}: Flip the switch to reverse the steering channel.
-\item \*\*Power Button}: Turns the controller on and off.
-\end{enumerate}
+In ECE346, `<ROBOT_IP>` is the IP address of your robot (i.e., **192.168.1.2XX**), and `<LAPTOP_IP>` is the IP address of your laptop under ECE346 Wi-Fi, which you can find by running `hostname -I` in a terminal window.
 
-\begin{figure}[H]
-\centering
-\begin{subfigure}[b]{0.49\textwidth}
-\centering
-\includegraphics[width=0.5\textwidth]{lab0/figures/TX_front.png}
-\caption{Right diagram of the remote controller.}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.49\textwidth}
-\centering
-\includegraphics[width=0.5\textwidth]{lab0/figures/TX_back.png}
-\caption{Left diagram of the remote controller.}
-\end{subfigure}
-\caption{Diagrams of the remote controller}
-\label{fig: tx}
-\end{figure}
-
-The robot's drivetrain uses a separate power source that is connected directly to the motor ESC. To power up the robot, \emph{first} turn on the remote controller by pressing the Power Button (K), \emph{then} turn the switch on the bottom of the chassis to the ON position.\\
-
-By default, pull the throttle towards you to go forward, and push the throttle away to brake and reverse. In order to steer the truck, you need to rotate the steering knob by the desired amount. You can invert the throttle and steering using the corresponding (I, J) switches.
-
-\subsection{Driving the Robot with the onboard Jetson computer}
-\label{sec: drive_robot}
-We use a \href{https://www.pololu.com/product/1350}{Maestro 6-Channel USB Servo Controller} to control the motor ESC and steering servo.
-
-% The running documentation of this servo controller can be found \href{https://www.pololu.com/docs/0J40}{here}. You can access the GUI interface of the controller from the command line:
-
-% \begin{lstlisting}[language=bash]
-% cd YOUR_REPO/asset/maestro-linux/
-% ./MaestroControlCenter
-% \end{lstlisting}
-
-We have provided you with a ROS wrapper of the Mastero Servo Controller API. It subscribes to a ROS topic and sends inputs to the controller. Due to safety concerns, the multiplexer switch automatically disables the control signal from the Mastero Servo Controller. \*\*In order to drive the robot with Jetson, you need to press the Down button of Channel 3 (G) all the time}. The system will immediately switch to the remote controller mode if you release this button.
-
-\newpage
-\section{Moving Mini Truck Autonomously}
-Before we run any decision-making algorithms, we need to ensure our mini-truck knows where it is and can execute our control command. These functionalities have been built on your robot as ROS nodes.\\
-
-In addition, we want to easily visualize the state and future plan of our robot on your own computers. Luckily, ROS has made it easy for us since it is naturally a distributed computing environment. A running ROS system can comprise dozens, even hundreds of nodes, spread across multiple machines with \href{http://wiki.ros.org/ROS/NetworkSetup}{network setups}.\\
-
-In general, to pass ROS messages between your laptop and the robot, your computer must be connected to the same network. We provide two useful scripts for network setups, which you will use later on.
-\begin{lstlisting}[language=bash] # If the computer hosts ROS Master
-source network_ros_host.sh <HOST_IP>
-
-    # If the computer is a client of the ROS Master
-    source network_ros_client.sh <HOST_IP> <CLIENT_IP>
-
-\end{lstlisting}
-
-In ECE346, `<HOST_IP>} is the IP address of your Robot, and `<PC_IP>} is the IP address of your computer under ECE346 WIFI. You can look this up on your computer's network settings.
-
-\subsection\*{Step 1: Launch Perception and Control Nodes On Robot}
-\addcontentsline{toc}{subsection}{**Step 1: Launch Perception and Control Nodes On Robot}}
-To launch perception and control nodes, **open a new terminal} and \*\*ssh into your robot}. Then,
-\begin{lstlisting}[language=bash]
+### Task 6.2: Launch Perception (SLAM) and Control Nodes On Robot ###
+After sshing into mini truck (**Task 6.1**) and waiting about 60 seconds, launch perception and control nodes by running
+```bash
 cd ~/StartUp
-./start_ros.sh <HOST_IP>
-\end{lstlisting}
-The `./start_ros.sh <HOST_IP>} command will automatically set your robot as the host of ROS Master using the previously mentioned script and start ROS. Please make sure your robot is static on the track in the F111 lab, because the localization algorithm requires accurate gravitational direction for initialization.
+# <ROBOT_IP> is 192.168.1.2XX
+./start_ros.sh <ROBOT_IP> 
+```
+The `./start_ros.sh <ROBOT_IP>` command will automatically set your robot as the host of ROS Master using the previously mentioned script and start ROS. The  should take ~60 seconds. **Please make sure your robot is static on the track in the F111 lab**, because the localization algorithm requires accurate gravitational direction for initialization.
 
-% If you encounter the error stating this file is not executable, you can change the permission by the following command and then retry.
-% \begin{lstlisting}[language=bash]
-% chmod +x start_ros.sh
-% \end{lstlisting}
+If you encounter the error stating this file is not executable, you can change the permission by the following command and then retry.
+```bash
+chmod +x start_ros.sh
+```
 
-\subsection\*{Step 2: Launch Visualization On Your PC}
-\addcontentsline{toc}{subsection}{\*\*Step 2: Launch Visualization On Your PC}}
-Next, we open a new terminal on your PC and navigate to the `ROS_Core} under your Git repository. Then, we activate the conda ROS environment, and (optionally) rebuild the workspace by:
-\begin{lstlisting}[language=bash] # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core # Start virtual environment
-conda activate ros_base # Optional: if you have new packages
-catkin_make
-\end{lstlisting}
-Moreover, let's configure the network setting using the script
-\begin{lstlisting}[language=bash]
-source network_ros_client.sh <HOST_IP> <PC_IP>
-\end{lstlisting}
-Finally, we can launch visualization nodes
-\begin{lstlisting}[language=bash]
-source devel/setup.bash # .zsh for Mac user
+### Task 6.3: Launch Visualization On Your PC ###
+Next, we open a new terminal on your PC and navigate to the `ROS_Core` under your Git repository. If you closed your terminal windows from **Task 1-5**, in a new terminal window, activate the conda ROS environment, (optionally) rebuild the workspace, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
+```bash
+ # Navigate to ROS_Core
+cd <Path of your repo>/ECE346/ROS_Core 
+# Start virtual environment
+conda activate ros_base 
+# Optional: Build ROS packages (if new packages)
+catkin_make 
+# Set up laptop environment
+source devel/setup.bash
+# Set up laptop ("client") network config
+source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
+# Launch visualization nodes
 roslaunch racecar_interface visualization.launch
-\end{lstlisting}
-After around 30s, Rviz (\autoref{fig: rviz_truck}) and RQT (\autoref{fig: rqt_truck}) windows will show up.
+```
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{lab0/figures/rviz_truck.png}
-\caption{Rviz visualization tool. The orange box indicates the current pose of the robot and the yellow arrows indicate the past poses.}
-\label{fig: rviz_truck}
-\end{figure}
+After around 30s, RViz (**Figure 10**) and RQT (**Figure 11**) windows will show up.
 
+![Rviz visualization tool. The orange box indicates the current pose of the robot and the yellow arrows indicate the past poses.](assets/rviz_truck.png)
+***Figure 10**: Rviz visualization tool. The orange box indicates the current pose of the robot and the yellow arrows indicate the past poses.*
+
+
+![RQT GUI.](assets/rqt_truck.png)
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.65\textwidth]{lab0/figures/rqt_truck.png}
-\caption{RQT GUI.}
+\caption{}
 \label{fig: rqt_truck}
 \end{figure}
 
@@ -702,6 +600,57 @@ Finally, launch your node and remember to press the Down button as described in 
 \begin{lstlisting}[language=bash]
 roslaunch <ROS Package> <Launch File>
 \end{lstlisting}
+
+## Driving the Robot with the Remote Controller ##
+[[Source]](https://manuals.plus/spektrum/2-4ghz-digital-radio-system-transmitter-manual)
+The remote controller (**Figure 9**) allows you to drive the robot manually -- as you would a regular RC car -- and also serves as a **dead man's switch** for the robot. We list each element's function below.
+
+A. **Throttle Trim**: Adjusts the throttle neutral point
+
+B. **Steering Trim**: Adjusts the steering centerpoint. Normally, the steering trim is adjusted until the vehicle tracks straight.
+
+C. **LED**: Indicates the power is ON
+
+D. **Steering Wheel**: Controls the steering angle of the front wheels.
+
+E. **Throttle/Brake**: Controls the vehicle's acceleration.
+
+F. **Steering Rate**: Adjusts the sensitivity (gain) of the steering wheel.
+
+G. **Channel 3**: Three-position momentary switch (not used here).
+
+H. **Throttle Limit**: Limits throttle output to 50/75/100\%. Note: you should keep it at 50\%.
+
+I. **Throttle Reversing**: Flip the switch to reverse the throttle channel.
+
+J. **Steering Reversing**: Flip the switch to reverse the steering channel.
+
+K. **Power Button**: Turns the controller on and off.
+
+![Right diagram of the remote controller.*](assets/TX_front.png)
+
+***Figure 9a**: Right diagram of the remote controller.*
+
+![Figure 9b](assets/TX_back.png)
+
+***Figure 9b**: Left diagram of the remote controller.*
+
+The robot's drivetrain uses a separate power source that is connected directly to the motor ESC. To power up the robot, **first** turn on the remote controller by pressing the Power Button (K), **then** turn the switch on the bottom of the chassis to the ON position.
+
+By default, pull the throttle towards you to go forward, and push the throttle away to brake and reverse. In order to steer the truck, you need to rotate the steering knob by the desired amount. You can invert the throttle and steering using the corresponding (I, J) switches.
+
+## Driving the Robot with the onboard Jetson computer ##
+We use a [Maestro 6-Channel USB Servo Controller](https://www.pololu.com/product/1350) to control the motor ESC and steering servo.
+
+The running documentation of this servo controller can be found [here](https://www.pololu.com/docs/0J40). You can access the GUI interface of the controller from the command line:
+
+```bash
+cd ECE346/asset/maestro-linux/
+./MaestroControlCenter
+```
+
+We have provided you with a ROS wrapper of the Mastero Servo Controller API. It subscribes to a ROS topic and sends inputs to the controller. Due to safety concerns, the multiplexer switch automatically disables the control signal from the Mastero Servo Controller. **In order to drive the robot with Jetson, you need to press the Down button of Channel 3 (G) all the time**. The system will immediately switch to the remote controller mode if you release this button.
+
 
 # TODO: can delete this. just use as reference
 
