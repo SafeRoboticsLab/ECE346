@@ -2,11 +2,9 @@
 
 Welcome to the Robotics Assignment ("Lab") component of Intelligent Robotic Systems! Over the semester, we will implement various methods for robot decision-making, both in simulated environments and on physical robotic hardware. In this lab we introduce you to essential concepts in ROS (the Robot Operating System), which will be solidified by analyzing and writing your own ROS code. You will then execute your code both in simulation and on your mini truck, which you'll then demonstrate to a course TA. This lab consists largely of reading and learning the basics of how to run your code for future labs. Although collaboration is always encouraged for labs in this course, we strongly encourage that each group member individually reads through this entire lab, as any future lab work will be difficult without this core understanding. Of course, to get the most out of this course and these labs, you should aim to fully understand and contribute to each assignment. If you plan to list ROS on your resume or CV, it will be assumed that you understand the core concepts that we introduce.
 
-# TODO: update objectives
+## Objectives
 
 The following are the objectives of this lab:
-
-- Install ROS on your own computer.
 - Get familiar with basic ROS concepts.
 - Be able to build and run a provided ROS package.
 - Get familiar with the visualization and simulation tools for this class.
@@ -15,7 +13,7 @@ The following are the objectives of this lab:
 - Learn how to run your own software on the Mini Truck.
 - Develop and test a goal-reaching controller for your robot.
 
-# Setting Up ROS
+## Setting Up ROS
 
 Before we get started, you need to set up the Git Repository and configure your computer for the lab. Please read through the detailed instructions [here](https://github.com/SafeRoboticsLab/ECE346).
 
@@ -518,8 +516,8 @@ ssh nvidia@192.168.1.2XX
 ```
 It will ask you for the login password for the Jetson: enter **nvidia** and you are all set.
 
-### Coding Remotely with VS Code ###
-If you want to code directly on your laptop but have the code saved in Jetson directly, one solution is to SSH into the Jetson and use vim or nano through the terminal. On the other hand, if you enjoy using modern IDEs, [VS Code allows you to code remotely through SSH](https://code.visualstudio.com/docs/remote/ssh-tutorial).
+### Coding Remotely and Collaborating with VS Code ###
+If you want to code directly on your laptop but have the code saved in Jetson directly, one solution is to SSH into the Jetson and use vim or nano through the terminal. On the other hand, if you enjoy using modern IDEs, [VS Code allows you to code remotely through SSH](https://code.visualstudio.com/docs/remote/ssh-tutorial). We also *highly recommend* for students to use the [VS Code Liveshare extension](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) in order to collaborate from multiple personal laptops (e.g. MacOS, Windows, Linux) to write and edit code that is then only executed by your lab group's laptop.
 
 ### Mini Truck + Laptop Network Communication via ROS ###
 Before we run any decision-making algorithms, we need to ensure our mini-truck knows where it is and can execute our control command. These functionalities have been built on your robot as ROS nodes. We also want to easily visualize the state and future plan of our robot on your own computers. Luckily, ROS has made this easy for us since it is naturally a distributed computing environment that can comprise hundreds of nodes across multiple machines with [network setups](http://wiki.ros.org/ROS/NetworkSetup). 
@@ -535,21 +533,21 @@ source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 In ECE346, `<ROBOT_IP>` is the IP address of your robot (i.e., **192.168.1.2XX**), and `<LAPTOP_IP>` is the IP address of your laptop under ECE346 Wi-Fi, which you can find by running `hostname -I` in a terminal window.
 
 ### Task 6.2: Launch Perception (SLAM) and Control Nodes On Robot ###
-After sshing into mini truck (**Task 6.1**) and waiting about 60 seconds, launch perception and control nodes by running
+After sshing into mini truck (**Task 6.1**) and waiting about 60 seconds, launch perception and control nodes from the truck by running
 ```bash
 cd ~/StartUp
 # <ROBOT_IP> is 192.168.1.2XX
 ./start_ros.sh <ROBOT_IP> 
 ```
-The `./start_ros.sh <ROBOT_IP>` command will automatically set your robot as the host of ROS Master using the previously mentioned script and start ROS. The  should take ~60 seconds. **Please make sure your robot is static on the track in the F111 lab**, because the localization algorithm requires accurate gravitational direction for initialization.
+The `./start_ros.sh <ROBOT_IP>` command will automatically set your robot as the host of ROS Master using the previously mentioned script and start ROS. The should take ~60 seconds. To be clear, the `start_ros.sh` script runs **locally on the mini truck** to start ROS Master, SLAM, and a control node that sends a signal to the robot's motors and servo. **Please make sure your robot is static on the track in the F111 lab**, because the localization algorithm requires accurate gravitational direction for initialization.
 
 If you encounter the error stating this file is not executable, you can change the permission by the following command and then retry.
 ```bash
 chmod +x start_ros.sh
 ```
 
-### Task 6.3: Launch Visualization On Your PC ###
-Next, we open a new terminal on your PC and navigate to the `ROS_Core` under your Git repository. If you closed your terminal windows from **Task 1-5**, in a new terminal window, activate the conda ROS environment, (optionally) rebuild the workspace, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
+### Task 6.3: Launch Visualization On Your Laptop ###
+Next, we open a new terminal on your laptop and navigate to the `ROS_Core` under your Git repository. If you closed your terminal windows from **Task 1-5**, in a new terminal window, activate the conda ROS environment, (optionally) rebuild the workspace, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
 ```bash
  # Navigate to ROS_Core
 cd <Path of your repo>/ECE346/ROS_Core 
@@ -565,45 +563,23 @@ source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 roslaunch racecar_interface visualization.launch
 ```
 
-After around 30s, RViz (**Figure 10**) and RQT (**Figure 11**) windows will show up.
+Shortly after, RViz (**Figure 9**) and RQT (**Figure 10**) windows will open.
 
 ![Rviz visualization tool. The orange box indicates the current pose of the robot and the yellow arrows indicate the past poses.](assets/rviz_truck.png)
-***Figure 10**: Rviz visualization tool. The orange box indicates the current pose of the robot and the yellow arrows indicate the past poses.*
+***Figure 9**: RViz visualization tool. An orange box that would appear here indicates the current pose of the robot and the yellow arrows indicate the past poses.*
 
+![RQT GUI](assets/rqt_truck.png)
+***Figure 10**: RQT GUI*
 
-![RQT GUI.](assets/rqt_truck.png)
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.65\textwidth]{lab0/figures/rqt_truck.png}
-\caption{}
-\label{fig: rqt_truck}
-\end{figure}
+### Task 6.4: Start Localization ###
+On your RQT console (**Figure 10**), first, go to the **Service Caller** page. Then, click the **refresh button** near the top left (this may appear blank) and choose **/SLAM/start_slam** from the drop-down menu. Finally, click the **call** button to start localization.
 
-\subsection\*{Step 3: Start Localization}
-\addcontentsline{toc}{subsection}{**Step 3: Start Localization}}
-On your RQT console (\autoref{fig: rqt_truck}), first, go to the **Service Caller} page. Then, click the **refresh button} \faRefresh~ and choose **/SLAM/start_slam} from the drop-down menu. Finally, click the \*\*call} button to start localization. \\
+An orange box will appear on your RViz after your service is called, which indicates the pose of your robot. Follow the instructions below to drive your mini truck around the track following and try to verify if the state estimation is accurate.
 
-An orange box will appear on your Rviz, which indicates the pose of your robot. Drive around the track and try to verify if the state estimation is accurate.\\
-
-\*\*Important}: Localization results will be significantly compromised if fiducial markers are occluded. Please do not stay or place your items inside the room.
-
-\subsection\*{Step 4: Launch Your Program On Truck}
-\addcontentsline{toc}{subsection}{**Step 4: Launch Your Program On Robot}}
-To launch your own decision-making algorithms, **open a new terminal} and \*\*ssh into your robot}. Then, let's navigate to your workspace, activate the conda ROS environment and configure network setups by:
-\begin{lstlisting}[language=bash]
-cd <Your Workspace>
-conda activate ros_base
-source network_ros_host.sh <HOST_IP>
-source devel/setup.bash # .zsh for Mac user
-\end{lstlisting}
-Finally, launch your node and remember to press the Down button as described in Section \ref{sec: drive_robot} to test your algorithm.
-\begin{lstlisting}[language=bash]
-roslaunch <ROS Package> <Launch File>
-\end{lstlisting}
+**Important**: Localization results will be significantly compromised if fiducial markers are occluded. Please do not stay or place your items inside the room.
 
 ## Driving the Robot with the Remote Controller ##
-[[Source]](https://manuals.plus/spektrum/2-4ghz-digital-radio-system-transmitter-manual)
-The remote controller (**Figure 9**) allows you to drive the robot manually -- as you would a regular RC car -- and also serves as a **dead man's switch** for the robot. We list each element's function below.
+The [remote controller](https://manuals.plus/spektrum/2-4ghz-digital-radio-system-transmitter-manual) (**Figure 11**) allows you to drive the robot manually -- as you would a regular RC car -- and also serves as a **dead man's switch** for the robot. We list each element's function below.
 
 A. **Throttle Trim**: Adjusts the throttle neutral point
 
@@ -627,84 +603,87 @@ J. **Steering Reversing**: Flip the switch to reverse the steering channel.
 
 K. **Power Button**: Turns the controller on and off.
 
-![Right diagram of the remote controller.*](assets/TX_front.png)
+![Right diagram of the remote controller](assets/TX_front.png)
 
-***Figure 9a**: Right diagram of the remote controller.*
+***Figure 11a**: Right diagram of the remote controller*
 
-![Figure 9b](assets/TX_back.png)
+![Left diagram of the remote controller](assets/TX_back.png)
 
-***Figure 9b**: Left diagram of the remote controller.*
+***Figure 11b**: Left diagram of the remote controller*
 
 The robot's drivetrain uses a separate power source that is connected directly to the motor ESC. To power up the robot, **first** turn on the remote controller by pressing the Power Button (K), **then** turn the switch on the bottom of the chassis to the ON position.
 
 By default, pull the throttle towards you to go forward, and push the throttle away to brake and reverse. In order to steer the truck, you need to rotate the steering knob by the desired amount. You can invert the throttle and steering using the corresponding (I, J) switches.
 
-## Driving the Robot with the onboard Jetson computer ##
-We use a [Maestro 6-Channel USB Servo Controller](https://www.pololu.com/product/1350) to control the motor ESC and steering servo.
-
-The running documentation of this servo controller can be found [here](https://www.pololu.com/docs/0J40). You can access the GUI interface of the controller from the command line:
+We use a [Maestro 6-Channel USB Servo Controller](https://www.pololu.com/product/1350) to control the motor ESC and steering servo. The running documentation of this servo controller can be found [here](https://www.pololu.com/docs/0J40). You can access the GUI interface of the controller from the command line:
 
 ```bash
 cd ECE346/asset/maestro-linux/
 ./MaestroControlCenter
 ```
 
-We have provided you with a ROS wrapper of the Mastero Servo Controller API. It subscribes to a ROS topic and sends inputs to the controller. Due to safety concerns, the multiplexer switch automatically disables the control signal from the Mastero Servo Controller. **In order to drive the robot with Jetson, you need to press the Down button of Channel 3 (G) all the time**. The system will immediately switch to the remote controller mode if you release this button.
+We have provided you with a ROS wrapper of the Maestro Servo Controller API. It subscribes to a ROS topic and sends inputs to the controller. Due to safety concerns, the multiplexer switch automatically disables the control signal from the Mastero Servo Controller. 
 
+**Important: In order to drive the robot with Jetson, you need to press the Down button of Channel 3 (G) all the time**. The system will immediately switch to the remote controller mode if you release this button.
 
-# TODO: can delete this. just use as reference
-
-## Overview & Goals
-
-1. Get familar with the hardware of the truck:
-   - Turn the truck on and off.
-   - Remote control the truck.
-   - Replace the battery.
-2. Get familar with the software interface of the truck:
-   - Connect to the truck via SSH.
-   - Run the SLAM and controller nodes.
-   - Play around with RViz visualization and the QRT control panel.
-3. Learn basic ROS sub/pub:
-   - Subscribe to Odometry topic and publish control command.
-4. Learn ROS parameter server:
-   - Set the parameters from launch file and command line.
-   - Set the parameters from yaml file.
-5. Write a simple P controller to reach a goal.
-
-6. Launch the ros packages and rviz visualization.
-
+### Task 6.5: Launch Your Program on Mini Truck ###
+Launch your own decision-making algorithm by  navigate to your laptop's workspace, activate the conda ROS environment and configure network setups, and finally, launch your node. Remember to press the Down button as described in the previous section to test your algorithm.:
+```bash
+cd ECE346/ROS_Core
+conda activate ros_base
+source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
+source devel/setup.bash
+roslaunch lab1 lab1_truck.launch
 ```
-roslaunch lab0 lab0_simulation.launch
+**Once you are finished, show your demo results to a lab TA.**
+
+## TL;DR: How to Launch Future Labs
+
+Open a terminal, SSH into your mini truck, and run the start up script. This should take ~60-90 seconds.
+```bash
+ssh nvidia@192.168.1.XX
+cd ~/StartUp
+./start_ros.sh 192.168.1.2XX
 ```
-
-Click the **2D Nav Goal** button on the top panel of RViz, and click on the map to set the goal. You should see a green triangle on the map, representing the chosen goal. At the same time, in the terminal you should also see:
-
+Open a second terminal, cd into your ECE346 ROS workspace, complete the typical ROS environment set up, and launch your nodes!
+```bash
+ # Navigate to ROS_Core
+cd ECE346/ROS_Core
+# Start virtual environment
+conda activate ros_base
+# Optional: reconfigure network (i.e. if laptop ip changes
+# Check <LAPTOP_IP> w/ "hostname -I"
+source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
+# Optional: Build ROS packages (if new packages)
+catkin_make
+# Set up laptop environment
+source devel/setup.bash
+# Launch ROS nodes e.g. use lab1 and lab1_truck.launch 
+roslaunch <ROS_Package> <Launch_File>
 ```
-[INFO] [xxxx.xxx]: Received a new goal [nan, nan]
-```
+To find available ROS packages, run `rospack list | grep /path/to/ECE346/`. Note `conda` needs to be activated to recognize `rospack`. 
 
-4. Write your code in [`scripts/controller/pure_pursuit.py`](scripts/controller/pure_pursuit.py) and finish all TODOs. Repeat step 3 to see if your controller works.
-   ![](assets/example.png)
-
-## Common Issues
+### Common Issues ###
 
 This lab depends on several external packages, such as [pySpline](https://github.com/mdolab/pyspline) and [networkx](https://networkx.org/). If you encounter **Cannot find module** errors, try to use install those packages with this [script](/Host_Setup/RoboStack/install_dependency.sh).
 
-```
-cd <Path of your repo>/Host_Setup/RoboStack
+```bash
+cd ECE346/Host_Setup/RoboStack
 source install_dependency.sh
 ```
 
-<------->
-
-### References and Additional Materials
+### References and Additional Materials ###
 
 Over the previous sections, we have covered a tiny portion of what ROS offers. Throughout the semester, we will learn more topics while implementing exciting algorithms on robots. We also encourage you to go over some of the excellent ROS tutorials and examples available online. You may find these materials very useful for gaining a deeper and more advanced understanding of ROS. Below are a few pointers to get you started on your ROS journey.
-\begin{itemize}
-\item \href{http://wiki.ros.org/Documentation}{Official ROS documentation}
-\item \href{http://www.clearpathrobotics.com/assets/guides/melodic/ros/}{ROS tutorial from Clearpath Robotics}
-\item \href{https://nu-msr.github.io/me495_site/}{ROS lecture notes from ME495 at Northwestern University}
-\item \href{https://www.cse.sc.edu/~jokane/agitr/agitr-letter.pdf}{A Gentle Introduction to ROS by Jason M. O’Kane}
-\end{itemize}
-\looseness=-1
-If you encounter issues, bugs, or unsolvable puzzles, your best helper is always Google (much wiser than any one of us). If your questions are ROS-related or you are unsure how to achieve some advanced features, you can check \href{https://answers.ros.org/questions/}{ROS Answers}, where you are most likely to find solutions to your problems.
+
+* [Official ROS documentation](http://wiki.ros.org/Documentation)
+
+* [ROS tutorial from Clearpath Robotics](http://www.clearpathrobotics.com/assets/guides/melodic/ros/)
+
+* [ROS lecture notes from ME495 at Northwestern University](https://nu-msr.github.io/me495_site/)
+
+* [A Gentle Introduction to ROS by Jason M. O'Kane](https://www.cse.sc.edu/~jokane/agitr/agitr-letter.pdf)
+
+
+If you encounter issues, bugs, or unsolvable puzzles, your best helper is always Google (much wiser than any one of us). If your questions are ROS-related or you are unsure how to achieve some advanced features, you can check [ROS Answers](https://answers.ros.org/questions/), where you are most likely to find solutions to your problems.
+
