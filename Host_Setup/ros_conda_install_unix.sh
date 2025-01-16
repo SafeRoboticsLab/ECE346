@@ -166,5 +166,8 @@ else
   exit 1
 fi
 
+export PATH="$HOME/miniforge3/bin:$PATH" 
+conda init
+
 # Add a line to .bashrc to activate the conda environment
 echo -e "${Green}Finished! Reopen a new terminal to see if everything works. ${NC}"
