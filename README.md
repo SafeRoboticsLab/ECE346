@@ -89,6 +89,7 @@ In VSCode, log into [GitHub](https://github.com/). Click the settings icon, then
     ```bash
     git push -u origin SP2025
     ```
+9. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", and "mb9041".
     
 ### Push to your private repository
 
@@ -136,8 +137,7 @@ This process should take ~5 minutes. If you already have conda (anaconda/minicon
 
 If you do not have conda installed, the script will first install [**miniforge**](https://github.com/conda-forge/miniforge), and then create a new ROS Noetic environment. 
 
-We create an alias for activating the new environment called ```start_ros```. You can activate the environment by running either `start_ros` or `
-conda activate ros_base`.
+We create an alias for activating the new environment called ```start_ros```. You can activate the environment by running either `start_ros` or `conda activate ros_base`.
 
 ## Test it out
 Open a new terminal, and run activate your ROS environment by `start_ros`.
@@ -176,7 +176,7 @@ Please check out our [FAQ](FAQ/readme.md) page for common questions.
 ## [Lab 2: ILQR Trajectory Planning](ROS_Core/src/Labs/Lab2)
 ## [Lab 3: Collision Avodiance and Navigation in Dynamic Environment](ROS_Core/src/Labs/Lab3)
 ## [Lab 4: MDP and POMDP](ROS_Core/src/Labs/Lab4)
-## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab 5)
+## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab5)
 
 # Reference
 ```bash
