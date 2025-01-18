@@ -168,7 +168,7 @@ roslaunch first_pkg first_launch.launch
 You should see ’Hello World’ printed out continuously in your terminal. To stop the ROS process, press `ctrl-C` in your terminal window. A detailed guide of launch files can be found [here](http://wiki.ros.org/roslaunch).
 
 # Let's Read and Write ROS!
-In this lab, you will implement a simple goal-reaching controller and apply your knowledge of ROS to make it run on both the simulation environment and your mini truck. We will use a proportional controller for the throttle, and a pure pursuit controller for steering. You need to finish **6** tasks by filling in missing codes of file [`pure_pursuit.py`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/lab1/scripts/controller/pure_pursuit.py) (file path: `ECE346/ROS_Core/src/Labs/lab1/scripts/controller/pure_pursuit.py`
+In this lab, you will implement a simple goal-reaching controller and apply your knowledge of ROS to make it run on both the simulation environment and your mini truck. We will use a proportional controller for the throttle, and a pure pursuit controller for steering. You need to finish **6** tasks by filling in missing codes of file [`pure_pursuit.py`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py) (file path: `ECE346/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`
 
 Before we dive into technical details, let's take a look at what is provided for this Lab. First, please make sure you have the latest version of the ECE346 code in your own private fork (following your initial [laptop set up](https://github.com/SafeRoboticsLab/ECE346), i.e., `git pull upstream 2025`). Under our catkin workspace (`ROS_Core`), we can build all packages, set up the environment, and launch our nodes, all from our terminal, as follows:
 ```bash
@@ -206,7 +206,7 @@ From the RQT GUI, let's first take a look at the node graph page. If the node gr
 `roslaunch` is a tool for easily launching multiple ROS nodes, as well as setting parameters on the parameter server. `roslaunch` takes in one or more XML configuration files (with the `.launch` extension) that specify the parameters to set and nodes to launch. In Lab 1, you just need to know how to interpret a launch file and pass arguments during `roslaunch`.
 
 ### Reading a Launch File ###
-Let's first **take a look** at the [launch file](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/lab1/launch/lab1_simulation.launch) you just used. You can click the link or find it locally from `<Path to your repo>ECE346/ROS_Core/src/Labs/lab1/launch/lab1_simulation.launch`.
+Let's first **take a look** at the [launch file](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab1/launch/lab1_simulation.launch) you just used. You can click the link or find it locally from `<Path to your repo>ECE346/ROS_Core/src/Labs/Lab1/launch/lab1_simulation.launch`.
 
 The first section, with syntax [`<arg name="AA"  default="BB"  doc="CC"/>`](http://wiki.ros.org/roslaunch/XML/arg), defines a list of arguments that you can pass into this launch file.
 
@@ -233,7 +233,7 @@ The argument you set in during `roslaunch` are read by your ROS nodes through [R
 ```python
 get_ros_param(param_name, default_value)
 ```
-You can find this function [in here](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/lab1/scripts/controller/utils/ros_utility.py), and it will be included for all labs.
+You can find this function [in here](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab1/scripts/controller/utils/ros_utility.py), and it will be included for all labs.
 
 ## ROS Messages, Topics, Publishers and Subscribers ##
 One primary function of ROS is the communication between nodes using messages. The publisher sends out the message to ROS topics, and the subscribers receive the messages. This section will use two examples borrowed from the [ROS official tutorial](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber(python)) to understand how publishers and subscribers work in ROS. For visualization, the node graph in **Figure 4** indicates which nodes are publishers or subscribers to a certain topic. For example, the `/lab1` node publishes to the `/Control` topic, and the `/simulation_node` is subscribed to the `/Control` topic.
