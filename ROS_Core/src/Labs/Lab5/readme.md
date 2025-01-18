@@ -1,4 +1,4 @@
-# Lab 4: Behavior Cloning
+# Lab 5: Behavior Cloning
 In this lab, we will use a basic behavior cloning algorithm to train a model to drive the truck.
 
 
@@ -44,7 +44,7 @@ conda activate ros_base
 catkin_make
 source devel/setup.bash
 source network_ros_host.sh <IP OF YOUR ROBOT>
-roslaunch racecar_learning lab4.launch
+roslaunch racecar_learning lab5.launch
 ``` 
 
 # Start Training Online
@@ -57,7 +57,7 @@ You can drive your robot along the reference path for a few loops, then simply l
 ## 4. Once the loss converges, call the service *"learning/eval"* from RQT to pause the training and evalute the model.
 Hit the down button on your controller to start the evaluation. The robot will drive along the reference path.
 ## 5. If the robot drives well, call the service *"learning/save_model"* from RQT to save the model and call the service *"learning/save_data"* to stop the training.
-Your model will be saved in folder ["ROS_Core/Labs/Lab4/models"](./models) on your robot, and the training data will be saved in folder ["ROS_Core/Labs/Lab4/data"](./data) on your robot.
+Your model will be saved in folder ["ROS_Core/Labs/Lab5/models"](./models) on your robot, and the training data will be saved in folder ["ROS_Core/Labs/Lab5/data"](./data) on your robot.
 ## 6. If you do not like your model, call the service *"learning/start_learn"* again from RQT to resume training again.
 
 # Traning Offline
@@ -66,7 +66,7 @@ With data collected from the previous step, we can train the model offline using
 # Test the Model
 You can evaluate the model trained offline by using additional parameter during the launch of the learning node. In *T3*, relaunch the node using 
 ```
-roslaunch racecar_learning lab4.launch model_path:=<PATH TO YOUR MODEL>
+roslaunch racecar_learning lab5.launch model_path:=<PATH TO YOUR MODEL>
 ```
 
 # Task: Train your own behavior cloning policy, test it on the robot and show it to your AIs
