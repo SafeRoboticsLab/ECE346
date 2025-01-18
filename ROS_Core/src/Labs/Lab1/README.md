@@ -210,7 +210,7 @@ Let's first **take a look** at the [launch file](https://github.com/SafeRobotics
 
 The first section, with syntax [`<arg name="AA"  default="BB"  doc="CC"/>`](http://wiki.ros.org/roslaunch/XML/arg), defines a list of arguments that you can pass into this launch file.
 
-The second section, [`<rosparam command="load" file="$(find lab0)/configs/config.yaml"/>`](http://wiki.ros.org/roslaunch/XML/rosparam), loads a list of parameters defined in a YAML file to the ROS parameter server. `$(find lab1)` will ask ROS to find the path to the `lab1` package so that you do not need to type the absolute path.
+The second section, [`<rosparam command="load" file="$(find lab1)/configs/config.yaml"/>`](http://wiki.ros.org/roslaunch/XML/rosparam), loads a list of parameters defined in a YAML file to the ROS parameter server. `$(find lab1)` will ask ROS to find the path to the `lab1` package so that you do not need to type the absolute path.
 
 The third section, with blocks enclosed by [`<include> xxxx </include>`](http://wiki.ros.org/roslaunch/XML/include), specifies other launch files to include during this launch, effectively allowing nesting of launch files. In addition, the syntax `<arg name="XX" value="$(arg AA)"/>` passes argument **AA** in this launch file into argument **XX** of the included launch file.
 
@@ -233,7 +233,7 @@ The argument you set in during `roslaunch` are read by your ROS nodes through [R
 ```python
 get_ros_param(param_name, default_value)
 ```
-You can find this function [in here](https://github.com/SafeRoboticsLab/ECE346/blob/SP2023/ROS_Core/src/Labs/lab0/scripts/controller/utils/ros_utility.py), and it will be included for all labs.
+You can find this function [in here](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/lab1/scripts/controller/utils/ros_utility.py), and it will be included for all labs.
 
 ## ROS Messages, Topics, Publishers and Subscribers ##
 One primary function of ROS is the communication between nodes using messages. The publisher sends out the message to ROS topics, and the subscribers receive the messages. This section will use two examples borrowed from the [ROS official tutorial](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber(python)) to understand how publishers and subscribers work in ROS. For visualization, the node graph in **Figure 4** indicates which nodes are publishers or subscribers to a certain topic. For example, the `/lab1` node publishes to the `/Control` topic, and the `/simulation_node` is subscribed to the `/Control` topic.
@@ -328,7 +328,7 @@ This snippet of code is where we make everything happen. It is the main block of
 ### Task 1: Set up a publisher for the ServoMsg message ###
 
 Now you know how to publish a ROS message. Let's write our first ROS code! Open your `pure_pursuit.py` file in the text editor of your choice (file path: `<Path of your
-repo>/ECE346/ROS Core/src/Labs/Lab0/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g topic name). **Once you are finished, show your code to a lab TA**, either by sending a photo (e.g., a screenshot or clear a photo of your screen with a phone camera) on slack or showing in-person during lab OH, and proceed. Note: you can proceed before receiving confirmation from a lab TA, but to receive full credit for this lab you must show your completed, correct work for each required section before the lab's deadline. This applies for all of Lab 1.
+repo>/ECE346/ROS Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g topic name). **Once you are finished, show your code to a lab TA**, either by sending a photo (e.g., a screenshot or clear a photo of your screen with a phone camera) on slack or showing in-person during lab OH, and proceed. Note: you can proceed before receiving confirmation from a lab TA, but to receive full credit for this lab you must show your completed, correct work for each required section before the lab's deadline. This applies for all of Lab 1.
 
 ### ROS Subscriber ###
 The code for the subscriber is very similar to the publisher and can be seen below. Now, instead of publishing to the `chatter` topic, we are subscribing to it.

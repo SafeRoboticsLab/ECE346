@@ -5,7 +5,7 @@
     
 
     <!-- This line loads ROS parameters from a yaml file -->
-    <rosparam command="load" file="$(find lab0)/configs/config.yaml" />
+    <rosparam command="load" file="$(find lab1)/configs/config.yaml" />
 
     <include file="$(find racecar_routing)/launch/routing.launch">
             <arg name="output" value="$(arg output)"/>
@@ -14,7 +14,7 @@
     </include>
 
     <!-- This section start a node -->
-    <node pkg="lab0" type="lab0_node.py" name="lab0" output="$(arg output)">
+    <node pkg="lab1" type="lab1_node.py" name="lab1" output="$(arg output)">
         <param name="odom_topic"           value="$(arg odom_topic)" />
         <param name="control_topic"        value="$(arg control_topic)" />
         <param name="simulation"           value="false" />

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(lab0)
+project(lab1)
 
 
 ## Find catkin macros and libraries
@@ -111,7 +111,7 @@ catkin_package(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
-  scripts/lab0_node.py
+  scripts/lab1_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
