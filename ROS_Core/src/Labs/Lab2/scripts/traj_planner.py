@@ -20,7 +20,7 @@ from nav_msgs.msg import Odometry
 from nav_msgs.msg import Path as PathMsg # used to display the trajectory on RVIZ
 from std_srvs.srv import Empty, EmptyResponse
 
-# You will use those for lab2   
+# You will use those for lab3   
 from racecar_msgs.msg import OdometryArray
 from utils import frs_to_obstacle, frs_to_msg, get_obstacle_vertices, get_ros_param
 from visualization_msgs.msg import MarkerArray

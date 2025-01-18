@@ -8,7 +8,7 @@ from racecar_obs_detection.srv import GetFRS, GetFRSResponse
 from racecar_obs_detection.cfg import configConfig
 from dynamic_reconfigure.server import Server
 
-from lab2_utils import get_ros_param
+from lab3_utils import get_ros_param
 
 def frs2setarray(frs):
     '''
@@ -57,7 +57,7 @@ class DynObstacle():
         #       and save them to the class variables
         #
         # Hint: You can find <configConfig> message 
-        #    <ROS_Core/src/Labs/Lab2/cfg/config.cfg>
+        #    <ROS_Core/src/Labs/Lab3/cfg/config.cfg>
         # Here are tutorials for dynamic reconfigure
         # http://wiki.ros.org/dynamic_reconfigure/Tutorials/HowToWriteYourFirstCfgFile
         # http://wiki.ros.org/dynamic_reconfigure/Tutorials/SettingUpDynamicReconfigureForANode%28python%29
@@ -83,7 +83,7 @@ class DynObstacle():
         #   which has been implemented for you.
         #
         # Hint: You can find <GetFRS> service 
-        #    <ROS_Core/src/Labs/Lab2/srv/GetFRS.srv>
+        #    <ROS_Core/src/Labs/Lab3/srv/GetFRS.srv>
         # Here is the tutorial for dynamic reconfigure
         # http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28python%29
         ###############################################

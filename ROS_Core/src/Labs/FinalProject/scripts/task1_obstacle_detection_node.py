@@ -4,7 +4,7 @@ import numpy as np
 from visualization_msgs.msg import MarkerArray, Marker
 from nav_msgs.msg import Odometry
 from tagslam_ros.msg import AprilTagDetectionArray
-from lab2_utils import get_ros_param, pose2T
+from lab3_utils import get_ros_param, pose2T
 import message_filters
 from tf.transformations import quaternion_from_matrix
 

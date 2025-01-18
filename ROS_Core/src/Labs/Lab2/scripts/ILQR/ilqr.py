@@ -36,7 +36,7 @@ class ILQR():
 		self.ref_path = None
 
 		# collision checker
-		# Note: This will not be used until lab2.
+		# Note: This will not be used until lab3.
 		self.collision_checker = CollisionChecker(self.config)
 		self.obstacle_list = []
 		
@@ -111,7 +111,7 @@ class ILQR():
 		Args:
 			vertices_list: list of np.ndarray: list of vertices for each obstacle.
 		'''
-		# Note: This will not be used until lab2.
+		# Note: This will not be used until lab3.
 		self.obstacle_list = []
 		for vertices in vertices_list:
 			self.obstacle_list.append(Obstacle(vertices))
