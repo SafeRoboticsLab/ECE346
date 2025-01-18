@@ -20,7 +20,7 @@ y_goal = # y coordinate of the goal
 plan_request = PlanRequest([x_start, y_start], [x_goal, y_goal])
 plan_response = plan_client(plan_request)
 
-# The following script will generate a reference path in [RefPath](scripts/task2_world/util.py#L65) class, which has been used in your Lab1's ILQR planner
+# The following script will generate a reference path in [RefPath](scripts/task2_world/util.py#L65) class, which has been used in your Lab2's ILQR planner
 x = []
 y = []
 width_L = []
@@ -36,7 +36,7 @@ for waypoint in plan_respond.path.poses:
             
 centerline = np.array([x, y])
 
-# This is the reference path that we passed to the ILQR planner in Lab1
+# This is the reference path that we passed to the ILQR planner in Lab2
 ref_path = RefPath(centerline, width_L, width_R, speed_limit, loop=False)
 ```
 

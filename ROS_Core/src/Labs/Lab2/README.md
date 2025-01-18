@@ -1,4 +1,4 @@
-# Lab 1 - Trajectory Planning with ILQR
+# Lab 2 - Trajectory Planning with ILQR
 
 ## Overview & Goals
 1. Implement ILQR algorithm to solve the trajectory planning problem.

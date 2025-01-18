@@ -15,7 +15,7 @@ git checkout main
 git pull
 
 # # Planning
-# cd $CUR_DIR/ROS_Core/src/Utility/Labs/Lab1
+# cd $CUR_DIR/ROS_Core/src/Utility/Labs/Lab2
 # git checkout main
 # git pull
 

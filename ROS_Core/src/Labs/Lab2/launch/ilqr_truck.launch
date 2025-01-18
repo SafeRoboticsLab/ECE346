@@ -9,7 +9,7 @@
     <arg name="path_topic"          default="/Routing/Path"         doc="ROS topic for reference path"/>
     <arg name="receding_horizon"    default="false"                 doc="whether to use receding horizon planner"/>
     <arg name="replan_dt"           default="0.1"                   doc="time step for replanning"/>
-    <arg name="ilqr_config"         default="configs/lab1.yaml"     doc="path to ilqr config file"/>
+    <arg name="ilqr_config"         default="configs/lab2.yaml"     doc="path to ilqr config file"/>
 
     <node pkg="racecar_planner" type="traj_planning_node.py" name="traj_planning" output="$(arg output)">
         <param name="odom_topic"           value="$(arg odom_topic)" />
