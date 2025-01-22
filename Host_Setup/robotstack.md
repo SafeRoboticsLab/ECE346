@@ -20,7 +20,7 @@ You have to use Windows Subsystem Linux. Please refer to this [tutorial](Windows
 Open a new terminal, and run activate your ROS environment by ```ros_env```.
 
 Then run ```roscore``` to start the ROS master. If everything works, you will seee
-![](asset/ros_core_output.png)
+![](assets/ros_core_output.png)
 
 # Common Issues
 ## 1. *"Unable to contact my own server at [http://xxxx]"*
