@@ -48,7 +48,7 @@ After rebuild the workspace, you can launch the task 2 world in simulation by
 roslaunch final_project task2_simulation.launch
 ```
 You will see both Rviz and RQT showing up. In Rviz, you can see the position of the ego car (yellow), Boss (red), elapsed time in the middle, total income on the top, currently available side tasks, and Boss's schedule on the side.
-![](asset/task2_rviz.png)
+![](assets/task2_rviz.png)
 
 ## Start the session
 You will need to call the ROS service "/SwiftHaul/Start" to start the session. For example:

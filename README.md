@@ -1,7 +1,7 @@
 # ECE 346 - Intelligent Robotic Systems
 **This repo hosts lab materials for *ECE 346: Intelligent Robotic Systems* at Princeton University.**
 
-![image info](asset/Figures/robot.jpg)
+![image info](assets/Figures/robot.jpg)
 
 <!-- To keep your forked repo updated, please fetch upstream every time we release a new lab assignment. If you are not familiar with fetch, please check out this [tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork). -->
 
@@ -143,10 +143,29 @@ conda activate ros_base`.
 Open a new terminal, and run activate your ROS environment by `start_ros`.
 
 Then run `rviz2` to start RViz, a 3D visualization tool for ROS2. If everything works, you will see
-![](Host_Setup/asset/ros_core_output.png)
+![](Host_Setup/assets/ros_core_output.png)
 
 ### Common Issues
+**"Package not found"**
+
+Very likely, you forgot to run `source devel/setup.bash` in your workspace. Also, try recompiling your packages using `catkin_make` first if you recently made changes to your code.
+
+**"Oh no! My ROS is broken**
+
+Do not panic, let's just try to delete the ROS environment and reinstall it. 
+
+First, go back to the base environment.
+```
+conda activate base
+```
+Then, delete the ROS environment.
+```
+conda env remove -n ros_base
+```
+Finally, reinstall ROS following the instructions above under **Set up ROS2 Environment via RoboStack**.
+
 **"Unable to contact my own server at [http://xxxx]"**
+
 You will typically see this error on Mac OS. This is because the default ROS master is not set to localhost. To fix this, you need to run following lines to in your terminal. 
 
 ```bash
@@ -164,9 +183,17 @@ echo "export ROS_HOSTNAME=localhost" >> $profile
 echo "export ROS_MASTER_URI=http://localhost:11311" >> $profile
 echo "export ROS_IP=localhost" >> $profile
 ```
+**"Missing xcrun at /Library/Developer/CommandLineTools/usr/bin/xcrun"**
 
-## Want practice with ROS2?
-We have a ROS2 cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
+This is also a common error on Mac OS. To fix this, you need to install the Xcode Command Line Tools. You can do this by running the following command in your terminal.
+
+```bash
+xcode-select --install
+```
+
+
+## Want practice with ROS?
+We have a ROS cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
 
 ## Frequently Asked Questions
 Please check out our [FAQ](FAQ/readme.md) page for common questions.
@@ -176,7 +203,7 @@ Please check out our [FAQ](FAQ/readme.md) page for common questions.
 ## [Lab 2: ILQR Trajectory Planning](ROS_Core/src/Labs/Lab2)
 ## [Lab 3: Collision Avodiance and Navigation in Dynamic Environment](ROS_Core/src/Labs/Lab3)
 ## [Lab 4: MDP and POMDP](ROS_Core/src/Labs/Lab4)
-## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab 5)
+## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab5)
 
 # Reference
 ```bash

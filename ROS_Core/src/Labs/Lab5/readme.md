@@ -35,7 +35,7 @@ source network_ros_client.sh <IP OF YOUR ROBOT> <IP OF YOUR PC>
 roslaunch racecar_interface visualization.launch enable_routing:=false
 ```
 ### 3. Start the SLAM from RQT
-![](./asset/rqt_truck.png)
+![](./assets/rqt_truck.png)
 ### 4. In *T3*, SSH into your robot and start learning node
 ```
 ssh nvidia@<IP OF YOUR ROBOT>
@@ -51,7 +51,7 @@ roslaunch racecar_learning lab5.launch
 ## 1. In the RQT, call the service *"learning/start_learn"* from RQT to start training. 
 ## 2. In the RVIZ, use the *"2D Nav Goal"* to set a reference path for the robot
 A loop will be generated automatically as your robot's reference path, use your controller to drive the robot along the path.
-![](./asset/loop.png)
+![](./assets/loop.png)
 ## 3. In *T3*, you will see the loss be printed out.
 You can drive your robot along the reference path for a few loops, then simply let the robot stop on the track and wait the loss to converge.
 ## 4. Once the loss converges, call the service *"learning/eval"* from RQT to pause the training and evalute the model.

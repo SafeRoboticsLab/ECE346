@@ -618,7 +618,7 @@ By default, pull the throttle towards you to go forward, and push the throttle a
 We use a [Maestro 6-Channel USB Servo Controller](https://www.pololu.com/product/1350) to control the motor ESC and steering servo. The running documentation of this servo controller can be found [here](https://www.pololu.com/docs/0J40). You can access the GUI interface of the controller from the command line:
 
 ```bash
-cd ECE346/asset/maestro-linux/
+cd ECE346/assets/maestro-linux/
 ./MaestroControlCenter
 ```
 
