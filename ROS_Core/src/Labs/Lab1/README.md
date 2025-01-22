@@ -665,11 +665,11 @@ To find available ROS packages, run `rospack list | grep /path/to/ECE346/`. Note
 
 ### Common Issues ###
 
-This lab depends on several external packages, such as [pySpline](https://github.com/mdolab/pyspline) and [networkx](https://networkx.org/). If you encounter **Cannot find module** errors, try to use install those packages with this [script](/Host_Setup/RoboStack/install_dependency.sh).
+This lab depends on several external packages, such as [pySpline](https://github.com/mdolab/pyspline) and [networkx](https://networkx.org/). If you encounter **Cannot find module** errors, try to use install those packages with this [script](/Host_Setup/ros_conda_install_unix.sh).
 
 ```bash
-cd ECE346/Host_Setup/RoboStack
-source install_dependency.sh
+cd ECE346/Host_Setup
+source ros_conda_install_unix.sh
 ```
 
 ### References and Additional Materials ###

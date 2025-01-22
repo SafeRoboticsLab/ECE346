@@ -122,7 +122,7 @@ mamba install -n ros_base rosdep -c conda-forge -c robostack-staging --yes
 rosdep init  # note: do not use sudo!
 rosdep update
 
-echo -e "${BLUE}Install Dependency${NC}"
+echo -e "${BLUE}Install Dependencies${NC}"
 pip install --upgrade "jax[cpu]"
 mamba install -n ros_base numpy scipy matplotlib jupyter notebook networkx shapely scikit-learn imageio -c conda-forge --yes
 mamba install -n ros_base hpp-fcl -c conda-forge --yes
