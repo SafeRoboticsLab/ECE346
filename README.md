@@ -172,7 +172,7 @@ Then, delete the ROS environment.
 ```
 conda env remove -n ros_base
 ```
-Finally, reinstall ROS following the instructions above under **Set up ROS Environment via RoboStack**.
+Finally, reinstall ROS following [Set up ROS Environment via RoboStack](https://github.com/SafeRoboticsLab/ECE346/tree/SP2025?tab=readme-ov-file#set-up-ros-environment-via-robostack).
 
 **"Unable to contact my own server at [http://xxxx]"**
 
