@@ -5,8 +5,8 @@
 
 <!-- To keep your forked repo updated, please fetch upstream every time we release a new lab assignment. If you are not familiar with fetch, please check out this [tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork). -->
 
-# Getting Started
-> **Note:** If you are following this repository outside of ECE 346 or are refreshing your ECE 346 laptop, please skip to [Set up ROS2 Environment via RoboStack](https://github.com/SafeRoboticsLab/ECE346/tree/SP2024?tab=readme-ov-file#set-up-ros2-environment-via-robostack) after cloning the repository with
+# Getting Started (Lab 0)
+> **Note:** If you are following this repository outside of ECE 346 or are refreshing your ECE 346 laptop, please skip to [Set up ROS Environment via RoboStack](https://github.com/SafeRoboticsLab/ECE346/tree/SP2025?tab=readme-ov-file#set-up-ros-environment-via-robostack) after cloning the repository with
 > ```bash
 > git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git
 > ``` 
@@ -89,7 +89,7 @@ In VSCode, log into [GitHub](https://github.com/). Click the settings icon, then
     ```bash
     git push -u origin SP2025
     ```
-9. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", and "mb9041".
+9. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", "alexzni", "logflash", and "mb9041".
     
 ### Push to your private repository
 
@@ -124,8 +124,8 @@ git push origin
     ```
 Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 and `git pull` directly into your local `SP2025` branch.
 
-## Set up ROS2 Environment via RoboStack
-One crucial component of ECE346 is the Robot Operating System (ROS) by Open Robotics. Even though most your robot's computation will be handled on board, it's very useful to set up ROS on your computer for development, testing, and visualization. We use [ROS2 Humble](https://docs.ros.org/en/humble/index.html) on [RoboStack](https://robostack.github.io/) for portability across Linux and MacOS and to easily manage packages with conda/mamba. To set up our environment, `cd` to the ECE346 directory in a terminal, then run
+## Set up ROS Environment via RoboStack
+One crucial component of ECE346 is the Robot Operating System (ROS) by Open Robotics. Even though most your robot's computation will be handled on board, it's very useful to set up ROS on your computer for development, testing, and visualization. We use [ROS Noetic](https://wiki.ros.org/noetic) on [RoboStack](https://robostack.github.io/) for portability across Linux and MacOS and to easily manage packages with conda/mamba. To set up our environment, `cd` to the ECE346 directory in a terminal, then run
 
 ```bash
 sudo apt install curl
@@ -133,7 +133,7 @@ cd Host_Setup
 chmod +x ros_conda_install_unix.sh
 ./ros_conda_install_unix.sh
 ```
-This process should take ~5 minutes. If you already have conda (anaconda/miniconda/miniforge, etc) installed, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new python3.11 environment with ROS2 Humble installed.
+This process should take ~5 minutes. If you already have conda (anaconda/miniconda/miniforge, etc) installed, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new python3.11 environment with ROS Noetic installed.
 
 If you do not have conda installed, the script will first install [**miniforge**](https://github.com/conda-forge/miniforge), and then create a new ROS Noetic environment. 
 
@@ -142,10 +142,20 @@ We create an alias for activating the new environment called ```start_ros```. Yo
 ## Test it out
 Open a new terminal, and run activate your ROS environment by `start_ros`.
 
-Then run `rviz2` to start RViz, a 3D visualization tool for ROS2. If everything works, you will see
+Then run `rviz` to start RViz, a 3D visualization tool for ROS. If everything works, you will see
 ![](Host_Setup/assets/ros_core_output.png)
 
-### Common Issues
+# Lab Assignments
+## [Lab 1: Introduction to ROS and Mini Truck](ROS_Core/src/Labs/Lab1)
+## [Lab 2: ILQR Trajectory Planning](ROS_Core/src/Labs/Lab2)
+## [Lab 3: Collision Avodiance and Navigation in Dynamic Environment](ROS_Core/src/Labs/Lab3)
+## [Lab 4: MDP and POMDP](ROS_Core/src/Labs/Lab4)
+## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab5)
+
+## Want practice with ROS?
+We have a ROS cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
+
+## Common Issues
 **"Package not found"**
 
 Very likely, you forgot to run `source devel/setup.bash` in your workspace. Also, try recompiling your packages using `catkin_make` first if you recently made changes to your code.
@@ -162,7 +172,7 @@ Then, delete the ROS environment.
 ```
 conda env remove -n ros_base
 ```
-Finally, reinstall ROS following the instructions above under **Set up ROS2 Environment via RoboStack**.
+Finally, reinstall ROS following the instructions above under **Set up ROS Environment via RoboStack**.
 
 **"Unable to contact my own server at [http://xxxx]"**
 
@@ -191,21 +201,7 @@ This is also a common error on Mac OS. To fix this, you need to install the Xcod
 xcode-select --install
 ```
 
-
-## Want practice with ROS?
-We have a ROS cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
-
-## Frequently Asked Questions
-Please check out our [FAQ](FAQ/readme.md) page for common questions.
-
-# Lab Assignments
-## [Lab 1: Introduction to ROS and Mini Truck](ROS_Core/src/Labs/Lab1)
-## [Lab 2: ILQR Trajectory Planning](ROS_Core/src/Labs/Lab2)
-## [Lab 3: Collision Avodiance and Navigation in Dynamic Environment](ROS_Core/src/Labs/Lab3)
-## [Lab 4: MDP and POMDP](ROS_Core/src/Labs/Lab4)
-## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab5)
-
-# Reference
+## Reference
 ```bash
 @article{FischerRAM2021,
     title={A RoboStack Tutorial: Using the Robot Operating System Alongside the Conda and Jupyter Data Science Ecosystems},
