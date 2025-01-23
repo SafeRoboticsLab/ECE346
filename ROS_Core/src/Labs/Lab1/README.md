@@ -133,13 +133,15 @@ Simply put, a ROS node is a process that performs computation. Nodes are combine
 
 ### Making a Node Executable
 
-In the last section, we discussed how to build catkin packages using `catkin_make`. In order to add the workspace to the ROS environment you need to navigate to the top level of your catkin workspace `catkin_ws` and `source` the `setup.bash` file.
+In the last section, we discussed how to build catkin packages using `catkin_make`. In order to add the workspace to the ROS environment you need to navigate to the top level of your catkin workspace `catkin_ws`, activate conda, and `source` the `setup.bash` file.
 
 ```bash
 # Navigate to the top level of your catkin workspace (if not there already)
 cd ECE346/catkin_ws
 # Build catkin workspace
 catkin_make
+# Activate ros_base
+conda activate ros_base
 # Add workspace to ROS environment
 source devel/setup.bash
 ```
@@ -148,21 +150,21 @@ source devel/setup.bash
 
 ### Running ROS Nodes with `roslaunch`
 
-In `first_pkg`, the `scripts` directory has a Python script for the ROS node `first_node.py`. To run this node, let us first activate our `ros_base` environment and `source` the set up file to add environment variables (e.g., relevant file paths). Note that we just built the workspace in the previous section, so we leave out `catkin_make`.
-
+In `first_pkg`, the `scripts` directory has a Python script for the ROS node `first_node.py`. To run this node, first run the same set up commands as above, if you haven't already, i.e.,
 ```bash
 # Navigate to the top level of your catkin workspace (if not there already)
 cd ECE346/catkin_ws
+# Build catkin workspace
+catkin_make
 # Activate ros_base
 conda activate ros_base
-# Add ROS env variables
+# Add workspace to ROS environment
 source devel/setup.bash
 ```
-
 Recall that our `first_pkg` contains a `launch` directory with the file `first_launch.launch`. The key idea of a launch file is to start the ROS Master (the central coordinator of the ROS system), run our node(s), and assign values to parameters using a single command. We will learn how to create our own `.launch` files in future labs.
 
 ```bash
-# rosrun <pkg_name> <launch_file>
+# roslaunch <pkg_name> <launch_file>
 roslaunch first_pkg first_launch.launch
 ```
 
