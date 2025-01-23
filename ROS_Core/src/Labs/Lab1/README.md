@@ -634,7 +634,7 @@ source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 source devel/setup.bash
 roslaunch lab1 lab1_truck.launch
 ```
-**Once you are finished, show your demo results to a lab TA.**
+**Once you are finished, demo your robot (in-person or via video recording on the F111 track) to a lab TA.**
 
 ## TL;DR: How to Launch Future Labs
 
