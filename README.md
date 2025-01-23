@@ -55,50 +55,50 @@ In VSCode, log into [GitHub](https://github.com/). Click the settings icon, then
 
 1. In the upper-right corner of any page on [GitHub](https://github.com/), select '+', then click New repository.
 
-2. Type ECE346_GroupXX as the name for your repository, and an optional description.
+2. Type ECE346_GroupXX as the name for your repository, add a README file, and an optional description.
 
 3. Choose 'Private' as your repository visibility.
 
 4. Click 'Create repository'.
 
-5. In your terminal, run the following command. **Important**: `--recurse-submodules` is neccessary to get all submodules, i.e., linked specific commits of separate GitHub repositories!
+5. In your terminal, run the following command in your root directory (`cd ~`). **Important**: `--recurse-submodules` is neccessary to get all submodules, i.e., linked specific commits of separate GitHub repositories!
     ```bash
     git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git
     ```
 
-6. From inside the cloned directory, rename the original 'ECE346' GitHub repo to 'upstream' (default is 'origin'), which you'll use to fetch future lab assignments and updates.
+6. From inside the cloned directory, rename the original `ECE346` GitHub repo to 'upstream' (default is 'origin'), which you'll use to fetch future lab assignments and updates.
     ```bash
     cd ECE346
     git remote rename origin upstream
     git remote set-url --push upstream DISABLE
     ```
     
-7. Add your new private repository as a new remote named 'origin'. Note, this is just typical name for the 'primary' remote (online repository). To locate your private repo's URL, navigate to its main page on GitHub, select the green <>Code icon, select SSH and copy this URL to your clipboard. 
+7. Add your new private repository as a new remote named 'origin'. Note, this is just typical name for the 'primary' remote (online repository). To locate your private repo's URL, navigate to its main page on GitHub, select the green `<> Code` icon, select SSH and copy this URL to your clipboard. 
     ```bash
     git remote add origin <URL of your private Repo>
     ```
 
-8. Complete your GitHub configuration in your terminal. **Note**: run these commands inside your ECE346 directory after creating a private fork below. Otherwise, you'll get the error "fatal: not in a git directory". (Instructions kept here since they're GitHub related).
+8. Complete your GitHub configuration in your terminal. **Note**: run these commands inside your ECE346 directory after creating a private fork below. Otherwise, you'll get the error `fatal: not in a git directory`.
 ```bash
 # Replace with your GitHub email address and full name or a fun alias ;). Note this will appear on GitHub
-git config –global user.email “your_email@example.com”
-git config –global user.name “Your Name”
+git config --global user.email “your_email@example.com”
+git config --global user.name “Your Name”
 ```
 
-9. Push the 'SP2025' branch of your local cloned repository to your new private remote one, which has now become a private fork of 'ECE346'.
+9. Push the `SP2025` branch of your local cloned repository to your new private remote one, which has now become a private fork of `ECE346`.
     ```bash
     git push -u origin SP2025
     ```
 10. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", "alexzni", "logflash", and "mb9041".
     
-### Push to your private repository
+### Push (upload) your future lab solutions to your private repository
 
 When working on the labs and making changes to your code, you can push the code to your private repo on GitHub by simply doing:
 ```bash
 git push origin
 ```
 
-### Pull updates from the original ECE346 repository
+### Pull (download) future updates from the original ECE346 repository
 **Not sure about merge? It is never a bad idea to keep a copy locally before merging.**
 1. Commit all of your changes
    ```bash
@@ -122,25 +122,24 @@ git push origin
     # Update submodules in case there are any
     git submodule update --init --recursive
     ```
-Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 and `git pull` directly into your local `SP2025` branch.
+Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 just run `git pull upstream --recurse-submodules SP2025` directly into your local `SP2025` branch.
 
 ## Set up ROS Environment via RoboStack
-One crucial component of ECE346 is the Robot Operating System (ROS) by Open Robotics. Even though most your robot's computation will be handled on board, it's very useful to set up ROS on your computer for development, testing, and visualization. We use [ROS Noetic](https://wiki.ros.org/noetic) on [RoboStack](https://robostack.github.io/) for portability across Linux and MacOS and to easily manage packages with conda/mamba. To set up our environment, `cd` to the ECE346 directory in a terminal, then run
+One crucial component of ECE346 is the Robot Operating System (ROS) by Open Robotics. Even though most your robot's computation will be handled on board, it's very useful to set up ROS on your computer for development, testing, and visualization. We use [ROS Noetic](https://wiki.ros.org/noetic) on [RoboStack](https://robostack.github.io/) for portability across Linux and MacOS and to easily manage packages with conda/mamba. To set up our environment, open a terminal and run
 
 ```bash
+cd ~/ECE346
 sudo apt install curl
 cd Host_Setup
 chmod +x ros_conda_install_unix.sh
 ./ros_conda_install_unix.sh
 ```
-This process should take ~5 minutes. If you already have conda (anaconda/miniconda/miniforge, etc) installed, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new python3.11 environment with ROS Noetic installed.
-
-If you do not have conda installed, the script will first install [**miniforge**](https://github.com/conda-forge/miniforge), and then create a new ROS Noetic environment. 
+This process should take ~5 minutes. If you do not have conda (anaconda/miniconda/miniforge, etc.) installed, the script will first install [**miniforge**](https://github.com/conda-forge/miniforge), and then create a new Python 3.11, ROS Noetic environment. Otherwise, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new ROS Noetic environment.
 
 We create an alias for activating the new environment called ```start_ros```. You can activate the environment by running either `start_ros` or `conda activate ros_base`.
 
 ## Test it out
-Open a new terminal, and run activate your ROS environment by `start_ros`.
+Open a new terminal, and activate your ROS environment by running `start_ros`.
 
 Then run `rviz` to start RViz, a 3D visualization tool for ROS. If everything works, you will see
 ![](Host_Setup/assets/ros_core_output.png)
