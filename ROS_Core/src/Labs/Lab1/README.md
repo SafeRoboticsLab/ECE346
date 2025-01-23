@@ -196,12 +196,12 @@ roslaunch lab1 lab1_simulation.launch
 
 Two windows should pop up when you run the above `roslaunch` command. The first window, shown in **Figure 3a**, is managed by an [RViz](http://wiki.ros.org/rviz) node. In the RViz window, you should see an orange rectangle which represents your robot. RViz will serve as the main visualization tool in our class. It is highly configurable, and we will introduce more functionalities (such as visualizing the map and planned routes) in future labs.
 
-The second window, shown in **Figure 3b**, is the [RQT](http://wiki.ros.org/rqt0) GUI. It is a versatile tool that allows you to inspect your ongoing ROS processes, send ROS messages and call ROS services, visualize data, etc. RQT is highly configurable.
+The second window, shown in **Figure 3b**, is the [RQT](http://wiki.ros.org/rqt0) GUI (click "Node Graph" in bottom left corner). It is a versatile tool that allows you to inspect your ongoing ROS processes, send ROS messages and call ROS services, visualize data, etc. RQT is highly configurable.
 You can [adjust the layout and panels](https://www.clearpathrobotics.com/assets/guides/kinetic/ros/Creating%20RQT%20Dashboard.html) and even [create your own plugins](https://wiki.ros.org/rqt/Tutorials/).
 
 
 ![Node graph of Lab 1 from RQT GUI](assets/lab1_rqt.png)
-***Figure 4**: Node graph of Lab 1 from RQT GUI*
+***Figure 4**: Node graph of Lab 1 from RQT GUI. **Note**: Click "Node Graph" in bottom left corner.*
 
 From the RQT GUI, let's first take a look at the node graph page. If the node graph is not shown on your GUI, you can add one from **Plugins** menu on the top of the panel. **Figure 4** shows a node graph of Lab 1 with 6 nodes. The `/rosout` node starts automatically with ROS Master, and it logs messages to your console. The `/rviz`, `/visualization_node` and `/rqt_gui` nodes handle visualization and process monitoring. The `/simulation_node` simulates the dynamics of our robot after executing control commands from the `/lab1` node. All these nodes are started with a single `roslaunch` command. In the next section, we will take a look at the basic functionality of roslaunch.
 
