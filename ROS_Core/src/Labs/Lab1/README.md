@@ -421,7 +421,7 @@ A full list of [`rostopic`](http://wiki.ros.org/rostopic) and [`rosmsg`](http://
 ### Task 3: Fill in the subscriber callback function ###
 Open your `pure_pursuit.py` file. Your third task is to fill in the missing code of the function `goal_callback` following instructions under **TODO**.
 
-Once you are finished, **restart** `lab1_simulation.launch`. From the RViz simulator, you can add a desired goal location by selecting **2D Nav Goal** from the top panel and then clicking a point on the map. You will see that the position of your clicked point is printed on your terminal.
+Once you are finished, **restart** `lab1_simulation.launch` (i.e., `roslaunch lab1 lab1_simulation.launch`). From the RViz simulator, you can add a desired goal location by selecting **2D Nav Goal** from the top panel and then clicking a point on the map. You will see that the position of your clicked point is printed on your terminal.
 
 ### Task 4: Construct and publish a ROS message ###
 
