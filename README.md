@@ -89,7 +89,7 @@ In VSCode, log into [GitHub](https://github.com/). Click the settings icon, then
     ```bash
     git push -u origin SP2025
     ```
-9. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", and "mb9041".
+9. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", "alexzni", "logflash", and "mb9041".
     
 ### Push to your private repository
 
@@ -145,7 +145,17 @@ Open a new terminal, and run activate your ROS environment by `start_ros`.
 Then run `rviz` to start RViz, a 3D visualization tool for ROS. If everything works, you will see
 ![](Host_Setup/assets/ros_core_output.png)
 
-### Common Issues
+# Lab Assignments
+## [Lab 1: Introduction to ROS and Mini Truck](ROS_Core/src/Labs/Lab1)
+## [Lab 2: ILQR Trajectory Planning](ROS_Core/src/Labs/Lab2)
+## [Lab 3: Collision Avodiance and Navigation in Dynamic Environment](ROS_Core/src/Labs/Lab3)
+## [Lab 4: MDP and POMDP](ROS_Core/src/Labs/Lab4)
+## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab5)
+
+## Want practice with ROS?
+We have a ROS cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
+
+## Common Issues
 **"Package not found"**
 
 Very likely, you forgot to run `source devel/setup.bash` in your workspace. Also, try recompiling your packages using `catkin_make` first if you recently made changes to your code.
@@ -191,21 +201,7 @@ This is also a common error on Mac OS. To fix this, you need to install the Xcod
 xcode-select --install
 ```
 
-
-## Want practice with ROS?
-We have a ROS cheat sheet for you! Check it out [here](Docs/ROScheatsheet.pdf).
-
-## Frequently Asked Questions
-Please check out our [FAQ](FAQ/readme.md) page for common questions.
-
-# Lab Assignments
-## [Lab 1: Introduction to ROS and Mini Truck](ROS_Core/src/Labs/Lab1)
-## [Lab 2: ILQR Trajectory Planning](ROS_Core/src/Labs/Lab2)
-## [Lab 3: Collision Avodiance and Navigation in Dynamic Environment](ROS_Core/src/Labs/Lab3)
-## [Lab 4: MDP and POMDP](ROS_Core/src/Labs/Lab4)
-## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab5)
-
-# Reference
+## Reference
 ```bash
 @article{FischerRAM2021,
     title={A RoboStack Tutorial: Using the Robot Operating System Alongside the Conda and Jupyter Data Science Ecosystems},
