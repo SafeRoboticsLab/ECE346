@@ -95,7 +95,7 @@ conda activate base
 
 # Update to ROS2 Humble and appropriate dependencies
 
-mamba create -n ros_base ros-humble-desktop python=3.11 \
+mamba create -n ros_base ros-noetic-desktop python=3.9 \
              -c robostack-staging -c conda-forge \
              --no-channel-priority --override-channels --yes
 
