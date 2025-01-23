@@ -148,7 +148,7 @@ Then run `rviz` to start RViz, a 3D visualization tool for ROS. If everything wo
 # Lab Assignments
 ## [Lab 1: Introduction to ROS and Mini Truck](ROS_Core/src/Labs/Lab1)
 ## [Lab 2: ILQR Trajectory Planning](ROS_Core/src/Labs/Lab2)
-## [Lab 3: Collision Avodiance and Navigation in Dynamic Environment](ROS_Core/src/Labs/Lab3)
+## [Lab 3: Collision Avoidance and Navigation in Dynamic Environment](ROS_Core/src/Labs/Lab3)
 ## [Lab 4: MDP and POMDP](ROS_Core/src/Labs/Lab4)
 ## [Lab 5: Imitation Learning](ROS_Core/src/Labs/Lab5)
 
