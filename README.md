@@ -141,7 +141,7 @@ We create an alias for activating the new environment called ```start_ros```. Yo
 ## Test it out
 Open a new terminal, and activate your ROS environment by running `start_ros`.
 
-Then run `rviz` to start RViz, a 3D visualization tool for ROS. If everything works, you will see
+Then run `roscore` to start the ROS master. If everything works, you will see
 ![](Host_Setup/assets/ros_core_output.png)
 
 # Lab Assignments
