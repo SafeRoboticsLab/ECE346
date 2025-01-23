@@ -432,7 +432,7 @@ As a reminder, in this lab, you are implementing a simple goal-reaching controll
 ### Throttle Control ###
 Our robot can control its acceleration through the motor's throttle input. In this Lab, we will implement a proportional controller to track reference speed $V_{ref}$.
 
-$ a = K_p(V_{ref}-V\_{robot})$
+$a = K_p(V_{ref}-V\_{robot})$
 
 ### Steering Control ###
 The pure pursuit method is a geometry-based algorithm to determine desired steering angle for a car to follow a path. As shown in Figure 5, pure pursuit calculates the steering angle $\delta$ to ensure the vehicle reaches the target point (**TP**) according to the kinematic bicycle model. This [tutorial](https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/PurePursuit.html) provides an excellent interactive explanation of the pure pursuit algorithm.
@@ -443,9 +443,7 @@ The pure pursuit method is a geometry-based algorithm to determine desired steer
 
 In short, you can obtain the steering angle $\delta$ by the equation below, where $L$ is the wheelbase of the robot, $\alpha$ is the relative angle of the look-ahead point w.r.t the robot, and $l_d$ is the distance between the robot and the look-ahead point.
 
-$
-\delta = \arctan \left(\frac{2 L \sin(\alpha)}{l_d}\right)
-$
+$\delta = \arctan \left(\frac{2 L \sin(\alpha)}{l_d}\right)$
 
 In this lab, we assume the reference path is the straight line connecting your robot and goal point. Therefore, the **TP** is a point on this line segment defined by user parameters.
 
