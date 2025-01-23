@@ -6,7 +6,7 @@
 <!-- To keep your forked repo updated, please fetch upstream every time we release a new lab assignment. If you are not familiar with fetch, please check out this [tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork). -->
 
 # Getting Started
-> **Note:** If you are following this repository outside of ECE 346 or are refreshing your ECE 346 laptop, please skip to [Set up ROS2 Environment via RoboStack](https://github.com/SafeRoboticsLab/ECE346/tree/SP2024?tab=readme-ov-file#set-up-ros2-environment-via-robostack) after cloning the repository with
+> **Note:** If you are following this repository outside of ECE 346 or are refreshing your ECE 346 laptop, please skip to [Set up ROS Environment via RoboStack](https://github.com/SafeRoboticsLab/ECE346/tree/SP2025?tab=readme-ov-file#set-up-ros-environment-via-robostack) after cloning the repository with
 > ```bash
 > git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git
 > ``` 
@@ -124,8 +124,8 @@ git push origin
     ```
 Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 and `git pull` directly into your local `SP2025` branch.
 
-## Set up ROS2 Environment via RoboStack
-One crucial component of ECE346 is the Robot Operating System (ROS) by Open Robotics. Even though most your robot's computation will be handled on board, it's very useful to set up ROS on your computer for development, testing, and visualization. We use [ROS2 Humble](https://docs.ros.org/en/humble/index.html) on [RoboStack](https://robostack.github.io/) for portability across Linux and MacOS and to easily manage packages with conda/mamba. To set up our environment, `cd` to the ECE346 directory in a terminal, then run
+## Set up ROS Environment via RoboStack
+One crucial component of ECE346 is the Robot Operating System (ROS) by Open Robotics. Even though most your robot's computation will be handled on board, it's very useful to set up ROS on your computer for development, testing, and visualization. We use [ROS Noetic](https://wiki.ros.org/noetic) on [RoboStack](https://robostack.github.io/) for portability across Linux and MacOS and to easily manage packages with conda/mamba. To set up our environment, `cd` to the ECE346 directory in a terminal, then run
 
 ```bash
 sudo apt install curl
@@ -133,7 +133,7 @@ cd Host_Setup
 chmod +x ros_conda_install_unix.sh
 ./ros_conda_install_unix.sh
 ```
-This process should take ~5 minutes. If you already have conda (anaconda/miniconda/miniforge, etc) installed, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new python3.11 environment with ROS2 Humble installed.
+This process should take ~5 minutes. If you already have conda (anaconda/miniconda/miniforge, etc) installed, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new python3.11 environment with ROS Noetic installed.
 
 If you do not have conda installed, the script will first install [**miniforge**](https://github.com/conda-forge/miniforge), and then create a new ROS Noetic environment. 
 
@@ -142,7 +142,7 @@ We create an alias for activating the new environment called ```start_ros```. Yo
 ## Test it out
 Open a new terminal, and run activate your ROS environment by `start_ros`.
 
-Then run `rviz2` to start RViz, a 3D visualization tool for ROS2. If everything works, you will see
+Then run `rviz` to start RViz, a 3D visualization tool for ROS. If everything works, you will see
 ![](Host_Setup/assets/ros_core_output.png)
 
 ### Common Issues
@@ -162,7 +162,7 @@ Then, delete the ROS environment.
 ```
 conda env remove -n ros_base
 ```
-Finally, reinstall ROS following the instructions above under **Set up ROS2 Environment via RoboStack**.
+Finally, reinstall ROS following the instructions above under **Set up ROS Environment via RoboStack**.
 
 **"Unable to contact my own server at [http://xxxx]"**
 
