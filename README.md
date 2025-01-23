@@ -15,7 +15,7 @@
 First, you will need to connect your ECE 346 laptop to a Wi-Fi network. To connect to eduroam, open your terminal and run
 
 ```bash
-python3 ~/Downloads/eduroam-linux-Princeton_University-Princeton_eduroam.py
+python3 ~/Documents/eduroam-linux-Princeton_University-Princeton_eduroam.py
 ```
 If you don't see this file, you can temporarily connect to puvisitor using a non-Princeton email to [download it](https://cat.eduroam.org). Click 'Yes' and enter one group member's username, i.e., netid@princeton.edu and corresponding password. Then navigate to your Wi-Fi networks by clicking the top right of your screen, selecting the Wi-Fi logo followed by 'Select Network', 'eduroam', 'Connect'.
 
