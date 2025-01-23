@@ -5,7 +5,7 @@
 
 <!-- To keep your forked repo updated, please fetch upstream every time we release a new lab assignment. If you are not familiar with fetch, please check out this [tutorial](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork). -->
 
-# Getting Started
+# Getting Started (Lab 0)
 > **Note:** If you are following this repository outside of ECE 346 or are refreshing your ECE 346 laptop, please skip to [Set up ROS Environment via RoboStack](https://github.com/SafeRoboticsLab/ECE346/tree/SP2025?tab=readme-ov-file#set-up-ros-environment-via-robostack) after cloning the repository with
 > ```bash
 > git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git
