@@ -45,13 +45,6 @@ cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
 
 Now in your browser, enter 'ece346-XX' for 'Title', where XX is your group number. For 'Key', simply paste the SSH key that you just copied.
 
-Finally, complete your GitHub configuration in your terminal
-```bash
-# Replace with your GitHub email address and full name or a fun alias ;). Note this will appear on GitHub
-git config –global user.email “your_email@example.com”
-git config –global user.name “Your Name”
-```
-
 **Setting up GitHub on VSCode**
 
 In VSCode, log into [GitHub](https://github.com/). Click the settings icon, then 'Back up and sync settings', 'Sign in', 'Sign in with GitHub'.
@@ -84,12 +77,19 @@ In VSCode, log into [GitHub](https://github.com/). Click the settings icon, then
     ```bash
     git remote add origin <URL of your private Repo>
     ```
-    
-8. Push the 'SP2025' branch of your local cloned repository to your new private remote one, which has now become a private fork of 'ECE346'.
+
+8. Complete your GitHub configuration in your terminal. **Note**: run these commands inside your ECE346 directory after creating a private fork below. Otherwise, you'll get the error "fatal: not in a git directory". (Instructions kept here since they're GitHub related).
+```bash
+# Replace with your GitHub email address and full name or a fun alias ;). Note this will appear on GitHub
+git config –global user.email “your_email@example.com”
+git config –global user.name “Your Name”
+```
+
+9. Push the 'SP2025' branch of your local cloned repository to your new private remote one, which has now become a private fork of 'ECE346'.
     ```bash
     git push -u origin SP2025
     ```
-9. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", "alexzni", "logflash", and "mb9041".
+10. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", "alexzni", "logflash", and "mb9041".
     
 ### Push to your private repository
 
