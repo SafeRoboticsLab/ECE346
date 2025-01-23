@@ -1,19 +1,10 @@
 # Lab 2 - Trajectory Planning with ILQR
 
-## Overview & Goals
-1. Implement ILQR algorithm to solve the trajectory planning problem.
-2. Develop a ROS package to plan the trajectory for the robot in both open-loop and receding-horizon mode.  
-3. Demostate the trajectory planning in simulation and on the real robot.
-
-![](./assets/example.png)
-
-# ECE 346 Spring 2025
-Due Date [TODO: DATE] February 29, 2025
-## Lab 2 Trajectory Planning with Iterative LQR ##
+**[Due 11:59PM Thursday, February 13]**
 
 This lab will focus on the fundamental robot trajectory planning problem using optimization-based methods. We will first express the trajectory planning problem as an optimal control problem and look into vehicle models that govern our robots' equations of motion. Then, we will utilize the iterative linear quadratic regulator (ILQR) to generate locally optimal trajectories and policy. In addition, we will design a receding horizon trajectory planner using your ILQR and test them on the simulator and the real robot.
 	
-There are **4 Tasks** and **2 Checkpoints** in this lab, and you will need to submit the results and demonstrate them to the AI before **[TODO: DATE] 12:00 PM March 03, 2022**.
+There are **4 Tasks** and **2 Checkpoints** in this lab, and you will need to submit the results and demonstrate them to the AI before **11:59PM February 13, 2024**.
 
 \input{lab2/sections/intro.tex}
 
@@ -142,7 +133,7 @@ We have implemented the function to attain polices to traverse along a reference
 
 After finishing Task 2, you can test the ILQR within our simulated environment. Launch your ROS nodes using the following:
 ```bash
-roslaunch racecar_planner ilq_simulation.launch
+roslaunch racecar_planner ilqr_simulation.launch
 ```
 After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz. In **Figure 4**, we show an exemplary open-loop trajectory planned by the ILQR, where the red line is the reference path from the route planner and the green line is ILQR planned trajectory. Demonstrate your simulation results to AIs to check out Task 2.
 
