@@ -1,5 +1,5 @@
 # Lab 5: Imitation Learning
-**[Due 11:59PM Thursday, April 3]**
+**[Due 11:59PM Thursday, April 10]**
 In this lab, we will use a basic imitation learning (behavior cloning) algorithm to train a model to drive the truck.
 
 

@@ -1,6 +1,6 @@
 # Lab 2 - Trajectory Planning with ILQR
 
-**[Due 11:59PM Thursday, February 13]**
+**[Due 11:59PM Thursday, February 27]**
 
 This lab will focus on the fundamental robot trajectory planning problem using optimization-based methods. We will first express the trajectory planning problem as an optimal control problem and look into vehicle models that govern our robots' equations of motion. Then, we will utilize the iterative linear quadratic regulator (ILQR) to generate locally optimal trajectories and policy. In addition, we will design a receding horizon trajectory planner using your ILQR and test them on the simulator and the real robot.
 	
