@@ -134,7 +134,7 @@ cd Host_Setup
 chmod +x ros_conda_install_unix.sh
 ./ros_conda_install_unix.sh
 ```
-This process should take ~5 minutes. If you do not have conda (anaconda/miniconda/miniforge, etc.) installed, the script will first install [**miniforge**](https://github.com/conda-forge/miniforge), and then create a new Python 3.11, ROS Noetic environment. Otherwise, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new ROS Noetic environment.
+This process should take ~5 minutes. If you do not have conda (anaconda/miniconda/miniforge, etc.) installed, the script will first install [**miniforge**](https://github.com/conda-forge/miniforge), and then create a new Python 3.9, ROS Noetic environment. Otherwise, it will install [**miniforge**](https://github.com/conda-forge/miniforge) in parallel with your current conda, and then create a new ROS Noetic environment.
 
 We create an alias for activating the new environment called ```start_ros```. You can activate the environment by running either `start_ros` or `conda activate ros_base`.
 

@@ -133,13 +133,15 @@ Simply put, a ROS node is a process that performs computation. Nodes are combine
 
 ### Making a Node Executable
 
-In the last section, we discussed how to build catkin packages using `catkin_make`. In order to add the workspace to the ROS environment you need to navigate to the top level of your catkin workspace `catkin_ws` and `source` the `setup.bash` file.
+In the last section, we discussed how to build catkin packages using `catkin_make`. In order to add the workspace to the ROS environment you need to navigate to the top level of your catkin workspace `catkin_ws`, activate conda, and `source` the `setup.bash` file.
 
 ```bash
 # Navigate to the top level of your catkin workspace (if not there already)
 cd ECE346/catkin_ws
 # Build catkin workspace
 catkin_make
+# Activate ros_base
+conda activate ros_base
 # Add workspace to ROS environment
 source devel/setup.bash
 ```
@@ -148,21 +150,21 @@ source devel/setup.bash
 
 ### Running ROS Nodes with `roslaunch`
 
-In `first_pkg`, the `scripts` directory has a Python script for the ROS node `first_node.py`. To run this node, let us first activate our `ros_base` environment and `source` the set up file to add environment variables (e.g., relevant file paths). Note that we just built the workspace in the previous section, so we leave out `catkin_make`.
-
+In `first_pkg`, the `scripts` directory has a Python script for the ROS node `first_node.py`. To run this node, first run the same set up commands as above, if you haven't already, i.e.,
 ```bash
 # Navigate to the top level of your catkin workspace (if not there already)
 cd ECE346/catkin_ws
+# Build catkin workspace
+catkin_make
 # Activate ros_base
 conda activate ros_base
-# Add ROS env variables
+# Add workspace to ROS environment
 source devel/setup.bash
 ```
-
 Recall that our `first_pkg` contains a `launch` directory with the file `first_launch.launch`. The key idea of a launch file is to start the ROS Master (the central coordinator of the ROS system), run our node(s), and assign values to parameters using a single command. We will learn how to create our own `.launch` files in future labs.
 
 ```bash
-# rosrun <pkg_name> <launch_file>
+# roslaunch <pkg_name> <launch_file>
 roslaunch first_pkg first_launch.launch
 ```
 
@@ -194,12 +196,12 @@ roslaunch lab1 lab1_simulation.launch
 
 Two windows should pop up when you run the above `roslaunch` command. The first window, shown in **Figure 3a**, is managed by an [RViz](http://wiki.ros.org/rviz) node. In the RViz window, you should see an orange rectangle which represents your robot. RViz will serve as the main visualization tool in our class. It is highly configurable, and we will introduce more functionalities (such as visualizing the map and planned routes) in future labs.
 
-The second window, shown in **Figure 3b**, is the [RQT](http://wiki.ros.org/rqt0) GUI. It is a versatile tool that allows you to inspect your ongoing ROS processes, send ROS messages and call ROS services, visualize data, etc. RQT is highly configurable.
+The second window, shown in **Figure 3b**, is the [RQT](http://wiki.ros.org/rqt0) GUI (click "Node Graph" in bottom left corner). It is a versatile tool that allows you to inspect your ongoing ROS processes, send ROS messages and call ROS services, visualize data, etc. RQT is highly configurable.
 You can [adjust the layout and panels](https://www.clearpathrobotics.com/assets/guides/kinetic/ros/Creating%20RQT%20Dashboard.html) and even [create your own plugins](https://wiki.ros.org/rqt/Tutorials/).
 
 
 ![Node graph of Lab 1 from RQT GUI](assets/lab1_rqt.png)
-***Figure 4**: Node graph of Lab 1 from RQT GUI*
+***Figure 4**: Node graph of Lab 1 from RQT GUI. **Note**: Click "Node Graph" in bottom left corner.*
 
 From the RQT GUI, let's first take a look at the node graph page. If the node graph is not shown on your GUI, you can add one from **Plugins** menu on the top of the panel. **Figure 4** shows a node graph of Lab 1 with 6 nodes. The `/rosout` node starts automatically with ROS Master, and it logs messages to your console. The `/rviz`, `/visualization_node` and `/rqt_gui` nodes handle visualization and process monitoring. The `/simulation_node` simulates the dynamics of our robot after executing control commands from the `/lab1` node. All these nodes are started with a single `roslaunch` command. In the next section, we will take a look at the basic functionality of roslaunch.
 
@@ -329,7 +331,7 @@ This snippet of code is where we make everything happen. It is the main block of
 ### Task 1: Set up a publisher for the ServoMsg message ###
 
 Now you know how to publish a ROS message. Let's write our first ROS code! Open your `pure_pursuit.py` file in the text editor of your choice (file path: `<Path of your
-repo>/ECE346/ROS Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g topic name). **Once you are finished, show your code to a lab TA**, either by sending a photo (e.g., a screenshot or clear a photo of your screen with a phone camera) on slack or showing in-person during lab OH, and proceed. Note: you can proceed before receiving confirmation from a lab TA, but to receive full credit for this lab you must show your completed, correct work for each required section before the lab's deadline. This applies for all of Lab 1.
+repo>/ECE346/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g topic name). **Once you are finished, show your code to a lab TA**, either by sending a photo (e.g., a screenshot or clear a photo of your screen with a phone camera) on slack or showing in-person during lab OH, and proceed. Note: you can proceed before receiving confirmation from a lab TA, but to receive full credit for this lab you must show your completed, correct work for each required section before the lab's deadline. This applies for all of Lab 1.
 
 ### ROS Subscriber ###
 The code for the subscriber is very similar to the publisher and can be seen below. Now, instead of publishing to the `chatter` topic, we are subscribing to it.
@@ -419,7 +421,7 @@ A full list of [`rostopic`](http://wiki.ros.org/rostopic) and [`rosmsg`](http://
 ### Task 3: Fill in the subscriber callback function ###
 Open your `pure_pursuit.py` file. Your third task is to fill in the missing code of the function `goal_callback` following instructions under **TODO**.
 
-Once you are finished, **restart** `lab1_simulation.launch`. From the RViz simulator, you can add a desired goal location by selecting **2D Nav Goal** from the top panel and then clicking a point on the map. You will see that the position of your clicked point is printed on your terminal.
+Once you are finished, **restart** `lab1_simulation.launch` (i.e., `roslaunch lab1 lab1_simulation.launch`). From the RViz simulator, you can add a desired goal location by selecting **2D Nav Goal** from the top panel and then clicking a point on the map. You will see that the position of your clicked point is printed on your terminal.
 
 ### Task 4: Construct and publish a ROS message ###
 
@@ -642,7 +644,7 @@ roslaunch lab1 lab1_truck.launch
 ![](assets/rqt_reverse_throttle.png)
 ***Figure 12**: Dynamic Reconfigure window: tune your mini truck!*
 
-**Once you are finished, show your demo results to a lab TA.**
+**Once you are finished, demo your robot (in-person or via video recording on the F111 track) to a lab TA.**
 
 ## TL;DR: How to Launch Future Labs
 
