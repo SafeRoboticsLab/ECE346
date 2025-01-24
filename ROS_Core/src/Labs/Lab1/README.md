@@ -657,7 +657,7 @@ cd ~/StartUp
 ./start_ros.sh 192.168.1.2XX
 ```
 Open a second terminal,
-navigate to the `ROS_Core`, activate the conda ROS environment, source the set up environment script, source the network configuration script (if ip address has changed), and launch visualization nodes by running:
+navigate to the `ROS_Core`, activate the conda ROS environment, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
 ```bash
  # Navigate to ROS_Core
 cd <Path of your repo>/ECE346/ROS_Core 
