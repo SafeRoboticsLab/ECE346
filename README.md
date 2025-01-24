@@ -124,7 +124,7 @@ git push origin
     ```
 Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 just run `git pull upstream --recurse-submodules SP2025` directly into your local `SP2025` branch.
 
-**Optional tool for merge conflicts**: We recommend you download [GitKraken](https://www.gitkraken.com/download), which is a GitHub commit visualizer for *when* you run into merge conflicts. After downloading for Linux (.deb), navigate to your file and install:
+**Optional tool for merge conflicts**: If you'd like, you can download [GitKraken](https://www.gitkraken.com/download), which is a GitHub commit visualizer for *when* you run into merge conflicts, which may make things easier. However, after a few uses you need to start a free trial, so let us know about better free alternatives ([Sourcetree](https://www.sourcetreeapp.com/) is not available for Ubuntu). After downloading for Linux (.deb), navigate to your file and install:
 ```bash
 cd ~/Downloads
 sudo dpkg -i gitkraken-amd64.deb
