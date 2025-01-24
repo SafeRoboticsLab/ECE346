@@ -3,7 +3,7 @@
 In this lab, we will use a basic imitation learning (behavior cloning) algorithm to train a model to drive the truck.
 
 
-**Make sure that your repo is up-to-dated**
+**Make sure that your repo is up-to-date**
 # Setup Environment
 ## 1. Open a new terminal and SSH into your robot
 ```
