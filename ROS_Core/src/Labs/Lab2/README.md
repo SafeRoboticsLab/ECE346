@@ -12,7 +12,7 @@ There are **4 tasks** and **2 checkpoints** in this lab, and you will need to su
 git pull upstream 2025 --recurse-submodules
 ```
 
-If you encounter the `ModuleNotFoundError`, please install missing packages using `mamba install <package_name>` under the `ros_base` environment. For example, to fix `ModuleNotFoundError: No module named sklearn`, you can use `mamba install scikit-learn`. 
+If you encounter the `ModuleNotFoundError`, please install missing packages to your conda environment (first, `conda activate ros_base`) using `mamba install <package_name>` under the `ros_base` environment. For example, to fix `ModuleNotFoundError: No module named sklearn`, you can use `mamba install scikit-learn`. Note: [`mamba`](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html) is essentially a lightweight [`conda`](https://anaconda.org/anaconda/conda) with faster installs
 
 ## Software Structure
 In this lab, you will build a trajectory planner for our robot. Specifically, we will develop the `racecar_planner` ROS package under the directory [ROS_Core/src/Labs/Lab2](https://github.com/SafeRoboticsLab/ECE346/tree/SP2025/ROS_Core/src/Labs/Lab2). The basic software structure can be found in **Figure 1**.
@@ -86,7 +86,6 @@ We have provided helper functions to compute cost and system rollout, as well as
 To run cells in `task1.ipynb`, click the play button (or ctrl + enter), install the Python and Jupyter extensions, choose Python Environments, and choose `ros_base` as your environment. You also need to **install** `tqdm` to your ros_base environment which you can do in your terminal
 ```bash
 conda activate ros_base
-# Note: mamba is essentially a lightweight conda with faster installs
 mamba install tqdm
 ```
 
