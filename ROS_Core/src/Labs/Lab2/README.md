@@ -81,7 +81,14 @@ Unlike the tasks you had in Lab 1, Task 1 is very open-ended. You will need to c
 
 The `plan` function takes in **the initial state** $x_0$ and **optional initial control sequences** $\bar{u}_{0:T}$. After optimization using ILQR, it outputs a **dictionary** containing **planned trajectory** $x_{0:T}$, **control sequences** $u_{0:T}$, **feedback gain** $\{K_t\}$, and other information.
 
-We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and show visualization results to a lab TA.
+We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and show visualization results to a lab TA. 
+
+To run cells in `task1.ipynb`, click the play button (or ctrl + enter), install the Python and Jupyter extensions, choose Python Environments, and choose `ros_base` as your environment. You also need to **install** `tqdm` to your ros_base environment which you can do in your terminal
+```bash
+conda activate ros_base
+# Note: mamba is essentially a lightweight conda with faster installs
+mamba install tqdm
+```
 
 # ILQR as a Policy Planner
 
@@ -93,13 +100,16 @@ $
 $
 
 ### Task 2: Computing Feedback Control
-We have implemented the function to attain polices to traverse along a reference path in the [`policy_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L344) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. In Task 2, you are asked to compute the robot's control as described in the feedback control equation above by completing the [`compute_control`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L192) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class.
+We have implemented the function to attain polices to traverse along a reference path in the [`policy_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L344) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. In Task 2, you are asked to compute the robot's control as described in the feedback control equation above by completing the [`compute_control`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L192) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class (`trajplanner.py`).
 
 After finishing Task 2, you can test the ILQR within our simulated environment. Launch your ROS nodes using the following:
 ```bash
+cd ECE346/ROS_Core
+conda activate ros_base
+source devel/setup.bash
 roslaunch racecar_planner ilqr_simulation.launch
 ```
-After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz. In **Figure 4**, we show an exemplary open-loop trajectory planned by the ILQR, where the red line is the reference path from the route planner and the green line is ILQR planned trajectory. Demonstrate your simulation results to a lab TA to check out Task 2.
+After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz. In **Figure 4**, we show an exemplary open-loop trajectory planned by the ILQR, where the red line is the reference path from the route planner and the green line is ILQR planned trajectory. **Demonstrate your simulation results to a lab TA**.
 
 ![Example of Task 2 Results](assets/task2_result.png)
 
@@ -111,21 +121,23 @@ After seeing `ILQR warm up finished` on your terminal, you can choose any point 
 
 # Receding Horizon Trajectory Planner with ILQR
 
-
 Instead of computing the entire plan to track the reference path, we can utilize ILQR in a receding horizon fashion. Every time when the ROS node receives a new pose, we call ILQR to generate a new plan over a short horizon and use planned policy to generate controls.
 
 ### Task 3: Implementing the Receding Horizon Planner
 
 In this task, you will need to finish the [`receding_horizon_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L409) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. You may find comment blocks inside this function helpful for your implementation. Once finished, test your receding horizon planner by launching:
 ```bash
+cd ECE346/ROS_Core
+conda activate ros_base
+source devel/setup.bash
 roslaunch racecar_planner ilqr_simulation.launch receding_horizon:=true
 ```
 
 After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz and verify your receding horizon planner. Think about the advantages and disadvantages of the policy planner in Task 2 and the receding horizon planner in this task. **Share your thoughts with a lab TA and demonstrate your simulation**.
 
-# Testing Your Planner on Mini-Truck
+# Testing Your Planner on Mini Truck
 
-The modularity of ROS allows us to quickly deploy our algorithms from the simulated environment into the real robot with minimal changes to your code. As you did in lab 1, test your trajectory planner on the Mini Truck with the provided `ilqr_truck.launch`. You can use `receding_horizon` option to choose between policy planner and receding horizon planner.
+The modularity of ROS allows us to quickly deploy our algorithms from the simulated environment into the real robot with minimal changes to your code. As you did in lab 1, test your trajectory planner on the mini truck with the provided `ilqr_truck.launch`. You can use `receding_horizon` option to choose between policy planner and receding horizon planner. To make things clear, here are the detailed instructions.
 
 Open a terminal, SSH into your mini truck, and run the start up script. This should take ~60-90 seconds.
 ```bash
@@ -134,7 +146,7 @@ cd ~/StartUp
 ./start_ros.sh 192.168.1.2XX
 ```
 Open a second terminal,
-navigate to the `ROS_Core`, activate the conda ROS environment, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
+navigate to `ROS_Core`, activate the conda ROS environment, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
 ```bash
  # Navigate to ROS_Core
 cd <Path of your repo>/ECE346/ROS_Core 
@@ -165,15 +177,16 @@ source devel/setup.bash
 # Set up laptop ("client") network config
 source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 # Launch ROS nodes, enable/disable receding_horizon
-roslaunch lab2 ilqr_truck.launch receding_horizon=false
+roslaunch racecar_planner ilqr_truck.launch receding_horizon:=true
 ```
+**Reminder:** To find all available ROS packages (since package names do not always align with launch files or labs), run `rospack list | grep /path/to/ECE346/`. Note `ros_base` needs to be activated to recognize `rospack` and the `setup.bash` file needs to be sourced to locate relevant packages.
 
 ![Update dynamic reconfigure parameters using RQT](assets/dyn_reconfig.png)
 
 ***Figure 5**: Update dynamic reconfigure parameters using RQT*
 
 ## Updating Parameters Using Dynamic Reconfigure
-Due to hardware limitations, you might find it necessary to tune the direction and center point of the steering control, as well as the latency composition value to improve the performance of your plsanner on the robot. Instead of passing those values as ROS parameters, and setting them by re-launching, we can use **ROS Dynamic Reconfigure** to adjust them on the fly. Detailed tutorials on Dynamic Reconfigure can be found [here](http://wiki.ros.org/dynamic_reconfigure/Tutorials). You can adjust those parameters using RQT as shown in **Figure 5**.
+Due to hardware limitations, you might find it necessary to tune the direction and center point of the steering control, as well as the latency composition value to improve the performance of your planner on the robot. Instead of passing those values as ROS parameters, and setting them by re-launching, we can use **ROS Dynamic Reconfigure** to adjust them on the fly. Detailed tutorials on Dynamic Reconfigure can be found [here](http://wiki.ros.org/dynamic_reconfigure/Tutorials). You can adjust those parameters using RQT as shown in **Figure 5**.
 
 ### Task 4: Demonstrating ILQR Planner on Robot
-Finally, test your planner on the mini-truck robot and **demonstrate its performance with a lab TA**.
+Finally, test your planner on the mini truck and **demonstrate its performance with a lab TA**.
