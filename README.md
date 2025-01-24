@@ -124,6 +124,12 @@ git push origin
     ```
 Once you are fully comfortable with the git merge workflow, you may want to skip steps 1 and 3 just run `git pull upstream --recurse-submodules SP2025` directly into your local `SP2025` branch.
 
+**Optional tool for merge conflicts**: We recommend you download [GitKraken](https://www.gitkraken.com/download), which is a GitHub commit visualizer for *when* you run into merge conflicts. After downloading for Linux (.deb), navigate to your file and install:
+```bash
+cd ~/Downloads
+sudo dpkg -i gitkraken-amd64.deb
+```
+
 ## Set up ROS Environment via RoboStack
 One crucial component of ECE346 is the Robot Operating System (ROS) by Open Robotics. Even though most your robot's computation will be handled on board, it's very useful to set up ROS on your computer for development, testing, and visualization. We use [ROS Noetic](https://wiki.ros.org/noetic) on [RoboStack](https://robostack.github.io/) for portability across Linux and MacOS and to easily manage packages with conda/mamba. To set up our environment, open a terminal and run
 
