@@ -634,6 +634,14 @@ source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 source devel/setup.bash
 roslaunch lab1 lab1_truck.launch
 ```
+
+**Important**: Due to differing ESC calibrations within our fleet, you may find that your truck is completing your tasks while driving in reverse (lol). If this is the case, open your **RQT** window and navigate to the **Dynamic Reconfigure** page (**Figure 12**). Select **servo_control...** and click on the **throttle_dir** parameter. This reverses your throttle control and the car should behave as expected! 
+
+**In future labs** you may have to tune your mini truck by adjusting the parameters in the **Dynamic Reconfigure** window.
+
+![](assets/rqt_reverse_throttle.png)
+***Figure 12**: Dynamic Reconfigure window: tune your mini truck!*
+
 **Once you are finished, show your demo results to a lab TA.**
 
 ## TL;DR: How to Launch Future Labs
@@ -644,19 +652,37 @@ ssh nvidia@192.168.1.XX
 cd ~/StartUp
 ./start_ros.sh 192.168.1.2XX
 ```
-Open a second terminal, cd into your ECE346 ROS workspace, complete the typical ROS environment set up, and launch your nodes!
+Open a second terminal,
+navigate to the `ROS_Core`, activate the conda ROS environment, source the set up environment script, source the network configuration script (if ip address has changed), and launch visualization nodes by running:
+```bash
+ # Navigate to ROS_Core
+cd <Path of your repo>/ECE346/ROS_Core 
+# Start virtual environment
+conda activate ros_base 
+# Optional: Build ROS packages (if new packages)
+catkin_make 
+# Set up laptop environment
+source devel/setup.bash
+# Set up laptop ("client") network config
+# Check with: "hostname -I" in case laptop ip has changed
+source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
+# Launch visualization nodes
+roslaunch racecar_interface visualization.launch
+```
+Navigate to **Service Caller**, choose **/SLAM/start_slam**, and click **call**.
+
+Open a third terminal, cd into your ECE346 ROS workspace, complete the typical ROS environment set up, and launch your nodes!
 ```bash
  # Navigate to ROS_Core
 cd ECE346/ROS_Core
 # Start virtual environment
 conda activate ros_base
-# Optional: reconfigure network (i.e. if laptop ip changes
-# Check <LAPTOP_IP> w/ "hostname -I"
-source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 # Optional: Build ROS packages (if new packages)
 catkin_make
 # Set up laptop environment
 source devel/setup.bash
+# Set up laptop ("client") network config
+source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 # Launch ROS nodes e.g. use lab1 and lab1_truck.launch 
 roslaunch <ROS_Package> <Launch_File>
 ```
