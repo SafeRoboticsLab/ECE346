@@ -97,6 +97,15 @@ We have implemented the function to attain polices to traverse along a reference
 
 After finishing Task 2, you can test the ILQR within our simulated environment. Launch your ROS nodes using the following:
 ```bash
+ # Navigate to ROS_Core
+cd <Path of your repo>/ECE346/ROS_Core 
+# Start virtual environment
+conda activate ros_base 
+# Optional: Build ROS packages (if new packages)
+catkin_make 
+# Set up laptop environment
+source devel/setup.bash
+# Launch simulation nodes
 roslaunch racecar_planner ilqr_simulation.launch
 ```
 After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz. In **Figure 4**, we show an exemplary open-loop trajectory planned by the ILQR, where the red line is the reference path from the route planner and the green line is ILQR planned trajectory. **Demonstrate your simulation results to a lab TA**.
@@ -118,6 +127,15 @@ Instead of computing the entire plan to track the reference path, we can utilize
 
 In this task, you will need to finish the [`receding_horizon_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L409) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. You may find comment blocks inside this function helpful for your implementation. Once finished, test your receding horizon planner by launching:
 ```bash
+ # Navigate to ROS_Core
+cd <Path of your repo>/ECE346/ROS_Core 
+# Start virtual environment
+conda activate ros_base 
+# Optional: Build ROS packages (if new packages)
+catkin_make 
+# Set up laptop environment
+source devel/setup.bash
+# Launch simulation nodes
 roslaunch racecar_planner ilqr_simulation.launch receding_horizon:=true
 ```
 
@@ -125,7 +143,7 @@ After seeing `ILQR warm up finished` on your terminal, you can choose any point 
 
 # Testing Your Planner on Mini-Truck
 
-The modularity of ROS allows us to quickly deploy our algorithms from the simulated environment into the real robot with minimal changes to your code. As you did in lab 1, test your trajectory planner on the Mini Truck with the provided `ilqr_truck.launch`. You can use `receding_horizon` option to choose between policy planner and receding horizon planner.
+The modularity of ROS allows us to quickly deploy our algorithms from the simulated environment into the real robot with minimal changes to your code. As you did in lab 1, test your trajectory planner on the mini truck with the provided `ilqr_truck.launch`. You can use `receding_horizon` option to choose between policy planner and receding horizon planner.
 
 Open a terminal, SSH into your mini truck, and run the start up script. This should take ~60-90 seconds.
 ```bash

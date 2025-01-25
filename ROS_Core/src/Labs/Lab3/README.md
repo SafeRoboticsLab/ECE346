@@ -1,7 +1,6 @@
 # Lab 3 - Collision Avoidance and Navigation in Dynamic Environment (Forward Reachable Set)
 **[Due 11:59PM Thursday, March 6]**
 
-
 In this lab, we will dive deeper into our ILQR trajectory planner. Specifically, we will introduce its new capability to avoid static and dynamic obstacles. First, we will build upon your Lab 2's result and allow your robot to navigate around static obstacles. Then, we will integrate forward-reachable sets to enable your robot to interact with other robots through a traffic simulator, with other cars joining the traffic with your robot.
 
 There are **3 tasks** in this lab, and you will need to submit (push) your results and demonstrate them to a lab TA before **11:59PM March 6, 2025**.
@@ -21,6 +20,15 @@ In this lab, you will use your ILQR algorithm developed in the last lab to plan 
 # Static Obstacles
 In the first part of this lab, we will build collision avoidance functionality based on your ILQR. After activating ROS environment, rebuilding (`catkin_make`), and sourcing the workspace, we can launch the ROS nodes by running
 ```bash
+ # Navigate to ROS_Core
+cd <Path of your repo>/ECE346/ROS_Core 
+# Start virtual environment
+conda activate ros_base 
+# Optional: Build ROS packages (if new packages)
+catkin_make 
+# Set up laptop environment
+source devel/setup.bash
+# Launch nodes
 roslaunch racecar_planner lab3_task1.launch num_static_obs:=2
 ```
 This will launch a simulation environment (**Figure 2**) with two static obstacles (blue squares).
@@ -55,6 +63,15 @@ Inside the [`receding_horizon_planning_thread`](https://github.com/SafeRoboticsL
 ### Testing obstacle avoidance
 Now re-launch ROS nodes and select a goal point on the map. 
 ```bash
+ # Navigate to ROS_Core
+cd <Path of your repo>/ECE346/ROS_Core 
+# Start virtual environment
+conda activate ros_base 
+# Optional: Build ROS packages (if new packages)
+catkin_make 
+# Set up laptop environment
+source devel/setup.bash
+# Launch nodes
 roslaunch racecar_planner lab3_task1.launch num_static_obs:=2
 ```
 The default parameter should be able to handle most static obstacles. If the robot is running off the corner, you will need to restart the simulation. If your robot is stuck and you have implemented a reset strategy in the optional Step 5, you can reset static obstacles using RQT ((**Figure 3**).
@@ -69,7 +86,7 @@ In addition to static obstacles, we must consider other agents as dynamic obstac
 
 **Worst-Case Analysis.** We can compute the worst-case FRS concerning any possible controls. By avoiding FRSs at every time step within our planning horizon, your robot can avoid collision for any actions taken by other agents. However, this can make our planned trajectory very conservative and inefficient. For example, **Figure 4** shows the evolution of worst-case FRS. We can observe that worst-case FRS grows rapidly and occupies the entire road.
 
-![The evolution of the worst-case forward reachable set.](assets/frs_ol.pdf)
+![The evolution of the worst-case forward reachable set.](assets/frs_ol.png)
 
 ***Figure 4**: The evolution of the worst-case forward reachable set.*
 
@@ -135,7 +152,7 @@ $
      \dot{X} = (A-BK)X+Bd
  \end{equation}
  $
- Using this formulation, we can obtain the FRS of other agents in [Frenet coordinate](https://fjp.at/posts/optimal-frenet/#:~:text=to%20the%20controller.-,Frenet%20Coordinates,road%20or%20a%20reference%20path), which can be transformed into Cartesian coordinate easily. For example, the FRS with predicted policy can be seen in **Figure 5**. This forward reachable set does not over-grow as timestep increases because our feedback policy can stabilize the system despite the disturbance.
+ Using this formulation, we can obtain the FRS of other agents in [Frenet coordinates](https://fjp.at/posts/optimal-frenet/#:~:text=to%20the%20controller.-,Frenet%20Coordinates,road%20or%20a%20reference%20path), which can be transformed into Cartesian coordinates easily. For example, the FRS with predicted policy can be seen in **Figure 5**. This forward reachable set does not over-grow as timestep increases because our feedback policy can stabilize the system despite the disturbance.
 
  ![20 Steps forward reachable sets with predictive policy projected to $\hat{x}-\hat{y}$ plane](assets/FRS.png)
 
@@ -146,10 +163,13 @@ $
 
  You task is to finish [`multistep_zonotope_reachset`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab3/scripts/frs.py#L10) function in the [`FRS`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab3/scripts/frs.py) class following instructions. This function will calculate multiple-step reachable sets given an initial set.
 
- Finally, you can use [`ROS_Core/src/Labs/Lab3/scripts/task2.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab3/scripts/task2.ipynb) to reproduce **Figure 5**.
+ Finally, you can use [`ROS_Core/src/Labs/Lab3/scripts/task2.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab3/scripts/task2.ipynb) to reproduce **Figure 6**.
+
+![Example result of task 2](assets/task2.png)
+***Figure 6**: Example result of task 2*
 
 ## Task 3: Collision Avoidance with Dynamic Obstacles
-In Task 3, we will first create a new ROS node to host ROS Service Server that calculates the FRS. We will implement this node in [`ROS_Core/src/Labs/Lab3/scripts/dyn_obstacle_node.py`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab3/scripts/dyn_obstacle_node.py) file. Specifically, we will:
+In task 3, we will first create a new ROS node to host ROS Service Server that calculates the FRS. We will implement this node in [`ROS_Core/src/Labs/Lab3/scripts/dyn_obstacle_node.py`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab3/scripts/dyn_obstacle_node.py) file. Specifically, we will:
 
 1. Create a subscriber to get poses of other agents;
 2. Create a Dynamic Reconfigure Server to allow you to adjust FRS parameters on the fly; 
@@ -169,51 +189,44 @@ Next, you **must also write a ROS Service Client** inside your trajectory planne
 3. Inside the [`receding_horizon_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L409) function, call the service client you created in Step 1. For example, you can do 
 
 ```python
-request = t_cur + np.arange(self.planner.T)*self.planner.dt
+request = t_cur + np.arange(self.planner.T) * self.planner.dt
 response = Your_Service_Client(request)
 ```
 
-\item Then process the response of your service call using the helper function \href{https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/utils/dyn_obstacle.py#L7}{\textcolor{orange}{`frs_to_obstacle}}}. The output of this helper function need to be **extended} into the `obstacles_list} (the same list you are using for Task 1) before sending it to the ILQR planner. 
+4. Then process the response of your service call using the helper function [`frs_to_obstacle`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/utils/dyn_obstacle.py#L7). The output of this helper function need to be **extended** into the `obstacles_list` (the same list you are using for task 1) before sending it to the ILQR planner. 
 
-**Hint}: See \href{https://www.geeksforgeeks.org/append-extend-python/}{append() and extend() in Python} to learn more about their difference.
-\item Use the the helper function \href{https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/utils/dyn_obstacle.py#L26}{\textcolor{orange}{`frs_to_msg}}} to generate visualization messages of FRSs. Publish the message with `frs_pub} that you created in step 2.
+**Hint**: See [append() and extend() in Python](https://www.geeksforgeeks.org/append-extend-python/) to learn more about their difference.
+
+5. Use the the helper function [`frs_to_msg`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/utils/dyn_obstacle.py#L26) to generate visualization messages of FRSs. Publish the message with `frs_pub` that you created in step 2.
 
 
 Finally, you can test your collision avoidance by launching ROS nodes:
 ```bash
+ # Navigate to ROS_Core
+cd <Path of your repo>/ECE346/ROS_Core 
+# Start virtual environment
+conda activate ros_base 
+# Optional: Build ROS packages (if new packages)
+catkin_make 
+# Set up laptop environment
+source devel/setup.bash
+# Launch nodes
 roslaunch racecar_planner lab3_task2.launch
 ```
 If everything works properly, you will see your robot moving around the track and avoid collisions with other agents.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{lab3/figures/task2.png}
-    \caption{Example result of Task 2}
-\end{figure}
-![]()
+You can also use RQT (**Figure 7**) to adjust FRS parameters, as described in the previous sections. What will happen if you increase $d_x$ and $d_y$ and set all $K$ terms to 0? **Please discuss your observations with a lab TA**.
 
-***Figure 3**: *
+![You can use RQT to setup Dynamic Reconfigure Parameters for FRS](assets/rqt_dyn_obs.png)
 
-You can also use RQT (\autoref{fig:task2_rqt} to adjust FRS parameters, as described in the previous sections. What will happen if you increase $d_x$ and $d_y$ and set all $K$ terms to 0? Please discuss with your TA about your observations.
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\textwidth]{lab3/figures/rqt_dyn_obs.png}
-    \caption{You can use RQT to setup Dynamic Reconfigure Parameters for FRS}
-\end{figure}
-
-![]()
-
-***Figure 3**: *
+***Figure 7**: You can use RQT to setup Dynamic Reconfigure Parameters for FRS*
 
 # Appendix
-% The figure of full node graph showing changes from lab 2
 
-\begin{sidewaysfigure}[ht]
-    \includegraphics[width=\textwidth]{lab3/figures/lab3_new_nodes.png}
-    \caption{New nodes and topics in lab 3}
-\end{sidewaysfigure}
+![You can use RQT to setup Dynamic Reconfigure Parameters for FRS](assets/lab3_new_nodes.png)
 
-\begin{sidewaysfigure}[ht]
-    \includegraphics[width=\textwidth]{lab3/figures/lab3_new_nodes_highlight.png}
-    \caption{New nodes and topics in lab 3}
-\end{sidewaysfigure}
+***Figure 8**: New nodes and topics in lab 3*
+
+![New nodes and topics in lab 3](assets/lab3_new_nodes_highlight.png)
+
+***Figure 9**: New nodes and topics in lab 3*
