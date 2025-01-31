@@ -175,7 +175,7 @@ You should see ’Hello World’ printed out continuously in your terminal. To s
 # Let's Read and Write ROS!
 In this lab, you will implement a simple goal-reaching controller and apply your knowledge of ROS to make it run on both the simulation environment and your mini truck. We will use a proportional controller for the throttle, and a pure pursuit controller for steering. You need to finish **6** tasks by filling in missing codes of file [`pure_pursuit.py`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py) (file path: `ECE346/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`
 
-Before we dive into technical details, let's take a look at what is provided for this Lab. First, please make sure you have the latest version of the ECE346 code in your own private fork (following your initial [laptop set up](https://github.com/SafeRoboticsLab/ECE346), i.e., `git pull upstream 2025`). Under our catkin workspace (`ROS_Core`), we can build all packages, set up the environment, and launch our nodes, all from our terminal, as follows:
+Before we dive into technical details, let's take a look at what is provided for this Lab. First, please make sure you have the latest version of the ECE346 code in your own private fork (following your initial [laptop set up](https://github.com/SafeRoboticsLab/ECE346), i.e., `git pull upstream SP2025 --recurse-submodules`). Under our catkin workspace (`ROS_Core`), we can build all packages, set up the environment, and launch our nodes, all from our terminal, as follows:
 ```bash
  # Activate ROS environment
 conda activate ros_base 
