@@ -4,7 +4,7 @@
 
 This lab will focus on the fundamental robot trajectory planning problem using optimization-based methods. We will first express the trajectory planning problem as an optimal control problem and look into vehicle models that govern our robot's equations of motion. Then, we will utilize the iterative linear quadratic regulator (ILQR) to generate locally optimal trajectories and policy. In addition, we will design a receding horizon trajectory planner using your ILQR and test them on the simulator and the real robot.
     
-There are **4 tasks** in this lab, and you will need to submit (push) your results and demonstrate them to a lab TA before **11:59PM February 27, 2025**.
+There are **4 tasks** in this lab, and you will need to submit (push) your code and submit your video recordings + comment to Canvas before **11:59PM February 27, 2025**.
 
 **Note**: Make sure you have **pulled the code from upstream** into your repository and **updated all submodules**, i.e.,
 ```bash
@@ -17,9 +17,9 @@ If you encounter the `ModuleNotFoundError`, please install missing packages usin
 ## Software Structure
 In this lab, you will build a trajectory planner for our robot. Specifically, we will develop the `racecar_planner` ROS package under the directory [ROS_Core/src/Labs/Lab2](https://github.com/SafeRoboticsLab/ECE346/tree/SP2025/ROS_Core/src/Labs/Lab2). The basic software structure can be found in **Figure 1**.
 
-![Software Structure for Lab 2](assets/file.png)
+![Software Structure for lab 2](assets/file.png)
 
-***Figure 1**: Software Structure for Lab 2*
+***Figure 1**: Software Structure for lab 2*
 
 We will implement the ILQR algorithm in the [`ILQR`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L17) class and test it in the Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb). Then, we will develop open-loop and receding horizon trajectory planning algorithms with ROS inside the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. We will compare their performances in simulation and on the real robot.
 
@@ -74,18 +74,18 @@ One way to solve the optimal control problem posed above is using ILQR, which wi
 
 We have implemented a set of cost functions within the [`Cost`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/cost/cost.py#L13) class, whose parameters can be defined by your configuration file. The description of each cost function and its parameters can be found in the code. In addition, we provide you with very efficient implementation to obtain Jacobian and Hessian of the cost function using [Jax](https://jax.readthedocs.io/en/latest/). Specifically, you will find [`get_derivatives_np`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/cost/cost.py#L48) and [`get_traj_cost`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/cost/cost.py#L21) useful for your ILQR. Please refer to their docstrings for instructions.
 
-**In Lab 2, cost parameters for all tasks are provided. You are certainly welcome but not required to fine-tune those parameters.**
+**In lab 2, cost parameters for all tasks are provided. You are certainly welcome but not required to fine-tune those parameters.**
 
 ### Task 1: Implementing ILQR Algorithm
-Unlike the tasks you had in Lab 1, Task 1 is very open-ended. You will need to complete the main ILQR loop in the [`plan`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L133) function of [`ILQR`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L17) class following pseudocodes provided in the ILQR handout.
+Unlike the tasks you had in lab 1, task 1 is very open-ended. You will need to complete the main ILQR loop in the [`plan`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L133) function of [`ILQR`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L17) class following pseudocodes provided in the ILQR handout.
 
 The `plan` function takes in **the initial state** $x_0$ and **optional initial control sequences** $\bar{u}_{0:T}$. After optimization using ILQR, it outputs a **dictionary** containing **planned trajectory** $x_{0:T}$, **control sequences** $u_{0:T}$, **feedback gain** $\{K_t\}$, and other information.
 
-We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and show visualization results to a lab TA.
+We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and take a video of your visualization results to upload to Canvas. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 # ILQR as a Policy Planner
 
-In Task 1, your ILQR generated a reference trajectory $x_{0:T}=\{\hat{x}_0,\cdots,\hat{x}_T\}$ and reference control $u_{0:T}=\{\hat{u}_0,\cdots,\hat{u}_T\}$ to complete the time trial on a racetrack. In addition, ILQR provides a local state feedback control policy to track the reference trajectory at each time step. For example, if the current state of the robot is $x_t$, the feedback control can be found as:
+In task 1, your ILQR generated a reference trajectory $x_{0:T}=\{\hat{x}_0,\cdots,\hat{x}_T\}$ and reference control $u_{0:T}=\{\hat{u}_0,\cdots,\hat{u}_T\}$ to complete the time trial on a racetrack. In addition, ILQR provides a local state feedback control policy to track the reference trajectory at each time step. For example, if the current state of the robot is $x_t$, the feedback control can be found as:
 $
 \begin{equation}
     u_t = \hat{u}_t + K_t(x_t - \hat{x}_t).
@@ -93,9 +93,9 @@ $
 $
 
 ### Task 2: Computing Feedback Control
-We have implemented the function to attain polices to traverse along a reference path in the [`policy_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L344) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. In Task 2, you are asked to compute the robot's control as described in the feedback control equation above by completing the [`compute_control`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L192) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class.
+We have implemented the function to attain polices to traverse along a reference path in the [`policy_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L344) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. In task 2, you are asked to compute the robot's control as described in the feedback control equation above by completing the [`compute_control`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L192) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class.
 
-After finishing Task 2, you can test the ILQR within our simulated environment. Launch your ROS nodes using the following:
+After finishing task 2, you can test the ILQR within our simulated environment. Launch your ROS nodes using the following:
 ```bash
  # Navigate to ROS_Core
 cd <Path of your repo>/ECE346/ROS_Core 
@@ -108,15 +108,15 @@ source devel/setup.bash
 # Launch simulation nodes
 roslaunch racecar_planner ilqr_simulation.launch
 ```
-After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz. In **Figure 4**, we show an exemplary open-loop trajectory planned by the ILQR, where the red line is the reference path from the route planner and the green line is ILQR planned trajectory. **Demonstrate your simulation results to a lab TA**.
+After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz. In **Figure 4**, we show an exemplary open-loop trajectory planned by the ILQR, where the red line is the reference path from the route planner and the green line is ILQR planned trajectory. **Record a video of your simulation results to upload to Canvas**.
 
-![Example of Task 2 Results](assets/task2_result.png)
+![Example of task 2 Results](assets/task2_result.png)
 
-***Figure 4a**: Example of Task 2 (Policy Planner) Results*
+***Figure 4a**: Example of task 2 (Policy Planner) Results*
 
-![Example of Task 3 Results](assets/task3_result.png)
+![Example of task 3 Results](assets/task3_result.png)
 
-***Figure 4b**: Example of Task 3 (Receding Horizon Planner) Results*
+***Figure 4b**: Example of task 3 (Receding Horizon Planner) Results*
 
 # Receding Horizon Trajectory Planner with ILQR
 
@@ -139,7 +139,7 @@ source devel/setup.bash
 roslaunch racecar_planner ilqr_simulation.launch receding_horizon:=true
 ```
 
-After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz and verify your receding horizon planner. Think about the advantages and disadvantages of the policy planner in Task 2 and the receding horizon planner in this task. **Share your thoughts with a lab TA and demonstrate your simulation**.
+After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map, using **2D Nav Goal** on your RViz, and verify your receding horizon planner. Think about the advantages and disadvantages of the policy planner in task 2 and the receding horizon planner in this task. **Record a video of your simulation to upload on Canvas and write a few sentences (e.g., as a comment or attached document) with your thoughts in your final submission**.
 
 # Testing Your Planner on Mini-Truck
 
@@ -194,4 +194,4 @@ roslaunch lab2 ilqr_truck.launch receding_horizon=false
 Due to hardware limitations, you might find it necessary to tune the direction and center point of the steering control, as well as the latency composition value to improve the performance of your plsanner on the robot. Instead of passing those values as ROS parameters, and setting them by re-launching, we can use **ROS Dynamic Reconfigure** to adjust them on the fly. Detailed tutorials on Dynamic Reconfigure can be found [here](http://wiki.ros.org/dynamic_reconfigure/Tutorials). You can adjust those parameters using RQT as shown in **Figure 5**.
 
 ### Task 4: Demonstrating ILQR Planner on Robot
-Finally, test your planner on the mini-truck robot and **demonstrate its performance with a lab TA**.
+Finally, test your planner on the mini-truck robot and **record a video of your demonstration to be uploaded on Canvas**. You can also double-check your demo with a lab TA during lab OH before uploading!

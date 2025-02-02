@@ -3,7 +3,7 @@
 
 In this lab, we will dive deeper into our ILQR trajectory planner. Specifically, we will introduce its new capability to avoid static and dynamic obstacles. First, we will build upon your Lab 2's result and allow your robot to navigate around static obstacles. Then, we will integrate forward-reachable sets to enable your robot to interact with other robots through a traffic simulator, with other cars joining the traffic with your robot.
 
-There are **3 tasks** in this lab, and you will need to submit (push) your results and demonstrate them to a lab TA before **11:59PM March 6, 2025**.
+There are **3 tasks** in this lab, and you will need to submit (push) your code and upload demo videos + comment to Canvas before **11:59PM March 6, 2025**.
 
 **Note**: Make sure you have **pulled the code from upstream** into your repository and **updated all submodules**, i.e.,
 ```bash
@@ -215,7 +215,7 @@ roslaunch racecar_planner lab3_task2.launch
 ```
 If everything works properly, you will see your robot moving around the track and avoid collisions with other agents.
 
-You can also use RQT (**Figure 7**) to adjust FRS parameters, as described in the previous sections. What will happen if you increase $d_x$ and $d_y$ and set all $K$ terms to 0? **Please discuss your observations with a lab TA**.
+You can also use RQT (**Figure 7**) to adjust FRS parameters, as described in the previous sections. What will happen if you increase $d_x$ and $d_y$ and set all $K$ terms to 0? **Please upload your observations (e.g., as a comment or separate document) in your final submission on Canvas**.
 
 ![You can use RQT to setup Dynamic Reconfigure Parameters for FRS](assets/rqt_dyn_obs.png)
 

@@ -3,7 +3,7 @@
 
 Welcome to the "lab" component of Intelligent Robotic Systems! Over the semester, we will implement various methods for robot decision-making, both in simulated environments and on physical robotic hardware. In this lab we introduce you to essential concepts in ROS (the Robot Operating System), which will be solidified by analyzing and writing your own ROS code. You will then execute your code both in simulation and on your mini truck, which you'll then demonstrate to a course TA. This lab consists largely of reading and learning the basics of how to run your code for future labs. Although collaboration is always encouraged for labs in this course, we strongly encourage that each group member individually reads through this entire lab, as any future lab work will be difficult without this core understanding. Of course, to get the most out of this course and these labs, you should aim to fully understand and contribute to each assignment. If you plan to list ROS on your resume or CV, it will be assumed that you understand the core concepts that we introduce.
 
-There are **6 tasks** in this lab, and you will need to upload your results (i.e., `pure_pursuit.py` after **tasks 1-5**, simulation video for **task 5**, and mini truck demo video for **task 6**) to Canvas before **11:59PM February 13, 2025**. You can record the videos with your smartphone. This lab is quite long, so **start early**, and feel free to check your results with lab TAs during lab OH! Also, if you need input outside of lab OH, you can ask us a question on Ed (and share a video link if needed).
+There are **6 tasks** in this lab, and you will need to push your code (i.e., `git push origin SP2025` after completing `pure_pursuit.py` in **tasks 1-5**,) and upload your demonstration results (i.e., a simulation video for **task 5** and mini truck demo video for **task 6**) to Canvas before **11:59PM February 13, 2025**. You can record the videos with your smartphone. This lab is quite long, so **start early**, and feel free to check your results with lab TAs during lab OH! Also, if you need input outside of lab OH, you can ask us a question on Ed (and share a video link if needed).
 
 ## Objectives
 
@@ -452,7 +452,7 @@ $\delta = \arctan \left(\frac{2 L \sin(\alpha)}{l_d}\right)$
 In this lab, we assume the reference path is the straight line connecting your robot and goal point. Therefore, the **TP** is a point on this line segment defined by user parameters.
 
 ### Task 5: Implement the goal reaching controller ###
-Open your `pure_pursuit.py` file. You will finish the function `planning_thread` following the implementation details under the **TODO** block. This task concludes all coding parts of Lab 1. Relaunch the simulation, set **2D Nav Goal** as any points on RViz, and drive your robot towards the goal point. The default parameter should work well in the simulation if your implementation is correct. **Once you are finished, take a video of your simulation results (e.g., with phone or screen recording)**, and proceed to the next task. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
+Open your `pure_pursuit.py` file. You will finish the function `planning_thread` following the implementation details under the **TODO** block. This task concludes all coding parts of Lab 1. Relaunch the simulation, set **2D Nav Goal** as any points on RViz, and drive your robot towards the goal point. The default parameter should work well in the simulation if your implementation is correct. **Once you are finished, take a video of your simulation results** (e.g., with phone or screen recording) and **push your code to your private fork** (i.e., `git push origin SP2025`), and proceed to the next task. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 # Let's Get Real - Intro to *Mini Truck*  #
 Autonomous driving has sparked much public interest in the last few years. In this lab, we will work with a 1/14-scale autonomous *mini truck* as our mobile robot platform (**Figure 6**). 
@@ -542,7 +542,7 @@ cd ~/StartUp
 # <ROBOT_IP> is 192.168.1.2XX
 ./start_ros.sh <ROBOT_IP> 
 ```
-The `./start_ros.sh <ROBOT_IP>` command will automatically set your robot as the host of ROS Master using the previously mentioned script and start ROS. The should take ~60 seconds. To be clear, the `start_ros.sh` script runs **locally on the mini truck** to start ROS Master, SLAM, and a control node that sends a signal to the robot's motors and servo. **Please make sure your robot is static on the track in the F111 lab**, because the localization algorithm requires accurate gravitational direction for initialization.
+The `./start_ros.sh <ROBOT_IP>` command will automatically set your robot as the host of ROS Master using the previously mentioned script and start ROS. The should take ~60 seconds. To be clear, the `start_ros.sh` script runs **locally on the mini truck** to start ROS Master, SLAM, and a control node that sends a signal to the robot's motors and servo. **Please make sure your robot is static (not moving, flat) on the track in the F111 lab**, because the localization algorithm requires accurate gravitational direction for initialization.
 
 If you encounter the error stating this file is not executable, you can change the permission by the following command and then retry.
 ```bash
@@ -646,7 +646,7 @@ roslaunch lab1 lab1_truck.launch
 ![](assets/rqt_reverse_throttle.png)
 ***Figure 12**: Dynamic Reconfigure window: tune your mini truck!*
 
-**Once you are finished, demo your robot on the F111 track and record a video to upload to Canvas**. You can also double-check your demo with a lab TA during lab OH before uploading!
+**Once you are finished, demo your robot on the F111 track and record a video to upload to Canvas**. If you made any code changes or haven't already, please push your code to Github to be checked by lab TAs (i.e., `git push origin SP2025`).You can also double-check your demo with a lab TA during lab OH before uploading!
 
 ## TL;DR: How to Launch Future Labs
 
