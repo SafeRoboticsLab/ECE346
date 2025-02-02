@@ -466,6 +466,8 @@ The modularity of ROS allows us to quickly deploy our algorithms from the simula
 
 Read the information about your mini truck robot below (beware lots of reading). Afterwards, follow the instructions and test your goal-reaching controller on the mini truck **in F111** with the provided `lab1_truck.launch`. **Demo your robot on the F111 track and record a video to upload to Canvas**.
 
+**Always remember**, turn on your RC remote controller *before* switching on mini truck motors, and *switch off* your mini truck motors before the RC remote controller. For some mini trucks (e.g., NX-02), the truck may automatically drive forward when not tuned with the RC controller.
+
 # Intro to Mini Truck!
 ![A hardware schematic of the robotic platform.](assets/schematic.png)
 ***Figure 7**: A hardware schematic of the robotic platform.*
@@ -486,7 +488,7 @@ Please keep the robot and its accessories stored when you are not working with t
 
 * **Use caution and common sense when operating your robot.** Avoid driving it around potential hazards -- including stairs -- or unsuspecting civilians! Beyond basic "bench tests", we strongly recommend you only drive the robot inside the F111 lab space.
 
-* **Let us know immediately if any component is damaged or goes missing,** so that we can address the issue as quickly as possible.If you are experiencing hardware issues with the robot, please consult with a course AI **before** you try to fix it by yourself.
+* **Let us know immediately if any component is damaged or goes missing,** so that we can address the issue as quickly as possible.If you are experiencing hardware issues with the robot, please consult with a course TA **before** you try to fix it by yourself.
 
 * **Practice with the remote control and drive slowly!** The robot can achieve a maximum speed of over 15 mph (25 km/h). **Injuries and bone fractures are likely** if a person is hit at that level of speed.
 
@@ -582,6 +584,8 @@ An orange box will appear on your RViz after your service is called, which indic
 **Important**: Localization results will be significantly compromised if fiducial markers are occluded. Please do not stay or place your items inside the room.
 
 ## Driving the Robot with the Remote Controller ##
+> **Always remember**, turn on your RC remote controller *before* switching on mini truck motors, and *switch off* your mini truck motors before the RC remote controller. For some mini trucks (e.g., NX-02), the truck may automatically drive forward when not tuned with the RC controller.
+
 The [remote controller](https://manuals.plus/spektrum/2-4ghz-digital-radio-system-transmitter-manual) (**Figure 11**) allows you to drive the robot manually -- as you would a regular RC car -- and also serves as a **dead man's switch** for the robot. We list each element's function below.
 
 A. **Throttle Trim**: Adjusts the throttle neutral point
