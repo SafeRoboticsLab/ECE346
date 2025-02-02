@@ -1,9 +1,9 @@
 # Lab 1 - Introduction to ROS
 **[Due 11:59PM Thursday, February 13]**
 
-Welcome to the Robotics Assignment ("Lab") component of Intelligent Robotic Systems! Over the semester, we will implement various methods for robot decision-making, both in simulated environments and on physical robotic hardware. In this lab we introduce you to essential concepts in ROS (the Robot Operating System), which will be solidified by analyzing and writing your own ROS code. You will then execute your code both in simulation and on your mini truck, which you'll then demonstrate to a course TA. This lab consists largely of reading and learning the basics of how to run your code for future labs. Although collaboration is always encouraged for labs in this course, we strongly encourage that each group member individually reads through this entire lab, as any future lab work will be difficult without this core understanding. Of course, to get the most out of this course and these labs, you should aim to fully understand and contribute to each assignment. If you plan to list ROS on your resume or CV, it will be assumed that you understand the core concepts that we introduce.
+Welcome to the "lab" component of Intelligent Robotic Systems! Over the semester, we will implement various methods for robot decision-making, both in simulated environments and on physical robotic hardware. In this lab we introduce you to essential concepts in ROS (the Robot Operating System), which will be solidified by analyzing and writing your own ROS code. You will then execute your code both in simulation and on your mini truck, which you'll then demonstrate to a course TA. This lab consists largely of reading and learning the basics of how to run your code for future labs. Although collaboration is always encouraged for labs in this course, we strongly encourage that each group member individually reads through this entire lab, as any future lab work will be difficult without this core understanding. Of course, to get the most out of this course and these labs, you should aim to fully understand and contribute to each assignment. If you plan to list ROS on your resume or CV, it will be assumed that you understand the core concepts that we introduce.
 
-There are **6 tasks** in this lab, and you will need to show your results to a lab TA on slack (i.e., code screenshots and demo videos) or in-person before **11:59PM February 13, 2025**. This lab is quite long, so **start early** and preferably check in with lab TAs after each task.
+There are **6 tasks** in this lab, and you will need to upload your results (i.e., `pure_pursuit.py` after **tasks 1-5**, simulation video for **task 5**, and mini truck demo video for **task 6**) to Canvas before **11:59PM February 13, 2025**. You can record the videos with your smartphone. This lab is quite long, so **start early**, and feel free to check your results with lab TAs during lab OH! Also, if you need input outside of lab OH, you can ask us a question on Ed (and share a video link if needed).
 
 ## Objectives
 
@@ -11,9 +11,9 @@ The following are the objectives of this lab:
 - Get familiar with basic ROS concepts.
 - Be able to build and run a provided ROS package.
 - Get familiar with the visualization and simulation tools for this class.
-- Get familiar with the mini-truck platform.
+- Get familiar with the mini truck platform.
 - Learn how to interface with ROS subscribers, publishers, and parameter servers.
-- Learn how to run your own software on the Mini Truck.
+- Learn how to run your own software on the mini truck.
 - Develop and test a goal-reaching controller for your robot.
 
 ## Setting Up ROS
@@ -333,7 +333,7 @@ This snippet of code is where we make everything happen. It is the main block of
 ### Task 1: Set up a publisher for the ServoMsg message ###
 
 Now you know how to publish a ROS message. Let's write our first ROS code! Open your `pure_pursuit.py` file in the text editor of your choice (file path: `<Path of your
-repo>/ECE346/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g topic name). **Once you are finished, show your code to a lab TA**, either by sending a photo (e.g., a screenshot or clear a photo of your screen with a phone camera) on slack or showing in-person during lab OH, and proceed. Note: you can proceed before receiving confirmation from a lab TA, but to receive full credit for this lab you must show your completed, correct work for each required section before the lab's deadline. This applies for all of Lab 1.
+repo>/ECE346/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g., the topic name). **Once you are finished**, you can proceed to the next task. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 ### ROS Subscriber ###
 The code for the subscriber is very similar to the publisher and can be seen below. Now, instead of publishing to the `chatter` topic, we are subscribing to it.
@@ -394,7 +394,7 @@ listener()
 This last snippet of code is where we actually run the listener code.
 
 ### Task 2: Set up a subscriber for the Odometry message ###
-Open your `pure_pursuit.py` file.  Your second task is to set up a missing subscriber in the function `setup_subscriber` following instructions under **TODO**. **Once you are finished, show your code to a lab TA** (as a reminder, either by sending a photo on slack or in-person during lab OH).
+Open your `pure_pursuit.py` file.  Your second task is to set up a missing subscriber in the function `setup_subscriber` following instructions under **TODO**. **Once you are finished**, you can proceed to the next task.
 
 ### Inspecting ROS Messages using [`rostopic`](http://wiki.ros.org/rostopic) and [`rosmsg`](http://wiki.ros.org/rosmsg) ###
 Now you are an expert in setting up ROS publisher and subscriber. However, you may be wondering how to decode those ROS messages or figure out what's inside of each datatype in order to write a callback function. The command line tool [`rostopic`](http://wiki.ros.org/rostopic) and [`rosmsg`](http://wiki.ros.org/rosmsg) are designed for this usage.
@@ -427,7 +427,7 @@ Once you are finished, **restart** `lab1_simulation.launch` (i.e., `roslaunch la
 
 ### Task 4: Construct and publish a ROS message ###
 
-Open your `pure_pursuit.py` file. Your fourth task is to fill in the missing code of the function `publish_control` following instructions under **TODO**. **Once you are finished, show your code to a lab TA.**
+Open your `pure_pursuit.py` file. Your fourth task is to fill in the missing code of the function `publish_control` following instructions under **TODO**. **Once you are finished**, you can proceed to the next task. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 ## Goal Reaching Controller ##
 
@@ -452,7 +452,7 @@ $\delta = \arctan \left(\frac{2 L \sin(\alpha)}{l_d}\right)$
 In this lab, we assume the reference path is the straight line connecting your robot and goal point. Therefore, the **TP** is a point on this line segment defined by user parameters.
 
 ### Task 5: Implement the goal reaching controller ###
-Open your `pure_pursuit.py` file. You will finish the function `planning_thread` following the implementation details under the **TODO** block. This task concludes all coding parts of Lab 1. Relaunch the simulation, set **2D Nav Goal** as any points on RViz, and drive your robot towards the goal point. The default parameter should work well in the simulation if your implementation is correct. **Once you are finished, show your simulation results to a lab TA.**
+Open your `pure_pursuit.py` file. You will finish the function `planning_thread` following the implementation details under the **TODO** block. This task concludes all coding parts of Lab 1. Relaunch the simulation, set **2D Nav Goal** as any points on RViz, and drive your robot towards the goal point. The default parameter should work well in the simulation if your implementation is correct. **Once you are finished, take a video of your simulation results (e.g., with phone or screen recording)**, and proceed to the next task. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 # Let's Get Real - Intro to *Mini Truck*  #
 Autonomous driving has sparked much public interest in the last few years. In this lab, we will work with a 1/14-scale autonomous *mini truck* as our mobile robot platform (**Figure 6**). 
@@ -464,7 +464,7 @@ The modularity of ROS allows us to quickly deploy our algorithms from the simula
 
 ### Task 6: Try Out On Mini Truck on the  Track! ###
 
-Read the information about your mini truck robot below (beware lots of reading). Afterwards, follow the instructions and test your goal-reaching controller on the mini truck **in F111** with the provided `lab1_truck.launch`. **Demo your robot (in-person or via video recording on the F111 track) to a lab TA.**
+Read the information about your mini truck robot below (beware lots of reading). Afterwards, follow the instructions and test your goal-reaching controller on the mini truck **in F111** with the provided `lab1_truck.launch`. **Demo your robot on the F111 track and record a video to upload to Canvas**.
 
 # Intro to Mini Truck!
 ![A hardware schematic of the robotic platform.](assets/schematic.png)
@@ -536,7 +536,7 @@ source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 In ECE346, `<ROBOT_IP>` is the IP address of your robot (i.e., **192.168.1.2XX**), and `<LAPTOP_IP>` is the IP address of your laptop under ECE346 Wi-Fi, which you can find by running `hostname -I` in a terminal window.
 
 ### Task 6.2: Launch Perception (SLAM) and Control Nodes On Robot ###
-After sshing into mini truck (**Task 6.1**) and waiting about 60 seconds, launch perception and control nodes from the truck by running
+After sshing into mini truck (**task 6.1**) and waiting about 60 seconds, launch perception and control nodes from the truck by running
 ```bash
 cd ~/StartUp
 # <ROBOT_IP> is 192.168.1.2XX
@@ -550,7 +550,7 @@ chmod +x start_ros.sh
 ```
 
 ### Task 6.3: Launch Visualization On Your Laptop ###
-Next, we open a new terminal on your laptop and navigate to the `ROS_Core` under your Git repository. If you closed your terminal windows from **Task 1-5**, in a new terminal window, activate the conda ROS environment, (optionally) rebuild the workspace, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
+Next, we open a new terminal on your laptop and navigate to the `ROS_Core` under your Git repository. If you closed your terminal windows from **tasks 1-5**, in a new terminal window, activate the conda ROS environment, (optionally) rebuild the workspace, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
 ```bash
  # Navigate to ROS_Core
 cd <Path of your repo>/ECE346/ROS_Core 
@@ -646,7 +646,7 @@ roslaunch lab1 lab1_truck.launch
 ![](assets/rqt_reverse_throttle.png)
 ***Figure 12**: Dynamic Reconfigure window: tune your mini truck!*
 
-**Once you are finished, demo your robot (in-person or via video recording on the F111 track) to a lab TA.**
+**Once you are finished, demo your robot on the F111 track and record a video to upload to Canvas**. You can also double-check your demo with a lab TA during lab OH before uploading!
 
 ## TL;DR: How to Launch Future Labs
 
