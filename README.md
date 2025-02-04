@@ -90,7 +90,7 @@ git config --global user.name “Your Name”
     git push -u origin SP2025
     ```
 If your laptop says "The authenticity of host 'github.com'... continue connecting?" type "yes".
-10. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jwille", "alexzni", "logflash", and "mb9041".
+10. Add all course AI's as [collaborators](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) to your private fork by navigating to your private repository's **Settings** -> Click **Collaborators and Teams** under **Access** -> Click **Add People** -> **Add to Repository**: "jarodwille", "alexzni", "logflash", "CalvinTAVN", "vp2025", and "mb9041".
     
 ### Push (upload) your future lab solutions to your private repository
 
