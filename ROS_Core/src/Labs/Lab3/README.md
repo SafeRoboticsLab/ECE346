@@ -21,7 +21,7 @@ In this lab, you will use your ILQR algorithm developed in the last lab to plan 
 In the first part of this lab, we will build collision avoidance functionality based on your ILQR. After activating ROS environment, rebuilding (`catkin_make`), and sourcing the workspace, we can launch the ROS nodes by running
 ```bash
  # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core 
+cd ECE346/ROS_Core 
 # Start virtual environment
 conda activate ros_base 
 # Optional: Build ROS packages (if new packages)
@@ -64,7 +64,7 @@ Inside the [`receding_horizon_planning_thread`](https://github.com/SafeRoboticsL
 Now re-launch ROS nodes and select a goal point on the map. 
 ```bash
  # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core 
+cd ECE346/ROS_Core 
 # Start virtual environment
 conda activate ros_base 
 # Optional: Build ROS packages (if new packages)
@@ -203,7 +203,7 @@ response = Your_Service_Client(request)
 Finally, you can test your collision avoidance by launching ROS nodes:
 ```bash
  # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core 
+cd ECE346/ROS_Core 
 # Start virtual environment
 conda activate ros_base 
 # Optional: Build ROS packages (if new packages)

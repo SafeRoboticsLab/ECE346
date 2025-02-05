@@ -98,7 +98,7 @@ We have implemented the function to attain polices to traverse along a reference
 After finishing task 2, you can test the ILQR within our simulated environment. Launch your ROS nodes using the following:
 ```bash
  # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core 
+cd ECE346/ROS_Core 
 # Start virtual environment
 conda activate ros_base 
 # Optional: Build ROS packages (if new packages)
@@ -128,7 +128,7 @@ Instead of computing the entire plan to track the reference path, we can utilize
 In this task, you will need to finish the [`receding_horizon_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L409) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. You may find comment blocks inside this function helpful for your implementation. Once finished, test your receding horizon planner by launching:
 ```bash
  # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core 
+cd ECE346/ROS_Core 
 # Start virtual environment
 conda activate ros_base 
 # Optional: Build ROS packages (if new packages)
@@ -155,7 +155,7 @@ Open a second terminal,
 navigate to the `ROS_Core`, activate the conda ROS environment, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
 ```bash
  # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core 
+cd ECE346/ROS_Core 
 # Start virtual environment
 conda activate ros_base 
 # Optional: Build ROS packages (if new packages)

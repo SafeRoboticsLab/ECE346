@@ -17,10 +17,10 @@ First, you will need to connect your ECE 346 laptop to a Wi-Fi network. To conne
 ```bash
 python3 ~/Documents/eduroam-linux-Princeton_University-Princeton_eduroam.py
 ```
-If you don't see this file, you can temporarily connect to puvisitor using a non-Princeton email to [download it](https://cat.eduroam.org). Click 'Yes' and enter one group member's username, i.e., netid@princeton.edu and corresponding password. Then navigate to your Wi-Fi networks by clicking the top right of your screen, selecting the Wi-Fi logo followed by 'Select Network', 'eduroam', 'Connect'.
+If you don't see this file, you can temporarily connect to puvisitor using a non-Princeton email to [download it](https://cat.eduroam.org), and run the same command as above (but likely in `~/Downloads/`. Click 'Yes' and enter one group member's username, i.e., netid@princeton.edu and corresponding password. Then navigate to your Wi-Fi networks by clicking the top right of your screen, selecting the Wi-Fi logo followed by 'Select Network', 'eduroam', 'Connect'. If you're having trouble with this, try [redownloading](https://cat.eduroam.org) the script or ask a lab TA for help!
 
 ## Set up GitHub on your laptop
-Next, you will connect your laptop to one group member's GitHub account using an SSH key. In your terminal, run
+Next, you will connect your laptop to one group member's GitHub account using an SSH key. **Note** You can copy and paste within an Ubuntu terminal by using ctrl+shift+C and ctrl+shift+V respectively! In your terminal, run
 ```bash
 # Install packages to use GitHub and copy/paste
 sudo apt install git xclip
@@ -73,7 +73,7 @@ In VSCode, log into [GitHub](https://github.com/). Click the settings icon, then
     git remote set-url --push upstream DISABLE
     ```
     
-7. Add your new private repository as a new remote named 'origin'. Note, this is just typical name for the 'primary' remote (online repository). To locate your private repo's URL, navigate to its main page on GitHub, select the green `<> Code` icon, select SSH and copy this URL to your clipboard. 
+7. Add your new private repository as a new remote named 'origin'. Note, this is just typical name for the 'primary' remote (online repository). To locate your private repo's URL, navigate to its main page on GitHub, select the green `<> Code` icon, select SSH, and copy this URL to your clipboard. 
     ```bash
     git remote add origin <URL of your private Repo>
     ```

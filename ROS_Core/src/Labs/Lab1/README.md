@@ -170,7 +170,7 @@ Recall that our `first_pkg` contains a `launch` directory with the file `first_l
 roslaunch first_pkg first_launch.launch
 ```
 
-You should see ’Hello World’ printed out continuously in your terminal. To stop the ROS process, press `ctrl-C` in your terminal window. A detailed guide of launch files can be found [here](http://wiki.ros.org/roslaunch).
+You should see ’Hello World’ printed out continuously in your terminal. To stop the ROS process, press `ctrl+C` in your terminal window. A detailed guide of launch files can be found [here](http://wiki.ros.org/roslaunch).
 
 # Let's Read and Write ROS!
 In this lab, you will implement a simple goal-reaching controller and apply your knowledge of ROS to make it run on both the simulation environment and your mini truck. We will use a proportional controller for the throttle, and a pure pursuit controller for steering. You need to finish **6** tasks by filling in missing codes of file [`pure_pursuit.py`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py) (file path: `ECE346/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`
@@ -315,7 +315,7 @@ while not rospy.is_shutdown():
     rate.sleep()
 ```
 
-This `while` loop structure is fairly standard in `rospy`. The `while` loop will begin to iterate after checking the `is_shutdown` flag. Generally, when we launch nodes, the `is_shutdown` flag is not activated, but when we terminate a node using `Ctrl-C` the `is_shutdown` flag is activated and the loop terminates.
+This `while` loop structure is fairly standard in `rospy`. The `while` loop will begin to iterate after checking the `is_shutdown` flag. Generally, when we launch nodes, the `is_shutdown` flag is not activated, but when we terminate a node using `ctrl+C` the `is_shutdown` flag is activated and the loop terminates.
 
 Inside the loop, we first define a string message called `hello_str` that will contain the text "hello world". In this format, the string argument `{}` (or alternatively `%s`) concatenate strings and `rospy.get_time()` prints the current time. Next, using the `loginfo()` function, the string message `(hello_str)` will be printed in the terminal, written to the node's log file, and written to `rosout` (used for debugging).
 Using [`pub.publish()`](http://wiki.ros.org/rospy/Overview/Publishers_and_Subscribers), the string message is published to the `chatter` topic. Lastly, `rate.sleep()` is used to maintain a desired loop rate (we previously defined the loop rate as 10 Hz).
@@ -332,8 +332,7 @@ This snippet of code is where we make everything happen. It is the main block of
 
 ### Task 1: Set up a publisher for the ServoMsg message ###
 
-Now you know how to publish a ROS message. Let's write our first ROS code! Open your `pure_pursuit.py` file in the text editor of your choice (file path: `<Path of your
-repo>/ECE346/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g., the topic name). **Once you are finished**, you can proceed to the next task. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
+Now you know how to publish a ROS message. Let's write our first ROS code! Open your `pure_pursuit.py` file in the text editor of your choice (file path: `ECE346/ROS_Core/src/Labs/Lab1/scripts/controller/pure_pursuit.py`). Your first task is to set up a missing publisher in the function `setup_publisher` following instructions under **TODO**. Make sure you read through the code to get an understanding of variable names (e.g., the topic name). You can find the ServoMsg definition in `ROS_Core/src/Utility/Custom_Msgs/msg/ServoMsg.msg` or you can search across the entire codebase to see how it's used in other places with ctrl+shift+F in VSCode, typing in `ServoMsg()`. Both of these approaches are useful and common across software engineering, although be careful and make sure you know what you're doing. Also, if you haven't discovered this already, you can open a codebase in VSCode by navigating to the directory (e.g., `cd ECE346`) and then running `code .`, which opens VSCode in the current directory. **Once you are finished**, you can proceed to the next task. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 ### ROS Subscriber ###
 The code for the subscriber is very similar to the publisher and can be seen below. Now, instead of publishing to the `chatter` topic, we are subscribing to it.
@@ -384,7 +383,7 @@ Here, we define the `listener` node, also known as the node that is subscribed t
 
 Next, the `listener` is defined as a subscriber.  There are three important categories we need to specify when using the `Subscriber()` function. First, we need to declare the topic that we want to subscribe to. Here we are subscribing to the `chatter` topic.  Second, we need to identify the data type of the ROS message.  The data type for the message of the publisher and subscriber needs to be the same. Therefore the data type of the message will be a `String`. Third, we need to identify the name of the function where the message data will be sent. In our case, we are sending the message data to the `callback()` function.
 
-The `spin()` function keeps the node active until it is manually shut down (`Ctrl-C`).
+The `spin()` function keeps the node active until it is manually shut down (`ctrl+C`).
 
 ```python
 if __name__ == "__main__":
@@ -502,7 +501,7 @@ Please keep the robot and its accessories stored when you are not working with t
 
 ## Connecting to Mini Truck ##
 ### Turning On the Jetson ###
-The NVIDIA Jetson Xavier NX takes 12 V - 20 V DC power provided by the power bank mounted right below the Jetson. The power bank can output various DC voltages ranging from **5 V** to **20 V**. In order to avoid damage to the Jetson, **make sure you unplug the power cord before turning on the battery**. First, hold the power button on the battery until it lights up. Then, cycle through the voltage by double-clicking the power button until it shows **20 V**. Underpower will lead to hardware malfunctions. Finally, plug in the power cord, and the Jetson will turn on automatically.
+The NVIDIA Jetson Xavier NX takes 12 V - 20 V DC power provided by the power bank mounted right below the Jetson. The power bank can output various DC voltages ranging from **5 V** to **20 V**. In order to avoid damage to the Jetson, **make sure you unplug the power cord before turning on the battery**. First, hold the power button on the battery until it lights up. Then, cycle through the voltage by double-clicking the power button until it shows **16 V**. Underpower will lead to hardware malfunctions. Finally, plug in the power cord, and the Jetson will turn on automatically.
 
 You will see the remaining battery life on the screen. Please note that the power will last less than two hours. To program the Jetson, use the external power supply, labeled **NX PWR**, instead of using the battery.
 
@@ -555,20 +554,20 @@ chmod +x start_ros.sh
 Next, we open a new terminal on your laptop and navigate to the `ROS_Core` under your Git repository. If you closed your terminal windows from **tasks 1-5**, in a new terminal window, activate the conda ROS environment, (optionally) rebuild the workspace, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
 ```bash
  # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core 
+cd ECE346/ROS_Core 
 # Start virtual environment
 conda activate ros_base 
 # Optional: Build ROS packages (if new packages)
 catkin_make 
 # Set up laptop environment
 source devel/setup.bash
-# Set up laptop ("client") network config
+# Set up laptop ("client") network config. Find <LAPTOP_IP> with hostname -I
 source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 # Launch visualization nodes
 roslaunch racecar_interface visualization.launch
 ```
 
-Shortly after, RViz (**Figure 9**) and RQT (**Figure 10**) windows will open.
+**Remember**: You can find <LAPTOP_IP> by running `hostname -I` in a separate terminal. Shortly after, RViz (**Figure 9**) and RQT (**Figure 10**) windows will open.
 
 ![Rviz visualization tool. The orange box indicates the current pose of the robot and the yellow arrows indicate the past poses.](assets/rviz_truck.png)
 ***Figure 9**: RViz visualization tool. An orange box that would appear here indicates the current pose of the robot and the yellow arrows indicate the past poses.*
@@ -664,7 +663,7 @@ Open a second terminal,
 navigate to `ROS_Core`, activate the conda ROS environment, source the set up environment script, source the network configuration script, and launch visualization nodes by running:
 ```bash
  # Navigate to ROS_Core
-cd <Path of your repo>/ECE346/ROS_Core 
+cd ECE346/ROS_Core 
 # Start virtual environment
 conda activate ros_base 
 # Optional: Build ROS packages (if new packages)
