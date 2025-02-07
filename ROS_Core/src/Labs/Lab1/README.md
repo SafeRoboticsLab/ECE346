@@ -99,6 +99,8 @@ Let's build the code in our catkin workspace using the ROS command `catkin_make`
 ```bash
 # Navigate to the top level of your catkin workspace
 cd ECE346/catkin_ws
+# Activate ros_base conda environment
+conda activate ros_base
 # Build catkin workspace
 catkin_make
 ```
@@ -140,15 +142,15 @@ In the last section, we discussed how to build catkin packages using `catkin_mak
 ```bash
 # Navigate to the top level of your catkin workspace (if not there already)
 cd ECE346/catkin_ws
-# Build catkin workspace
-catkin_make
 # Activate ros_base
 conda activate ros_base
+# Build catkin workspace
+catkin_make
 # Add workspace to ROS environment
 source devel/setup.bash
 ```
 
-**Super-Duper-Uber Important**: You need to run the `catkin_make` command at the top of your workspace every time you define a new message type, build a new service, or add a new package to your catkin workspace (yes, even in Python). It is good practice to run `catkin_make` **every time you make any changes** to elements in the catkin workspace. Similarly, run `source devel/setup.bash` **every time you make any changes** or when you **open a new terminal window** to use your packages in that workspace. As a reminder, the `source` command is used to run a script and makes new/changed environment variables available (e.g., relevant ROS launch file paths) to your current environment session. A very common error is for launch files or nodes to be ‘not found’ if you forget to run these commands.
+**Super-Duper-Uber Important**: You need to run the `catkin_make` command (with conda activated!) at the top of your workspace every time you define a new message type, build a new service, or add a new package to your catkin workspace (yes, even in Python). It is good practice to run `catkin_make` **every time you make any changes** to elements in the catkin workspace. Similarly, run `source devel/setup.bash` **every time you make any changes** or when you **open a new terminal window** to use your packages in that workspace. As a reminder, the `source` command is used to run a script and makes new/changed environment variables available (e.g., relevant ROS launch file paths) to your current environment session. A very common error is for launch files or nodes to be ‘not found’ if you forget to run these commands.
 
 ### Running ROS Nodes with `roslaunch`
 
@@ -156,10 +158,10 @@ In `first_pkg`, the `scripts` directory has a Python script for the ROS node `fi
 ```bash
 # Navigate to the top level of your catkin workspace (if not there already)
 cd ECE346/catkin_ws
-# Build catkin workspace
-catkin_make
 # Activate ros_base
 conda activate ros_base
+# Build catkin workspace
+catkin_make
 # Add workspace to ROS environment
 source devel/setup.bash
 ```
