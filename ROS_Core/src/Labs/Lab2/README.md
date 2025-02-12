@@ -127,7 +127,7 @@ The modularity of ROS allows us to quickly deploy our algorithms from the simula
 
 Open a terminal, SSH into your mini truck, and run the start up script. This should take ~60-90 seconds.
 ```bash
-ssh nvidia@192.168.1.XX
+ssh nvidia@192.168.1.2XX
 cd ~/StartUp
 ./start_ros.sh 192.168.1.2XX
 ```
