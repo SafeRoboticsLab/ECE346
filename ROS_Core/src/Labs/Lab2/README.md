@@ -36,30 +36,14 @@ Throughout this semester, we will use the kinematic bicycle model to describe th
 
 ***Figure 2**: Kinematic Bicycle Model.*
 
- We assume the entire robot is a point mass at $R=\begin{bmatrix} X&Y \end{bmatrix}$ position, and the heading angle of the robot is $\psi$. The longitudinal velocity of the robot is $v$, and the steering angle is $\delta$. In addition, we also assume tires are under no-slip conditions so that both wheels' velocities align with their directions.
+ We assume the entire robot is a point mass at ![Matrix](https://latex.codecogs.com/svg.latex?R%3D%5Cbegin%7Bbmatrix%7D%20X%20%26%20Y%20%5Cend%7Bbmatrix%7D) position, and the heading angle of the robot is $\psi$. The longitudinal velocity of the robot is $v$, and the steering angle is $\delta$. In addition, we also assume tires are under no-slip conditions so that both wheels' velocities align with their directions.
  
- Let us consider the state of robot $x = \begin{bmatrix}
-X & Y & v & \psi & \delta
-\end{bmatrix}^T$. Under the kinematic bicycle model, the system dynamics can be expressed as 
-$\begin{equation}
-    \begin{bmatrix}
-        \dot{X} \\ 
-        \dot{Y} \\ 
-        \dot{v}\\
-        \dot{\psi} \\
-            \dot{\delta}
-%       \dot{\delta}
-    \end{bmatrix} = \begin{bmatrix}
-        v\cos(\psi) \\
-        v\sin(\psi) \\
-        a\\
-        \frac{v}{L}\tan(\delta)\\
-            \omega
-    \end{bmatrix}
-\end{equation}$
-where the system has control $u = \begin{bmatrix}
-    a & \omega
-\end{bmatrix}$ as $a$ is the longitudinal acceleration ($[m/s^2]$) and ${\omega}$ is the rate of steering ($[rad/s]$).\\
+ Let us consider the state of robot ![Matrix](https://latex.codecogs.com/svg.latex?x%20%3D%20%5Cbegin%7Bbmatrix%7D%20X%20%26%20Y%20%26%20v%20%26%20%5Cpsi%20%26%20%5Cdelta%20%5Cend%7Bbmatrix%7D%5ET)
+. Under the kinematic bicycle model, the system dynamics can be expressed as 
+
+![System dynamics](assets/system_dynamics.png)
+
+where the system has control ![Matrix](https://latex.codecogs.com/svg.latex?u%20%3D%20%5Cbegin%7Bbmatrix%7D%20a%20%26%20%5Comega%20%5Cend%7Bbmatrix%7D) as $a$ is the longitudinal acceleration ($[m/s^2]$) and ${\omega}$ is the rate of steering ($[rad/s]$).
 
 This kinematic bicycle dynamic has been implemented in the [`Bicycle5D`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/dynamics/bicycle5d.py#L8) class. 
 In addition, we provide you with very efficient implementations of trajectory rollout and derivative using [Jax](https://jax.readthedocs.io/en/latest/). Specifically, you will find [`integrate_forward_np`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/dynamics/bicycle5d.py#L55) and 
@@ -79,18 +63,14 @@ We have implemented a set of cost functions within the [`Cost`](https://github.c
 ### Task 1: Implementing ILQR Algorithm
 Unlike the tasks you had in lab 1, task 1 is very open-ended. You will need to complete the main ILQR loop in the [`plan`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L133) function of [`ILQR`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L17) class following pseudocodes provided in the ILQR handout.
 
-The `plan` function takes in **the initial state** $x_0$ and **optional initial control sequences** $\bar{u}_{0:T}$. After optimization using ILQR, it outputs a **dictionary** containing **planned trajectory** $x_{0:T}$, **control sequences** $u_{0:T}$, **feedback gain** $\{K_t\}$, and other information.
+The `plan` function takes in **the initial state** $x_0$ and **optional initial control sequences** ![u_bar](https://latex.codecogs.com/svg.latex?\bar{u}_{0:T}). After optimization using ILQR, it outputs a **dictionary** containing **planned trajectory** $x_{0:T}$, **control sequences** $u_{0:T}$, **feedback gain** $\{K_t\}$, and other information.
 
 We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and take a video of your visualization results to upload to Canvas. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 # ILQR as a Policy Planner
 
-In task 1, your ILQR generated a reference trajectory $x_{0:T}=\{\hat{x}_0,\cdots,\hat{x}_T\}$ and reference control $u_{0:T}=\{\hat{u}_0,\cdots,\hat{u}_T\}$ to complete the time trial on a racetrack. In addition, ILQR provides a local state feedback control policy to track the reference trajectory at each time step. For example, if the current state of the robot is $x_t$, the feedback control can be found as:
-$
-\begin{equation}
-    u_t = \hat{u}_t + K_t(x_t - \hat{x}_t).
-\end{equation}
-$
+In task 1, your ILQR generated a reference trajectory ![Equation](https://latex.codecogs.com/svg.latex?x_{0:T}=%5C%7B%5Chat{x}_0,%5Ccdots,%5Chat{x}_T%5C%7D) and reference control ![Equation](https://latex.codecogs.com/svg.latex?u_{0:T}=%5C%7B%5Chat{u}_0,%5Ccdots,%5Chat{u}_T%5C%7D) to complete the time trial on a racetrack. In addition, ILQR provides a local state feedback control policy to track the reference trajectory at each time step. For example, if the current state of the robot is $x_t$, the feedback control can be found as:
+![Equation](https://latex.codecogs.com/svg.latex?u_t%20=%20\hat{u}_t%20+%20K_t(x_t%20-%20\hat{x}_t).)
 
 ### Task 2: Computing Feedback Control
 We have implemented the function to attain polices to traverse along a reference path in the [`policy_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L344) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. In task 2, you are asked to compute the robot's control as described in the feedback control equation above by completing the [`compute_control`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L192) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class.
