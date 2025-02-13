@@ -21,7 +21,12 @@ In this lab, you will build a trajectory planner for our robot. Specifically, we
 
 ***Figure 1**: Software Structure for lab 2*
 
-We will implement the ILQR algorithm in the [`ILQR`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L17) class and test it in the Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb). Then, we will develop open-loop and receding horizon trajectory planning algorithms with ROS inside the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. We will compare their performances in simulation and on the real robot.
+We will implement the ILQR algorithm in the [`ILQR`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L17) class and test it in the Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb). First, in your terminal, run 
+```bash
+conda activate ros_base
+mamba install tqdm
+```
+If you don't do this, you may receive the error `ModuleNotFoundError`. After this, go to the top right in VSCode to run all code blocks (or use ctrl+enter). Now, we will develop open-loop and receding horizon trajectory planning algorithms with ROS inside the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class and compare their performances in simulation and on the real robot.
 
 ## Trajectory Planning by Optimization
  We can formulate a trajectory planning problem as a discrete-time optimal control problem with a finite horizon $T$:
