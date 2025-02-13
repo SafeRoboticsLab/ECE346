@@ -134,7 +134,7 @@ class ILQR():
 		#TODO 1b#
 		return # K_closed_loop, k_open_loop, last_reg
 	
-	def roll_out(self, X_0, U_0, K_closed_loop, k_open_loop, alpha):
+	def forward_pass(self, x_bar, u_bar, K_closed_loop, k_open_loop, alpha):
 		#TODO 1c#
 		return # state, control
 
@@ -181,7 +181,7 @@ class ILQR():
 
 		##########################################################################
 		# TODO 1a: Implement the ILQR algorithm. Use the functions above, i.e., 
-		# backward_pass() and roll_out(), and feel free to add any other helper functions.
+		# backward_pass() and forward_pass(), and feel free to add any other helper functions.
 
 		# Use the instance variables from load_parameters() for your ILQR 
 		# implementation. For example, use self.tol as the convergence criterion,
