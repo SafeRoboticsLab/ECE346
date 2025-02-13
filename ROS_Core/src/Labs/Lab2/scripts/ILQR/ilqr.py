@@ -129,6 +129,14 @@ class ILQR():
 		path_refs = self.ref_path.get_reference(trajectory[:2, :])
 		obs_refs = self.collision_checker.check_collisions(trajectory, self.obstacle_list)
 		return path_refs, obs_refs
+	
+	def backward_pass(self, trajectory, controls, path_refs, obs_refs):
+		#TODO 1b#
+		return # K_closed_loop, k_open_loop, last_reg
+	
+	def roll_out(self, X_0, U_0, K_closed_loop, k_open_loop, alpha):
+		#TODO 1c#
+		return # state, control
 
 	def plan(self, init_state: np.ndarray,
 				controls: Optional[np.ndarray] = None) -> Dict:
@@ -172,8 +180,16 @@ class ILQR():
 		J = self.cost.get_traj_cost(trajectory, controls, path_refs, obs_refs)
 
 		##########################################################################
-		# TODO 1: Implement the ILQR algorithm. Feel free to add any helper functions.
-		# You will find following implemented functions useful:
+		# TODO 1a: Implement the ILQR algorithm. Use the functions above, i.e., 
+		# backward_pass() and roll_out(), and feel free to add any other helper functions.
+
+		# Use the instance variables from load_parameters() for your ILQR 
+		# implementation. For example, use self.tol as the convergence criterion,
+		# self.alphas as the line search parameter, etc. This is important
+		# because we may be updating these parameters in the .yaml file for 
+		# the final project.
+
+		# You will also find following implemented functions useful:
 
 		# ******** Functions to compute the Jacobians of the dynamics  ************
 		# A, B = self.dyn.get_jacobian_np(trajectory, controls)
@@ -186,8 +202,8 @@ class ILQR():
 		# 	controls: np.ndarray, (dim_u, T) controls along the trajectory.
 
 		# Returns:
-		# 	A: np.ndarray, (dim_x, T) the Jacobian of the dynamics w.r.t. the state.
-		# 	B: np.ndarray, (dim_u, T) the Jacobian of the dynamics w.r.t. the control.
+		# 	A: np.ndarray, (dim_x, dim_x, T) the Jacobian of the dynamics w.r.t. the state.
+		# 	B: np.ndarray, (dim_u, dim_u, T) the Jacobian of the dynamics w.r.t. the control.
 		
 		# ******** Functions to roll the dynamics for one step  ************
 		# state_next, control_clip = self.dyn.integrate_forward_np(state, control)
@@ -226,7 +242,7 @@ class ILQR():
 		# return:
 		# 	q: np.ndarray, (dim_x, T) jacobian of cost function w.r.t. states
         #   r: np.ndarray, (dim_u, T) jacobian of cost function w.r.t. controls
-        #   Q: np.ndarray, (dim_x, dim_u, T) hessian of cost function w.r.t. states
+        #   Q: np.ndarray, (dim_x, dim_x, T) hessian of cost function w.r.t. states
         #   R: np.ndarray, (dim_u, dim_u, T) hessian of cost function w.r.t. controls
         #   H: np.ndarray, (dim_x, dim_u, T) hessian of cost function w.r.t. states and controls
 		

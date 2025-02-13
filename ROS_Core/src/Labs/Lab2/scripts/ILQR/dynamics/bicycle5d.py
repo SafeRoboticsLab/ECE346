@@ -84,8 +84,8 @@ class Bicycle5D():
 			controls: np.ndarray, (dim_u, T) controls along the trajectory.
 
 		Returns:
-			A: np.ndarray, (dim_x, T) the Jacobian of the dynamics w.r.t. the state.
-			B: np.ndarray, (dim_u, T) the Jacobian of the dynamics w.r.t. the control.
+			A: np.ndarray, (dim_x, dim_x, T) the Jacobian of the dynamics w.r.t. the state.
+			B: np.ndarray, (dim_u, dim_u, T) the Jacobian of the dynamics w.r.t. the control.
 		"""
 		A_jax, B_jax = self.get_jacobian_jax(trajectory, controls)
 		return np.asarray(A_jax), np.asarray(B_jax)
