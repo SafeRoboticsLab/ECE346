@@ -65,7 +65,7 @@ Unlike the tasks you had in lab 1, task 1 is very open-ended. You will need to c
 
 The `plan` function takes in **the initial state** $x_0$ and **optional initial control sequences** ![u_bar](https://latex.codecogs.com/svg.latex?\bar{u}_{0:T}). After optimization using ILQR, it outputs a **dictionary** containing **planned trajectory** $x_{0:T}$, **control sequences** $u_{0:T}$, **feedback gain** $\{K_t\}$, and other information.
 
-We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and take a video of your visualization results to upload to Canvas. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
+We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of the `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and take a video of your visualization results to upload to Canvas. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 # ILQR as a Policy Planner
 
