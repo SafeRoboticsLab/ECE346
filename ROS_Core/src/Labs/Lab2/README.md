@@ -21,12 +21,7 @@ In this lab, you will build a trajectory planner for our robot. Specifically, we
 
 ***Figure 1**: Software Structure for lab 2*
 
-We will implement the ILQR algorithm in the [`ILQR`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L17) class and test it in the Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb). First, in your terminal, run 
-```bash
-conda activate ros_base
-mamba install tqdm
-```
-If you don't do this, you may receive the error `ModuleNotFoundError`. After this, go to the top right in VSCode to run all code blocks (or use ctrl+enter). Now, we will develop open-loop and receding horizon trajectory planning algorithms with ROS inside the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class and compare their performances in simulation and on the real robot.
+We will implement the ILQR algorithm in the [`ILQR`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/ILQR/ilqr.py#L17) class and test it in the Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb). After this, we will develop open-loop and receding horizon trajectory planning algorithms with ROS inside the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class and compare their performances in simulation and on the real robot.
 
 ## Trajectory Planning by Optimization
  We can formulate a trajectory planning problem as a discrete-time optimal control problem with a finite horizon $T$:
@@ -70,7 +65,12 @@ Unlike the tasks you had in lab 1, task 1 is very open-ended. You will need to c
 
 The `plan` function takes in **the initial state** $x_0$ and **optional initial control sequences** ![u_bar](https://latex.codecogs.com/svg.latex?\bar{u}_{0:T}). After optimization using ILQR, it outputs a **dictionary** containing **planned trajectory** $x_{0:T}$, **control sequences** $u_{0:T}$, **feedback gain** $\{K_t\}$, and other information.
 
-We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of the `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and take a video of your visualization results to upload to Canvas. This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
+We have provided helper functions to compute cost and system rollout, as well as their derivatives. Detailed information can be found in **the comment block of the `plan` function**. Once finished, test your planner with provided Jupyter Notebook [`task1.ipynb`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/task1.ipynb) and take a video of your visualization results to upload to Canvas. First, in your terminal, run 
+```bash
+conda activate ros_base
+mamba install tqdm
+```
+If you don't do this, you may receive the error `ModuleNotFoundError`. After this, navigate to `task1.ipynb` in VSCode and go to the top right to run all code blocks (or use ctrl+enter).This is also a good point to check in with a lab TA during lab OH to make sure you're on the right track, but you can submit everything at the very end if you’re confident you know what you’re doing!
 
 # ILQR as a Policy Planner
 
