@@ -121,7 +121,7 @@ roslaunch racecar_planner ilqr_simulation.launch receding_horizon:=true
 
 After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map, using **2D Nav Goal** on your RViz, and verify your receding horizon planner. Think about the advantages and disadvantages of the policy planner in task 2 and the receding horizon planner in this task. **Record a video of your simulation to upload on Canvas and write a few sentences (e.g., as a comment or attached document) with your thoughts in your final submission**.
 
-# Testing Your Planner on Mini-Truck
+# Testing Your Planner on Mini Truck
 
 The modularity of ROS allows us to quickly deploy our algorithms from the simulated environment into the real robot with minimal changes to your code. As you did in lab 1, test your trajectory planner on the mini truck with the provided `ilqr_truck.launch`. You can use `receding_horizon` option to choose between policy planner and receding horizon planner.
 
@@ -174,4 +174,4 @@ roslaunch lab2 ilqr_truck.launch receding_horizon=false
 Due to hardware limitations, you might find it necessary to tune the direction and center point of the steering control, as well as the latency composition value to improve the performance of your plsanner on the robot. Instead of passing those values as ROS parameters, and setting them by re-launching, we can use **ROS Dynamic Reconfigure** to adjust them on the fly. Detailed tutorials on Dynamic Reconfigure can be found [here](http://wiki.ros.org/dynamic_reconfigure/Tutorials). You can adjust those parameters using RQT as shown in **Figure 5**.
 
 ### Task 4: Demonstrating ILQR Planner on Robot
-Finally, test your planner on the mini-truck robot and **record a video of your demonstration to be uploaded on Canvas**. You can also double-check your demo with a lab TA during lab OH before uploading!
+Finally, test your planner on the mini truck robot and **record a video of your demonstration to be uploaded on Canvas**. You can also double-check your demo with a lab TA during lab OH before uploading!
