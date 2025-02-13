@@ -136,6 +136,7 @@ class ILQR():
 	
 	def forward_pass(self, x_bar, u_bar, K_closed_loop, k_open_loop, alpha):
 		#TODO 1c#
+		# you may also see this function referred to as roll_out(), e.g., in Google Colab #
 		return # state, control
 
 	def plan(self, init_state: np.ndarray,
