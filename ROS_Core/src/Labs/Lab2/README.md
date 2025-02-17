@@ -168,7 +168,7 @@ source devel/setup.bash
 # Set up laptop ("client") network config
 source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 # Launch ROS nodes, enable/disable receding_horizon
-roslaunch lab2 ilqr_truck.launch receding_horizon=false
+roslaunch racecar_planner ilqr_truck.launch receding_horizon:=false
 ```
 
 ![Update dynamic reconfigure parameters using RQT](assets/dyn_reconfig.png)
