@@ -10,6 +10,8 @@ from .ref_path import RefPath
 from .config import Config
 import time
 
+import rospy # For logging
+
 status_lookup = ['Iteration Limit Exceed',
                 'Converged',
                 'Failed Line Search']
@@ -158,7 +160,8 @@ class ILQR():
 
 		# We first check if the planner is ready
 		if self.ref_path is None:
-			print('No reference path is provided.')
+			rospy.loginfo_once('No reference path is provided.')
+			# print('No reference path is provided.')
 			return dict(status=-1)
 
 		# if no initial control sequence is provided, we assume it is all zeros.
