@@ -172,9 +172,11 @@ roslaunch racecar_planner ilqr_truck.launch receding_horizon:=false
 ```
 
 ## Updating Parameters Using Dynamic Reconfigure
+As a reminder, **ROS Dynamic Reconfigure** allows adjustment on the fly using RQT (**Figure 5**) instead of passing those values as ROS parameters by re-launching. Detailed tutorials on Dynamic Reconfigure can be found [here](http://wiki.ros.org/dynamic_reconfigure/Tutorials). 
+
 Remember to set your **Dynamic Reconfigure** settings to those you used in Lab 1, e.g. `throttle_dir`, perhaps `throttle_D`, etc. To improve the performance of your ILQR planner, you may also need to tune different parameters of the truck including the center point and range of the steering control (`steering_`), as well as the latency composition value (`latency` in the `traj_planning` node). 
 
-**ROS Dynamic Reconfigure** allows adjustment on the fly using RQT (**Figure 5**) instead of passing those values as ROS parameters by re-launching. Detailed tutorials on Dynamic Reconfigure can be found [here](http://wiki.ros.org/dynamic_reconfigure/Tutorials). 
+The `latency` parameter tries to correct for the fact that localization in SLAM takes time, and this delayed state estimation may cause your robot to essentially "overshoot" its trajectory. Therefore, it computes a "prior" using a dynamic model of your truck to approximate where it *actually* is. If this doesn't make sense, ask a lab TA at lab hours!
 
 ### Task 4: Demonstrating ILQR Planner on Robot
 Finally, test your planner on the mini truck robot and **record a video of your demonstration to be uploaded on Canvas**. You can also double-check your demo with a lab TA during lab OH before uploading! We relax the requirement from Lab 1 that the truck needs to stop *exactly* at your set goal (and this time stay in lanes), but adjust **Dynamic Reconfigure** to try your best!
