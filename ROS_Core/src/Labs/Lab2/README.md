@@ -91,7 +91,7 @@ catkin_make
 # Set up laptop environment
 source devel/setup.bash
 # Launch simulation nodes
-roslaunch racecar_planner ilqr_simulation.launch enable
+roslaunch racecar_planner ilqr_simulation.launch enable_routing:=true
 ```
 After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz. In **Figure 4**, we show an exemplary open-loop trajectory planned by the ILQR, where the red line is the reference path from the route planner and the green line is ILQR planned trajectory. **Record a video of your simulation results to upload to Canvas**.
 
