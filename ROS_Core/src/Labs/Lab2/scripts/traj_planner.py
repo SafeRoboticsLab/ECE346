@@ -215,6 +215,8 @@ class TrajectoryPlanner():
         ###############################
         # Implement your control law here using ILQR policy
         # Hint: make sure that the difference in heading is between [-pi, pi]
+        # but make sure that the angle is still preserved (e.g. do something
+        # with np.mod() to make sure x_diff[3] is in the right range)
         
         accel = 0 # TO BE REPLACED
         steer_rate = 0 # TO BE REPLACED
