@@ -138,8 +138,11 @@ class ILQR():
 	
 	def forward_pass(self, x_bar, u_bar, K_closed_loop, k_open_loop, alpha):
 		#TODO 1c#
-		# you may also see this function referred to as roll_out(), e.g., in Google Colab #
-		return # state, control
+		# you may also see this function referred to as roll_out(), e.g., in Google Colab 
+		# Note: make sure that the difference in heading is between [-pi, pi]
+        # but make sure that the angle is still preserved (e.g. do something
+        # with np.mod() to make sure x_diff[3] is in the right range)
+		return # state, control_clipped
 
 	def plan(self, init_state: np.ndarray,
 				controls: Optional[np.ndarray] = None) -> Dict:
@@ -210,7 +213,8 @@ class ILQR():
 		# 	B: np.ndarray, (dim_u, dim_u, T) the Jacobian of the dynamics w.r.t. the control.
 		
 		# ******** Functions to roll the dynamics for one step  ************
-		# state_next, control_clip = self.dyn.integrate_forward_np(state, control)
+		# state_next, control_clipped = self.dyn.integrate_forward_np(state, control)
+		# NOTE: Make sure to use control_clipped in the forward pass.
 		
 		# Finds the next state of the vehicle given the current state and
 		# control input.
