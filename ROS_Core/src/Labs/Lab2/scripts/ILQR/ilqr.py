@@ -67,12 +67,12 @@ class ILQR():
 		print('Line Search Alphas: ', self.alphas)
 
 		# regularization parameters
-		self.reg_min = float(self.config.reg_min)
-		self.reg_max = float(self.config.reg_max)
-		self.reg_init = float(self.config.reg_init)
-		self.reg_scale_up = float(self.config.reg_scale_up)
-		self.reg_scale_down = float(self.config.reg_scale_down)
-		self.max_attempt = self.config.max_attempt
+		self.reg_min = float(self.config.reg_min) # Minimum regularization value.
+		self.reg_max = float(self.config.reg_max) # Maximum regularization value.
+		self.reg_init = float(self.config.reg_init) # Initial regularization value.
+		self.reg_scale_up = float(self.config.reg_scale_up) # Increase factor (to multiply by) for regularization.
+		self.reg_scale_down = float(self.config.reg_scale_down) # Decrease factor (to divide by) for regularization.
+		self.max_attempt = self.config.max_attempt # Maximum number of attempts to increase regularization.
 		
 	def warm_up(self):
 		'''

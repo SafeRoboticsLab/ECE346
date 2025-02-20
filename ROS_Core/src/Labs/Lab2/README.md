@@ -80,7 +80,7 @@ In task 1, your ILQR generated a reference trajectory ![Equation](https://latex.
 ### Task 2: Computing Feedback Control
 We have implemented the function to attain polices to traverse along a reference path in the [`policy_planning_thread`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L344) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class. In task 2, you are asked to compute the robot's control as described in the feedback control equation above by completing the [`compute_control`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L192) function of the [`TrajectoryPlanner`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/traj_planner.py#L23) class.
 
-After finishing task 2, you can test the ILQR within our simulated environment. Launch your ROS nodes using the following:
+Note that the horizon is not very long for this policy planner (compared to `receding_horizon`), so don't be worried if the box in your simulator doesn't move for far goals (you will see `[WARN]... Try to receive a policy beyond horizon!`). After finishing task 2, you can test the ILQR within our simulated environment. Launch your ROS nodes using the following:
 ```bash
  # Navigate to ROS_Core
 cd ECE346/ROS_Core 
@@ -91,7 +91,7 @@ catkin_make
 # Set up laptop environment
 source devel/setup.bash
 # Launch simulation nodes
-roslaunch racecar_planner ilqr_simulation.launch enable_routing:=true
+roslaunch racecar_planner ilqr_simulation.launch
 ```
 After seeing `ILQR warm up finished` on your terminal, you can choose any point on the map using **2D Nav Goal** on your RViz. In **Figure 4**, we show an exemplary open-loop trajectory planned by the ILQR, where the red line is the reference path from the route planner and the green line is ILQR planned trajectory. **Record a video of your simulation results to upload to Canvas**.
 
@@ -168,7 +168,7 @@ source devel/setup.bash
 # Set up laptop ("client") network config
 source network_ros_client.sh <ROBOT_IP> <LAPTOP_IP>
 # Launch ROS nodes, enable/disable receding_horizon
-roslaunch racecar_planner ilqr_truck.launch receding_horizon:=false
+roslaunch racecar_planner ilqr_truck.launch receding_horizon:=true
 ```
 
 ## Updating Parameters Using Dynamic Reconfigure
@@ -179,7 +179,7 @@ Remember to set your **Dynamic Reconfigure** settings to those you used in Lab 1
 The `latency` parameter tries to correct for the fact that localization in SLAM takes time, and this delayed state estimation may cause your robot to essentially "overshoot" its trajectory. Therefore, it computes a "prior" using a dynamic model of your truck to approximate where it *actually* is. If this doesn't make sense, ask a lab TA at lab hours!
 
 ### Task 4: Demonstrating ILQR Planner on Robot
-Finally, test your planner on the mini truck robot and **record a video of your demonstration to be uploaded on Canvas**. You can also double-check your demo with a lab TA during lab OH before uploading! We relax the requirement from Lab 1 that the truck needs to stop *exactly* at your set goal (and this time stay in lanes), but adjust **Dynamic Reconfigure** to try your best!
+Finally, test your planner on the mini truck robot and **record a video of your demonstration to be uploaded on Canvas**. Demonstrate your planner both with and without `receding_horizon:=true` (i.e. also try `receding_horizon:=false`).You can also double-check your demo with a lab TA during lab OH before uploading! We relax the requirement from Lab 1 that the truck needs to stop *exactly* at your set goal (and this time stay in lanes), but adjust **Dynamic Reconfigure** to try your best!
 
 ![Update dynamic reconfigure parameters using RQT](assets/dyn_reconfig.png)
 
