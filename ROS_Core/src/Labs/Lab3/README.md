@@ -47,7 +47,8 @@ Recall that in Lab 2, we have implemented a receding horizon planner inside [`Tr
 2. Subscribe to the topic from step 1, with message type [`MarkerArray`](http://docs.ros.org/en/noetic/api/visualization_msgs/html/msg/MarkerArray.html). This message contained a list of obstacles represented by a marker.
 
     Hint: You can use `rosmsg show visualization_msgs/MarkerArray` to inspect the data structure of `MarkerArray` message.
-    Hint 2: The callback function for this subscriber is a new one that is defined in step 4. You can call it static_obstacle_callback
+    
+    Hint: The callback function for this subscriber is a new one that is defined in step 4. You can call it static_obstacle_callback
 
 3. Initialize an empty **dictionary** (let's call it `static_obstacle_dict`) as a [class variable](https://www.tutorialspoint.com/python/python_classes_objects.htm), i.e., a variable that is shared by all instances of a class (in this case, it is your `TrajectoryPlanner`).
 4. Create a callback function for the subscriber. Inside this callback function, we retrieve **id** and **vertices** for each obstacle using [`get_obstacle_vertices`](https://github.com/SafeRoboticsLab/ECE346/blob/SP2025/ROS_Core/src/Labs/Lab2/scripts/utils/static_obstacle.py#L5) helper function. Then, **add vertices to `static_obstacle_dict` whose key is the id of the obstacle**.
