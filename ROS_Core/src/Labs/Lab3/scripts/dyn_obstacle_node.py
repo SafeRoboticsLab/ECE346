@@ -103,6 +103,14 @@ class DynObstacle():
 if __name__ == '__main__':
     ##########################################
     #TODO: Initialize a ROS Node with a DynObstacle object
+    #
+    #   1. initialize a node 
+    #   (optional): use rospy.loginfo to display this node starting
+    #   2. create an instance of DynObstacle
+    #   3. Make sure the Node is continuously running and responsive to callbacks
+    #   
+    #   Refer to this document for more information: 
+    #   http://wiki.ros.org/rospy/Overview/Initialization%20and%20Shutdown
     ##########################################
     
     pass
