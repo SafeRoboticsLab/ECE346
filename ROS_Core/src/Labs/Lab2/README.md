@@ -8,7 +8,7 @@ There are **4 tasks** in this lab, and you will need to submit (push) your code 
 
 **Note**: Make sure you have **pulled the code from upstream** into your repository and **updated all submodules**, i.e.,
 ```bash
-git pull upstream 2025 --recurse-submodules
+git pull upstream SP2025 --recurse-submodules
 ```
 
 # Getting Started #
