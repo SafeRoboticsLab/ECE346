@@ -1,5 +1,5 @@
 # Lab 3 - Collision Avoidance and Navigation in Dynamic Environment (Forward Reachable Set)
-**[Due 11:59PM Thursday, March 6]**
+**[Due 11:59PM Thursday, March 20]**
 
 In this lab, we will dive deeper into our ILQR trajectory planner. Specifically, we will introduce its new capability to avoid static and dynamic obstacles. First, we will build upon your Lab 2's result and allow your robot to navigate around static obstacles. Then, we will integrate forward-reachable sets to enable your robot to interact with other robots through a traffic simulator, with other cars joining the traffic with your robot.
 
