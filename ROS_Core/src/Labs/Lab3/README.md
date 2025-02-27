@@ -78,6 +78,8 @@ roslaunch racecar_planner lab3_task1.launch num_static_obs:=2
 ```
 The default parameter should be able to handle most static obstacles. If the robot is running off the corner, you will need to restart the simulation. If your robot is stuck and you have implemented a reset strategy in the optional Step 5, you can reset static obstacles using RQT ((**Figure 3**).
 
+**(Submission)Please record a video of the truck successfully avoiding the 2 obstacles.**
+
 ![Figure 3](assets/rqt_reset.png)
 
 ***Figure 3**: Reset static obstacles by 1) selecting `/simulation/reset_static_obstacle` from drop-down menu 2) entering numbers of static obstacles into the **service expression** 3) clicking the `Call` button to send the service.*
@@ -176,7 +178,15 @@ roslaunch racecar_planner lab3_task2.launch
 ```
 If everything works properly, you will see your robot moving around the track and avoid collisions with other agents.
 
+Note: At different areas of the track (such as in the inner circle), your truck may swerve in either direction drastically to avoid the dynamic obstacle. This is completely normal behavior that is dictated by the costs of the obstacles in conjunction to the state and control cost. Therefore, tuning the costs of each is important in fixing these issues but is not expected of you until the final Lab.
+
 You can also use RQT (**Figure 7**) to adjust FRS parameters, as described in the previous sections. What will happen if you increase $d_x$ and $d_y$ and set all $K$ terms to 0? **Please upload your observations (e.g., as a comment or separate document) in your final submission on Canvas**.
+
+**Submission:**
+
+1. Video of truck successfully avoiding 2 static obstacles and continuing its path
+2. Video of truck succcesfully overtaking or avoiding a dynamic truck once
+3. Document answering the above quesiton about** $d_x$, $d_y$ and $K$
 
 ![You can use RQT to setup Dynamic Reconfigure Parameters for FRS](assets/rqt_dyn_obs.png)
 
