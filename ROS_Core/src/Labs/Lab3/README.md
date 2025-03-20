@@ -180,6 +180,10 @@ If everything works properly, you will see your robot moving around the track an
 
 Note: At different areas of the track (such as in the inner circle), your truck may swerve in either direction drastically to avoid the dynamic obstacle. This is completely normal behavior that is dictated by the costs of the obstacles in conjunction to the state and control cost. Therefore, tuning the costs of each is important in fixing these issues but is not expected of you until the final Lab.
 
+Note 2: The simulator, especially with the dynamic obstacle avoidance, can be finnicky; therefore multiple retry attempts may be needed to show the overtaking behavior. 
+
+**Important Note: If you want to go back to tasks 1 and 2, you must uncomment all of the code from task 3. If not your trajectory planner will try to call a node that does not exist and give an error.**
+
 You can also use RQT (**Figure 7**) to adjust FRS parameters, as described in the previous sections. What will happen if you increase $d_x$ and $d_y$ and set all $K$ terms to 0? **Please upload your observations (e.g., as a comment or separate document) in your final submission on Canvas**.
 
 **Submission:**
