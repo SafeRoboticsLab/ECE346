@@ -190,7 +190,7 @@ You can also use RQT (**Figure 7**) to adjust FRS parameters, as described in th
 
 1. Video of truck successfully avoiding 2 static obstacles and continuing its path
 2. Video of truck succcesfully overtaking or avoiding a dynamic truck once
-3. Document answering the above quesiton about** $d_x$, $d_y$ and $K$
+3. Document answering the above question about** $d_x$, $d_y$ and $K$
 
 ![You can use RQT to setup Dynamic Reconfigure Parameters for FRS](assets/rqt_dyn_obs.png)
 
