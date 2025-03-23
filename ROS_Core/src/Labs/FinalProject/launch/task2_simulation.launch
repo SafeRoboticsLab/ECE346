@@ -21,9 +21,9 @@
     <arg name="static_obs_size"     default="0.2"                   doc="type of static obsects"/>
     <arg name="static_obs_topic"    default="/Obstacles/Static"     doc="ROS topic for static obstacles"/>
     <arg name="dyn_obs_topic"       default="/Obstacles/Dynamic"    doc="ROS topic for dynamic obstacles"/>
-    <arg name="obstacles" default="$(find final_project)/task1.yaml" doc="load obstacle location"/>
+    <arg name="obstacles" default="$(find final_project)/task2.yaml" doc="load obstacle location"/>
 
-    <rosparam file="$(find final_project)/task1.yaml" command="load" />
+    <rosparam file="$(find final_project)/task2.yaml" command="load" />
 
     <node pkg="final_project" type="keyboard_control.py" name="keyboard_control" output="$(arg output)">
     </node>
