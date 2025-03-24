@@ -101,7 +101,7 @@ You will design an algorithm to override unsafe inputs (like steering off the tr
 
 **Make sure to leave enough time to complete Task 2. Unlike Task 1, we have intentionally left the intended approach open-ended.**
 
-**For example, you could build upon ILQR (use obstacle distances to choose when to override a user) or train an aversarial machine learning approach.**
+**For example, you could build upon ILQR (use obstacle distances or some cost threshold to choose when to override a user) or train an aversarial machine learning approach.**
 
 ### Keyboard Subscriber and Publisher
 
