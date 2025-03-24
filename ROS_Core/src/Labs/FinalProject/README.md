@@ -107,7 +107,7 @@ You will design an algorithm to override unsafe inputs (like steering off the tr
 
 Inspect the [keyboard_control.py](./scripts/keyboard_control.py) file, and add a subscriber. Look for keywords `TODO (Task 2)`. 
 
-in the ros_base terminal, do conda install pynput
+in the `ros_base` terminal, run `conda install pynput`
 
 Inspect the [traj_planner.py](./scripts/traj_planner.py) file, and add a publisher. Look for keywords `TODO (Task 2)`.
 
