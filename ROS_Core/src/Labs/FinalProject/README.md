@@ -99,7 +99,7 @@ Note that abruptly switching lanes on the reference path will lead to a jagged r
 
 You will design an algorithm to override unsafe inputs (like steering off the track, running into obstacles, and veering into a lane with oncoming traffic).
 
-**Make sure to leave enough time to complete Task 2. Unlike Task 1, we have intentionally left the intended approach vague.**
+**Make sure to leave enough time to complete Task 2. Unlike Task 1, we have intentionally left the intended approach open-ended.**
 
 **For example, you could build upon ILQR (use obstacle distances to choose when to override a user) or train an aversarial machine learning approach.**
 
