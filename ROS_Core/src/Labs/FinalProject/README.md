@@ -17,9 +17,13 @@ To ensure your files are up to date, make sure to run:
 git pull upstream SP2025 --recurse-submodules
 ```
 
-To test that this works, run the same `catkin_make` and `source devel/setup.bash` commands that you usually run, followed by
+To test that this works, run
 
 ```bash
+cd ROS_Core
+rm -rf build devel # delete old compiled files
+catkin_make # recompile files (now including final_project pkg)
+source devel/setup.bash # source environment variables (now final_project is found!)
 roslaunch final_project task1_simulation.launch
 ```
 
