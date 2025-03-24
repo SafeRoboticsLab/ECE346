@@ -117,7 +117,7 @@ Inspect the [traj_planner.py](./scripts/traj_planner.py) file, and add a publish
 
 Inspect the [task2.yaml](./task2.yaml) file to add your own obstacles and goals
 
-Inspect the [task2_ilqre.yaml](./cfg/task2_ilqr.yaml) file to manipulate costs
+Inspect the [task2_ilqr.yaml](./cfg/task2_ilqr.yaml) file to manipulate costs
 
 
 ### Getting Started
