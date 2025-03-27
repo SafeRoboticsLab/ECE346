@@ -160,7 +160,7 @@ Your task is to use our MDP class to create the MDP based on the following figur
 
 ![t_inter_diagram](./assets/t_inter_diagram.png)
 
-The T-intersection problem has 2 cars: our car, called `ego`, and the other car, called `other`. The state $s = $ {$\text{ego}_i, \text{other}_j$} with $i,j \in $ {$1 \dots 5$}S includes where we are our trajectory (in yellow) and where the other car is on its own trajectory (in blue). The action space has 2 actions: `forward` and `stop`. The following information describes our MDP:
+The T-intersection problem has 2 cars: our car, called `ego`, and the other car, called `other`. The state is `s = {ego_i, other_j}`, with `i` and `j` both between 1 and 5, inclusive. This includes where we are our trajectory (in yellow) and where the other car is on its own trajectory (in blue). The action space has 2 actions: `forward` and `stop`. The following information describes our MDP:
 
 Our choice of action affects the other car's action as follows:
 ![eq1](./assets/eq1.png)
@@ -170,7 +170,7 @@ For example, if we take the action `forward`, there is a `0.8` chance that the o
 The dynamics are described as follows:
 * When moving forward with action `forward`, for each car there is a `0.8` chance of moving 1 step ahead, and a `0.2` chance of moving 2 steps ahead.
 * When choosing action `stop`, the car will stop with probability `1.0`.
-* The system terminates when either car reaches the goal, i.e. $\text{ego}_i = \text{ego}_5$ or $\text{other}_i = \text{other}_5$, or when collision happens, i.e. $s = $ {$\text{ego}_i, \text{other}_j$} with $i, j \in $ {$4, 5$}.
+* The system terminates when either car reaches the goal, i.e. `ego_i = ego_5` or `other_i = other_5`, or when collision happens, i.e. `s = {ego_i, other_j}` with `i` and `j` both between 4 and 5, inclusive.
 
 The reward function is as follows:
 * `a = forward`: reward `-1`.
@@ -183,16 +183,16 @@ In the provided [Jupyter Notebook](./pomdp.ipynb), you will see the docstring fo
 ## Task 1.2: Value iteration and policy iteration
 Your next task is to write value iteration and policy iteration for the MDP that you have just created.
 
-Refer to the docstring in your [Jupyter Notebook](./pomdp.ipynb) for task 1.2. To check if your implementation of value iteration and policy iteration is correct, we provide you with a closed-form solution for the simple two-state MDP. Once you finish implementing it, run the test cases provided to check if your calculated $V^*(x), \pi^*(x)$ match the closed-form solution.
+Refer to the docstring in your [Jupyter Notebook](./pomdp.ipynb) for task 1.2. To check if your implementation of value iteration and policy iteration is correct, we provide you with a closed-form solution for the simple two-state MDP. Once you finish implementing it, run the test cases provided to check if your calculated `V_star(x)` and `pi_star(x)` match the closed-form solution.
 
 ## Task 1.3: Simulate your computed $\pi^*(x)$
 We provide you with a visualizer class for the T-intersection problem located in [visualizer.py](./visualizer.py). The class `TIntersectionVisualizer` has a function `TIntersectionVisualizer.plot()` that takes parameter `state` and gives you the visualization of the system at that state.
 
-From the $V^*, \pi^*$ in task 1.2, using the provided visualizer, do the following tasks:
+From the `V_star` and `pi_star`S in task 1.2, using the provided visualizer, do the following tasks:
 * Choose an initial state.
 * Iterate from the initial state until you reach a terminal condition (reach goal or in collision).
 * Maintain a list of all states that you have visited.
-* Use the provided visualizer and function to plot all figures of each recorded state and create a GIF. **Show this to your TAs.**
+* Use the provided visualizer and function to plot all figures of each recorded state and create a GIF.
 
 # T-intesection QMDP
 
@@ -201,11 +201,7 @@ Let us now turn this problem into a POMDP one. Assume that we have the same T-in
   * When taking the `look` action, we will receive reward `-1`
   * When the action is `look`, the new state is the current state with probability `1.0`
   * After apply action `look`, we receive an observation $z$ corresponding to where the other car is, with probabilities:
-    $ \begin{align}
-        & P(z = \text{other}_i | \text{other}_i) = 0.8 \\
-        & P(z = \text{other}_{\max\{1, i-1\}} | \text{other}_i) = 0.1 \\
-        & P(z = \text{other}_{\min\{5, i+1\}} | \text{other}_i) = 0.1
-    \end{align} $
+    ![eq2](./assets/eq2.png)
 
 We can approximate the POMDP solution with **QMDP** by computing the value function of the underlying MDP **offline** before doing online QMDP. Following Section \ref{qmdp-background}, the state value $\hat{V}$ of this MDP can be used in QMDP later.
 
