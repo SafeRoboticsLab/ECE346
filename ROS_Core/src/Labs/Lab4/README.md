@@ -156,34 +156,21 @@ print(twoStateMDP.get_real_state_value(0))
 ```
 
 ### T-intersection MDP
-Your task is to use our MDP class to create the MDP based on figure \ref{fig:t-intersection-mdp}.
-\begin{figure}[htp]
-    \centering
-    \includegraphics[height=8cm]{lab3/figures/t-intersection-mdp.jpg}
-    \caption{Passenger pick up MDP diagram for Minicity}
-    \label{fig:t-intersection-mdp} 
-\end{figure}
+Your task is to use our MDP class to create the MDP based on the following figure:
 
-The T-intersection problem has 2 cars: our car, called `ego`, and the other car, called `other`. The state $s = \{\text{ego}_i, \text{other}_j\}$ with $i,j \in \{1 \dots 5\}$ includes where we are our trajectory (in yellow) and where the other car is on its own trajectory (in blue). The action space has 2 actions: `forward` and `stop`. The following information describes our MDP:
+![t_inter_diagram](./assets/t_inter_diagram.png)
+
+The T-intersection problem has 2 cars: our car, called `ego`, and the other car, called `other`. The state $s = $ {$\text{ego}_i, \text{other}_j$} with $i,j \in $ {$1 \dots 5$}S includes where we are our trajectory (in yellow) and where the other car is on its own trajectory (in blue). The action space has 2 actions: `forward` and `stop`. The following information describes our MDP:
 
 Our choice of action affects the other car's action as follows:
-$
-    \displaystyle
-    \begin{align}
-        P(a_{\text{other}} | a_{\text{ego}}) = \begin{vmatrix}
-            & \text{other = forward} & \text{other = stop} \\
-            \text{ego = forward} & 0.2 & 0.8 \\
-            \text{ego = stop} & 0.4 & 0.6
-        \end{vmatrix}
-    \end{align}
-$
+![eq1](./assets/eq1.png)
 
 For example, if we take the action `forward`, there is a `0.8` chance that the other car will `stop`, and `0.2` chance that both cars will move forward.
 
 The dynamics are described as follows:
 * When moving forward with action `forward`, for each car there is a `0.8` chance of moving 1 step ahead, and a `0.2` chance of moving 2 steps ahead.
 * When choosing action `stop`, the car will stop with probability `1.0`.
-* The system terminates when either car reaches the goal, i.e. $\text{ego}_i = \text{ego}_5$ or $\text{other}_i = \text{other}_5$, or when collision happens, i.e. $s = \{\text{ego}_i, \text{other}_j\}$ with $i, j \in \{4, 5\}$.
+* The system terminates when either car reaches the goal, i.e. $\text{ego}_i = \text{ego}_5$ or $\text{other}_i = \text{other}_5$, or when collision happens, i.e. $s = $ {$\text{ego}_i, \text{other}_j$} with $i, j \in $ {$4, 5$}.
 
 The reward function is as follows:
 * `a = forward`: reward `-1`.
