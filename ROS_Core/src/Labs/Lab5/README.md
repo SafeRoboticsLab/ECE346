@@ -11,8 +11,36 @@ git pull upstream SP2025 --recurse-submodules
 ```
 
 # Getting Started
+
+## Set up GitHub on your truck!
+First, you will connect your truck to one group member's GitHub account using an SSH key. **Note** You can copy and paste within an Ubuntu terminal by using ctrl+shift+C and ctrl+shift+V respectively! In your terminal, run
+```bash
+# Install packages to use GitHub and copy/paste
+sudo apt install git xclip
+```
+```bash
+# Replace with your GitHub email address
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+Press enter three times to skip requiring a password for each push/pull. Then run,
+```bash
+# Start the ssh-agent and add your private key to it
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+Open Google Chrome and log into [GitHub](http://github.com) using the same email from previous steps. In the upper-right corner of any page on GitHub, click your profile photo, then click 'Settings'. In the "Access" section of the sidebar, click  'SSH and GPG keys'. Click 'New SSH key'. In your terminal, run this command to copy your SSH key
+
+```bash
+# Copy public ssh key to your clipboard:
+cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
+```
+
+Now in your browser, enter 'ece346-truck-XX' for 'Title', where XX is your group number. For 'Key', simply paste the SSH key that you just copied.
+
+
 ## Clone your ECE346 repo to your Robot
-First, you will need to clone your ECE346_GroupXX repo to your Robot.
+Next, you will need to clone your ECE346_GroupXX repo to your Robot.
 
 1. Open a new terminal and SSH into your robot.
     ```bash
