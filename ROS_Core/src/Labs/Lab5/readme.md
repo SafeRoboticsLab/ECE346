@@ -60,13 +60,13 @@ This process should take ~5 minutes. If you do not have conda (anaconda/minicond
 We create an alias for activating the new environment called ```start_ros```. You can activate the environment by running either `start_ros` or `conda activate ros_base`.
 
 ## Test it out
-Activate your ROS environment by running `start_ros`.
+Activate your ROS environment on the robot by running `start_ros`.
 
 Then run `roscore` to start the ROS master. If everything works, you will see
 ![](assets/ros_core_output.png)
 
 ## Install PyTorch and tqdm
-Next, you'll need to install ``PyTorch`` and ``tqdm`` on both your robot and your laptop. First, we'll do the robot:
+Next, you'll need to install ``PyTorch`` on both your robot and laptop, as well as ``tqdm`` on your robot. First, we'll do the robot:
 1. Open a new terminal and SSH into your robot.
     ```bash
     ssh nvidia@<IP OF YOUR ROBOT>
@@ -77,15 +77,14 @@ Next, you'll need to install ``PyTorch`` and ``tqdm`` on both your robot and you
     ```
 3. Install PyTorch.
     ```bash
-    conda install torch
-    conda install tqdm
+    pip install torch
+    pip install tqdm
     ```
 Then, do it again for your laptop.
 1. Open a new terminal. Activate the *ros_base* environment on your laptop and install PyTorch.
     ```bash
     conda activate ros_base
-    conda install torch
-    conda install tqdm
+    pip install torch
     ```
 
 # Launch the Learning Node
@@ -151,8 +150,8 @@ Place your truck at your starting point, and hold the *B button* down on your co
 # Task: Train a Behavior Cloning policy & Test it on the Truck
 After training your model on the robot (online) or on your laptop (offline), test it on the mini-truck robot and **record a video** of the robot making **2-3 good laps** around a specific loop. **Upload this video and submit it to Canvas.**
 
-**Hint:** your trained model may do poorly when testing it on the truck. Make sure your model converges to a value ```0.005``` or less before testing it; this is the ideal order of magnitude that you want a robust model to achieve. The time/number of iterations/epochs it may take to get this loss value will depend on the size of your reference path (i.e., the bigger the island you choose, the longer you'll need to train). 
+**Hint:** your trained model may do poorly when testing it on the truck. Make sure your model converges to a value of ```0.003 - 0.005``` or less before testing it; this is the ideal order of magnitude that you want a robust model to achieve. The time/number of iterations/epochs it may take to get this loss value will depend on the size of your reference path (i.e., the bigger the island you choose, the longer you'll need to train). 
 
 If training offline, you may need to play with the number of iterations to get a low enough convergence. If you're training on the truck, you may need to wait patiently.
 
-**Note:** With about 1 minute of driving the truck around the center island of the track and 15 minutes of training on the truck (~4000-4500 iterations), I was able to get a reasonable model. 
+**Note:** With about 1 minute of driving the truck around the center island of the track and 15 minutes of training on the truck (~4000-4500 iterations), I was able to get a reasonable (but slightly overfitted) model. 
