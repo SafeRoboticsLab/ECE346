@@ -13,7 +13,12 @@ git pull upstream SP2025 --recurse-submodules
 # Getting Started
 
 ## Set up GitHub on your truck!
-First, you will connect your truck to one group member's GitHub account using an SSH key. **Note** You can copy and paste within an Ubuntu terminal by using ctrl+shift+C and ctrl+shift+V respectively! In your terminal, run
+First, you will connect your truck to one group member's GitHub account using an SSH key. **Note** You can copy and paste within an Ubuntu terminal by using ctrl+shift+C and ctrl+shift+V respectively!
+1. Open a new terminal and SSH into your truck.
+    ```bash
+    ssh nvidia@<IP OF YOUR ROBOT>
+    ```
+2. In your truck's terminal run
 ```bash
 # Install packages to use GitHub and copy/paste
 sudo apt install git xclip
@@ -42,25 +47,21 @@ Now in your browser, enter 'ece346-truck-XX' for 'Title', where XX is your group
 ## Clone your ECE346 repo to your Robot
 Next, you will need to clone your ECE346_GroupXX repo to your Robot.
 
-1. Open a new terminal and SSH into your robot.
-    ```bash
-    ssh nvidia@<IP OF YOUR ROBOT>
-    ```
-2. In the robot terminal, run the following command in your root directory (``cd ~``). **Important:** ``--recurse-submodules`` is necessary to get all submodules, i.e., linked specific commits of separate GitHub repositories!
+1. In the robot terminal, run the following command in your root directory (``cd ~``). **Important:** ``--recurse-submodules`` is necessary to get all submodules, i.e., linked specific commits of separate GitHub repositories!
     ```bash
     git clone --recurse-submodules https://github.com/SafeRoboticsLab/ECE346.git
     ```
-3. From inside the cloned directory, rename the original ```ECE346``` GitHub repo to `upstream` (default is `origin`), which you'll use to fetch future lab assignments and updates.
+2. From inside the cloned directory, rename the original ```ECE346``` GitHub repo to `upstream` (default is `origin`), which you'll use to fetch future lab assignments and updates.
     ```bash
     cd ECE346
     git remote rename origin upstream
     git remote set-url --push upstream DISABLE
     ```
-4. Add your group's private repository as a new remote named ``origin``. Note, this is just the typical name for the 'primary' remote (online repository). To locate your private repo's URL, navigate to its main paige on GitHub, select the green ``<> Code`` icon, select SSH, and copy this URL to your clipboard.
+3. Add your group's private repository as a new remote named ``origin``. Note, this is just the typical name for the 'primary' remote (online repository). To locate your private repo's URL, navigate to its main paige on GitHub, select the green ``<> Code`` icon, select SSH, and copy this URL to your clipboard.
     ```bash
     git remote add origin <URL of your private REPO>
     ```
-5. Complete your GitHub configuration in your terminal. 
+4. Complete your GitHub configuration in your terminal. 
     ```bash
     # Replace with your GitHub email address and full name or a fun alias ;). Note this will appear on GitHub
     git config user.email "your_email@example.com"
@@ -68,7 +69,7 @@ Next, you will need to clone your ECE346_GroupXX repo to your Robot.
     ```
     **Note:** run the commands above inside your ECE346 directory after setting the URL to your remote repository. Otherwise, you'll get the error ``fatal: not in a git directory``.
 
-6. Pull the SP2025 branch of your private, remote repository to your new, local one on the truck.
+5. Pull the SP2025 branch of your private, remote repository to your new, local one on the truck.
     ```bash
     git pull origin SP2025
     ```
