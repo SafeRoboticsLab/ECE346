@@ -38,9 +38,9 @@ Open Google Chrome and log into [GitHub](http://github.com) using the same email
 
 ```bash
 # Copy public ssh key to your clipboard:
-cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard
+cat ~/.ssh/id_ed25519.pub
 ```
-
+Use ctrl+shift+c to copy the output from your terminal.
 Now in your browser, enter 'ece346-truck-XX' for 'Title', where XX is your group number. For 'Key', simply paste the SSH key that you just copied.
 
 
