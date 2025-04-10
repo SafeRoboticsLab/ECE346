@@ -47,11 +47,12 @@ cd ~/StartUp
 catkin_make_isolated
 ```
 
-To test that this works, you can put a static obstacle cube in front of the robot and run
+To test that this works, you can put a static obstacle cube in front of the robot
 
 ```bash
 roslaunch final_project task1_detection.launch
 ```
+Note: you have to run the 3 terminals as before; Thus the line above is the 3rd terminal where you run your algorithm.
 
 Once you start SLAM, a static obstacle should appear in real-time (and change position if you move it around). This should work with multiple static obstacles, assuming no occlusion.
 
