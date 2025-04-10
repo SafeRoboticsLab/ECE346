@@ -16,12 +16,12 @@ To ensure your files are up to date, make sure to run:
 ```bash
 git pull upstream SP2025 --recurse-submodules
 ```
-
 To test that this works, run
 
 ```bash
 cd ROS_Core
 rm -rf build devel # delete old compiled files
+conda install pynput #needed for Keyboard Control
 catkin_make # recompile files (now including final_project pkg)
 source devel/setup.bash # source environment variables (now final_project is found!)
 roslaunch final_project task1_simulation.launch

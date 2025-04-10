@@ -11,7 +11,7 @@ from ILQR import RefPath
 from ILQR import ILQR_jax as ILQR
 
 from racecar_msgs.msg import ServoMsg, OdometryArray
-from racecar_planner_optimized.cfg import plannerConfig
+from final_project.cfg import plannerConfig
 from visualization_msgs.msg import MarkerArray
 
 from dynamic_reconfigure.server import Server
