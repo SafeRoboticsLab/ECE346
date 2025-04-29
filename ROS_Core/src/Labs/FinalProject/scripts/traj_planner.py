@@ -158,7 +158,7 @@ class TrajectoryPlanner():
         '''
         self.pose_sub = rospy.Subscriber(self.odom_topic, Odometry, self.odometry_callback, queue_size=10)
 
-        # TODO (Task 2) - Write a corresponding publisher for the keyboard
+        # TODO (Task 2) - Write a corresponding Subscriber for the keyboard
         # ...
         
         self.path_sub = rospy.Subscriber(self.path_topic, PathMsg, self.path_callback, queue_size=10)
