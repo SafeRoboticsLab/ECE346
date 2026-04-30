@@ -33,9 +33,11 @@ git add      <path-to-conflicting-file>
 git commit
 ```
 
-Start the container and build the workspace:
+Start the container and rebuild the workspace:
 ```bash
-./start.sh
+./start.sh down
+./start.sh build
+./start.sh 
 # Inside the container:
 cd /ros2_ws && colcon build --symlink-install && source install/setup.bash
 ```
