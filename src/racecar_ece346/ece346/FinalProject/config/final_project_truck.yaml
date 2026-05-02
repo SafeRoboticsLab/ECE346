@@ -7,6 +7,20 @@ visualization_node:
   ros__parameters:
     odom_topic: /SLAM/Pose
 
+# --- Routing (consumed by 2D Nav Goal in RViz) ---
+# Truck publishes pose on /SLAM/Pose; routing_node defaults to /slam_pose,
+# so without this block the goal click silently produces no path.
+routing_node:
+  ros__parameters:
+    odom_topic: /SLAM/Pose
+    goal_topic: /goal_pose
+    routing_path_topic: /Routing/Path
+    routing_pathL_topic: /Routing/PathL
+    routing_pathR_topic: /Routing/PathR
+    clicked_goal: True
+    goal_with_heading: False
+    lane_change_cost: 1.0
+
 # --- AprilTag-based static obstacle detection ---
 static_obstacle_detection_node:
   ros__parameters:
