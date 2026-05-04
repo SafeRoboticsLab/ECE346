@@ -263,6 +263,42 @@ your host-side launch.
 - Know your group's **`<DOMAIN_ID>`** (a number between 0–101 assigned by
   the TAs).
 
+### One-time: pair the PS4 controller to the truck
+
+The PS4 controller pairs to the **Jetson** (not your laptop). The pairing
+persists across reboots — you only need to do this once per truck/controller
+pair.
+
+SSH into the truck and start `bluetoothctl`:
+```bash
+ssh nvidia@192.168.1.2XX
+bluetoothctl
+```
+
+Plug the controller into the Jetson over USB. You'll be prompted to authorize
+the HID service — type `yes`:
+```
+[agent] Authorize service 00001124-0000-1000-8000-00805f9b34fb (yes/no): yes
+```
+
+Unplug the controller, then press the **PS** button. The LED bar blinks while
+connecting and stays solid once paired. Type `exit` to leave `bluetoothctl`.
+
+**Troubleshooting** — if the LED keeps blinking and never connects, from
+inside `bluetoothctl`:
+```
+scan on
+```
+
+If `scan on` returns `Failed to start discovery: org.bluez.Error.NotReady`,
+exit and unblock the radio, then retry:
+```bash
+exit
+sudo rfkill unblock bluetooth
+bluetoothctl
+# press PS button
+```
+
 ### Terminal 1 (truck) — start SLAM
 
 ```bash
